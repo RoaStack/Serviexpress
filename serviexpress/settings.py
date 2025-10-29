@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'repuestos',
     'reservas',
     'usuarios',
+    'servicios',
     # Librerías externas
     'crispy_forms',
     'crispy_bootstrap5',
