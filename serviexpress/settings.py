@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'repuestos',
     'reservas',
     'usuarios',
+    'servicios',
     # Librerías externas
     'crispy_forms',
     'crispy_bootstrap5',
@@ -60,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 
 ROOT_URLCONF = 'serviexpress.urls'
 
@@ -139,3 +141,12 @@ STATICFILES_DIRS = [STATIC_DIR]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+
+# 🔐 Configuración de autenticación
+LOGIN_URL = 'login_usuario'           # dónde redirige si no ha iniciado sesión
+LOGIN_REDIRECT_URL = 'home'           # a dónde va después del login exitoso
+LOGOUT_REDIRECT_URL = 'login_usuario' # a dónde va después del logout
+
+# ⚙️ Configuración Crispy Forms (ya que lo tienes instalado)
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>ServiExpress</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body>
+  {% include 'includes/navbar.html' %}
+  <main>
+    {% if messages %}
+      <ul>
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+  {% include 'includes/footer.html' %}
+</body>
+</html>

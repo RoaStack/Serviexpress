@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Bienvenido a ServiExpress</h1>
+{% if user.is_authenticated %}
+  <p>Estás conectado como {{ user.username }}</p>
+{% else %}
+  <p>Por favor, inicia sesión o regístrate.</p>
+{% endif %}
+{% endblock %}
