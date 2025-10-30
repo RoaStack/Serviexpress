@@ -1,8 +1,7 @@
 from django.contrib import admin
-from .models import Usuario
+from .models import Servicio
 
-@admin.register(Usuario)
-class UsuarioAdmin(admin.ModelAdmin):
-    list_display = ('user', 'tipo_usuario', 'telefono', 'comuna')
-    list_filter = ('tipo_usuario',)
-    search_fields = ('user__username', 'user__email')
+@admin.register(Servicio)
+class ServicioAdmin(admin.ModelAdmin):
+    list_display = ('nombre', 'precio', 'duracion_estimada')
+    search_fields = ('nombre',)
