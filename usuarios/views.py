@@ -1,35 +1,27 @@
-# usuarios/views.py
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import Group
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.models import User
-from .models import Usuario
+from .forms import RegistroUsuarioForm  # ✅ Importamos el formulario
 
-# Registro de usuarios
+# 🧩 Registro de usuarios (ahora usando el formulario)
 def registro_usuario(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        email = request.POST['email']
-        password = request.POST['password']
-        tipo_usuario = request.POST['tipo_usuario']
+        form = RegistroUsuarioForm(request.POST)
+        if form.is_valid():
+            form.save()  # ✅ El form ya crea el User, Usuario y asigna grupo
+            messages.success(request, 'Usuario registrado correctamente.')
+            return redirect('login_usuario')
+        else:
+            messages.error(request, 'Por favor corrige los errores del formulario.')
+    else:
+        form = RegistroUsuarioForm()  # Render inicial vacío
 
-        # Crear el usuario base de Django
-        user = User.objects.create_user(username=username, email=email, password=password)
-        usuario = Usuario.objects.create(user=user, tipo_usuario=tipo_usuario)
+    return render(request, 'usuarios/registro.html', {'form': form})
 
-        # Asignar grupo según tipo de usuario
-        grupo = Group.objects.get(name=tipo_usuario.capitalize() + 's')  # Ej: Clientes, Mecanicos
-        user.groups.add(grupo)
 
-        messages.success(request, f'Usuario {username} registrado correctamente')
-        return redirect('login_usuario')
-
-    return render(request, 'usuarios/registro.html')
-
-# Login
+# 🔐 Login
 def login_usuario(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
@@ -42,16 +34,17 @@ def login_usuario(request):
                 messages.success(request, f'Bienvenido {user.username}')
                 return redirect('home')
             else:
-                messages.error(request, 'Usuario o contraseña incorrectos')
+                messages.error(request, 'Usuario o contraseña incorrectos.')
         else:
-            messages.error(request, 'Datos inválidos')
+            messages.error(request, 'Datos inválidos.')
     else:
         form = AuthenticationForm()
     return render(request, 'usuarios/login.html', {'form': form})
 
-# Logout
+
+# 🚪 Logout
 @login_required
 def logout_usuario(request):
     logout(request)
-    messages.info(request, 'Sesión cerrada correctamente')
+    messages.info(request, 'Sesión cerrada correctamente.')
     return redirect('login_usuario')
