@@ -1,23 +1,33 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>ServiExpress</title>
-  {% load static %}
-  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ServiExpress | {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 </head>
 <body>
-  {% include 'includes/navbar.html' %}
-  <main>
-    {% if messages %}
-      <ul>
-        {% for message in messages %}
-          <li>{{ message }}</li>
-        {% endfor %}
-      </ul>
+    {% include 'includes/messages.html' %}
+
+    {% if user.is_authenticated %}
+        {% if es_admin %}
+            {% include 'includes/navbar_admin.html' %}
+        {% elif es_mecanico %}
+            {% include 'includes/navbar_mecanico.html' %}
+        {% elif es_cliente %}
+            {% include 'includes/navbar_cliente.html' %}
+        {% else %}
+            {% include 'includes/navbar_public.html' %}
+        {% endif %}
+    {% else %}
+        {% include 'includes/navbar_public.html' %}
     {% endif %}
-    {% block content %}{% endblock %}
-  </main>
-  {% include 'includes/footer.html' %}
+
+    <main class="container mt-4">
+        {% block content %}{% endblock %}
+    </main>
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>

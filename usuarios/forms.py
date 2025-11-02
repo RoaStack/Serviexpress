@@ -1,36 +1,43 @@
 from django import forms
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import User
 from .models import Usuario
 
-class RegistroUsuarioForm(forms.ModelForm):
-    username = forms.CharField(max_length=150)
-    email = forms.EmailField(required=True)
-    password = forms.CharField(widget=forms.PasswordInput)
+class RegistroClienteForm(forms.ModelForm):
+    # Campos del User
+    username   = forms.CharField(label="Nombre de usuario", max_length=150)
+    first_name = forms.CharField(label="Nombre", max_length=150)
+    last_name  = forms.CharField(label="Apellido", max_length=150)
+    email      = forms.EmailField(label="Correo electrónico", required=True)
+    password   = forms.CharField(label="Contraseña", widget=forms.PasswordInput)
 
     class Meta:
         model = Usuario
-        fields = ['rut', 'nombre', 'apellido', 'direccion', 'comuna', 'telefono', 'tipo_usuario']
+        fields = ["rut", "direccion", "comuna", "telefono"]
+
+    # Validación amigable de username ya existente
+    def clean_username(self):
+        username = self.cleaned_data["username"].strip()
+        if User.objects.filter(username=username).exists():
+            raise forms.ValidationError("Este nombre de usuario ya está en uso. Por favor elige otro.")
+        return username
 
     def save(self, commit=True):
-        user = User.objects.create_user(
-            username=self.cleaned_data['username'],
-            email=self.cleaned_data['email'],
-            password=self.cleaned_data['password']
+        # 1) Crear User
+        user = User(
+            username=self.cleaned_data["username"].strip(),
+            first_name=self.cleaned_data["first_name"].strip(),
+            last_name=self.cleaned_data["last_name"].strip(),
+            email=self.cleaned_data["email"].strip(),
         )
-        usuario = super().save(commit=False)
-        usuario.user = user
+        user.set_password(self.cleaned_data["password"])
         if commit:
-            usuario.save()
+            user.save()
 
-        # 🔄 Asignar grupo según tipo_usuario
-        grupos_por_tipo = {
-            'ADMIN': 'Administradores',
-            'MECANICO': 'Mecanicos',
-            'CLIENTE': 'Clientes'
-        }
-        tipo = usuario.tipo_usuario.upper()
-        nombre_grupo = grupos_por_tipo.get(tipo)
-        if nombre_grupo:
-            grupo, _ = Group.objects.get_or_create(name=nombre_grupo)
-            user.groups.add(grupo)
-        return usuario
+        # 2) Crear Perfil (Usuario)
+        perfil = super().save(commit=False)
+        perfil.user = user
+        if commit:
+            perfil.save()
+
+        # 3) Devolver el user (para login en la vista)
+        return user

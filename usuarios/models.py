@@ -1,47 +1,32 @@
 from django.db import models
-from django.contrib.auth.models import User, Group
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+from django.contrib.auth.models import User
+from django.urls import reverse
 
 class Usuario(models.Model):
-    TIPOS_USUARIO = [
-        ('ADMIN', 'Administrador'),
-        ('MECANICO', 'Mecánico'),
-        ('CLIENTE', 'Cliente'),
-    ]
+    """
+    Perfil extendido para todos los usuarios del sistema (clientes, mecánicos, admins).
+    """
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="perfil")
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    tipo_usuario = models.CharField(max_length=10, choices=TIPOS_USUARIO)
-
-    # Campos adicionales
+    # Campos adicionales según requerimiento
     rut = models.CharField(max_length=12, unique=True)
-    nombre = models.CharField(max_length=100)
-    apellido = models.CharField(max_length=100)
     direccion = models.CharField(max_length=150)
     comuna = models.CharField(max_length=100)
     telefono = models.CharField(max_length=20, blank=True, null=True)
+    activo = models.BooleanField(default=True, null=True)
+    fecha_registro = models.DateTimeField(auto_now_add=True, null=True)
+
+    class Meta:
+        verbose_name = "Perfil de Usuario"
+        verbose_name_plural = "Perfiles de Usuarios"
+        ordering = ["user__first_name"]
 
     def __str__(self):
-        return f"{self.nombre} {self.apellido} ({self.get_tipo_usuario_display()})"
+        return f"{self.user.get_full_name()} ({self.user.username})"
 
-@receiver(post_save, sender=Usuario)
-def asignar_grupo_automatico(sender, instance, created, **kwargs):
-    if not instance.user:
-        return
+    @property
+    def nombre_completo(self):
+        return self.user.get_full_name()
 
-    grupos_por_tipo = {
-        'ADMIN': 'Administradores',
-        'MECANICO': 'Mecanicos',
-        'CLIENTE': 'Clientes',
-    }
-
-    tipo = instance.tipo_usuario.upper()
-    nombre_grupo = grupos_por_tipo.get(tipo)
-
-    if nombre_grupo:
-        grupo, _ = Group.objects.get_or_create(name=nombre_grupo)
-
-        # Evita limpiar y reasignar si ya está en el grupo correcto
-        if not instance.user.groups.filter(name=nombre_grupo).exists():
-            instance.user.groups.clear()
-            instance.user.groups.add(grupo)
+    def get_absolute_url(self):
+        return reverse("usuarios:detalle", kwargs={"pk": self.pk})

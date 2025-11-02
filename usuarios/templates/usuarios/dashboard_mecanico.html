@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Panel de mecánico{% endblock %}
+{% block content %}
+<h2>Panel de Mecánico</h2>
+<p>Hola, {{ request.user.get_full_name|default:request.user.username }}</p>
+<ul>
+  <li><a href="#">Ver pedidos</a></li>
+  <li><a href="#">Gestionar repuestos</a></li>
+</ul>
+{% endblock %}

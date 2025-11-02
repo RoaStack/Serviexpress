@@ -3,6 +3,6 @@ from .models import Usuario
 
 @admin.register(Usuario)
 class UsuarioAdmin(admin.ModelAdmin):
-    list_display = ('user', 'tipo_usuario', 'telefono', 'comuna')
-    list_filter = ('tipo_usuario',)
-    search_fields = ('user__username', 'user__email')
+    list_display = ('user', 'rut', 'telefono', 'comuna', 'activo', 'fecha_registro')
+    search_fields = ('user__username', 'user__first_name', 'user__last_name', 'rut')
+    list_filter = ('activo', 'comuna')
