@@ -1,50 +1,75 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, logout, authenticate
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login, authenticate, logout
+from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
-from .forms import RegistroUsuarioForm  # ✅ Importamos el formulario
+from django.contrib.auth.models import Group
+from .forms import RegistroClienteForm
 
-# 🧩 Registro de usuarios (ahora usando el formulario)
-def registro_usuario(request):
-    if request.method == 'POST':
-        form = RegistroUsuarioForm(request.POST)
+# 🧩 Registro de clientes (desde la web)
+def registro_cliente(request):
+    if request.method == "POST":
+        form = RegistroClienteForm(request.POST)
         if form.is_valid():
-            form.save()  # ✅ El form ya crea el User, Usuario y asigna grupo
-            messages.success(request, 'Usuario registrado correctamente.')
-            return redirect('login_usuario')
+            user = form.save()
+            # Asignar grupo Clientes
+            grupo_cliente, _ = Group.objects.get_or_create(name="Clientes")
+            user.groups.add(grupo_cliente)
+            # Login automático
+            login(request, user)
+            messages.success(request, "¡Tu cuenta fue creada con éxito! 🎉")
+            return redirect("usuarios:dashboard")
         else:
-            messages.error(request, 'Por favor corrige los errores del formulario.')
+            messages.error(request, "Por favor corrige los errores del formulario.")
     else:
-        form = RegistroUsuarioForm()  # Render inicial vacío
+        form = RegistroClienteForm()
 
-    return render(request, 'usuarios/registro.html', {'form': form})
-
+    return render(request, "usuarios/registro.html", {"form": form})
 
 # 🔐 Login
 def login_usuario(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
+            username = form.cleaned_data.get("username")
+            password = form.cleaned_data.get("password")
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                messages.success(request, f'Bienvenido {user.username}')
-                return redirect('home')
+                messages.success(request, f"Bienvenido {user.username}")
+                return redirect("usuarios:dashboard")
             else:
-                messages.error(request, 'Usuario o contraseña incorrectos.')
+                messages.error(request, "Usuario o contraseña incorrectos.")
         else:
-            messages.error(request, 'Datos inválidos.')
+            messages.error(request, "Datos inválidos.")
     else:
         form = AuthenticationForm()
-    return render(request, 'usuarios/login.html', {'form': form})
-
+    return render(request, "usuarios/login.html", {"form": form})
 
 # 🚪 Logout
 @login_required
 def logout_usuario(request):
     logout(request)
-    messages.info(request, 'Sesión cerrada correctamente.')
-    return redirect('login_usuario')
+    messages.info(request, "Sesión cerrada correctamente.")
+    return redirect("usuarios:login_usuario")
+
+# 🧭 Dashboard dinámico según grupo
+@login_required
+def dashboard(request):
+    user = request.user
+
+    # 👑 Admin (staff o superuser)
+    if user.is_staff or user.is_superuser:
+        return render(request, "usuarios/dashboard_admin.html")
+
+    # 🔧 Mecánico
+    if user.groups.filter(name="Mecanicos").exists():
+        return render(request, "usuarios/dashboard_mecanico.html")
+
+    # 👤 Cliente
+    if user.groups.filter(name="Clientes").exists():
+        return render(request, "usuarios/dashboard_cliente.html")
+
+    # Si no pertenece a ningún grupo
+    messages.warning(request, "Tu usuario no tiene un rol asignado. Contacta al administrador.")
+    return redirect("usuarios:login_usuario")
