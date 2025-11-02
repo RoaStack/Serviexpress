@@ -23,5 +23,11 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
-    path('usuarios/', include('usuarios.urls', namespace='usuarios')),
+    path('usuarios/', include('usuarios.urls')),
+    path('servicios/', include('servicios.urls', namespace='servicios')),
+    path('reservas/', include('reservas.urls', namespace='reservas')),
+    path('boletas/', include('boletas.urls', namespace='boletas')),
+    path('pedidos/', include('pedidos.urls', namespace='pedidos')),
+    path('proveedores/', include('proveedores.urls', namespace='proveedores')),
+    path('repuestos/', include('repuestos.urls', namespace='repuestos')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
