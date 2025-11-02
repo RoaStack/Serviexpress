@@ -31,4 +31,3 @@ urlpatterns = [
     path('proveedores/', include('proveedores.urls', namespace='proveedores')),
     path('repuestos/', include('repuestos.urls', namespace='repuestos')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-

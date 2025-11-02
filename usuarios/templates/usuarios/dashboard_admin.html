@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Panel de administrador{% endblock %}
+{% block content %}
+<h2>Panel de Administrador</h2>
+<p>Hola, {{ request.user.get_full_name|default:request.user.username }}</p>
+<ul>
+  <li><a href="/admin/">Entrar al Django Admin</a></li>
+  <li><a href="#">Reportes</a></li>
+</ul>
+{% endblock %}

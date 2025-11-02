@@ -1,9 +1,8 @@
 {% extends 'base.html' %}
+{% block title %}Inicio{% endblock %}
 {% block content %}
-<h1>Bienvenido a ServiExpress</h1>
-{% if user.is_authenticated %}
-  <p>Estás conectado como {{ user.username }}</p>
-{% else %}
-  <p>Por favor, inicia sesión o regístrate.</p>
-{% endif %}
+  <div class="text-center mt-5">
+    <h1>Bienvenido a ServiExpress 🚗</h1>
+    <p>Gestión eficiente para tu taller mecánico</p>
+  </div>
 {% endblock %}
