@@ -1,0 +1,50 @@
+/* ==== FOOTER GLOBAL ==== */
+.footer-global {
+  width: 100%;
+  background-color: #1a1d21; /* gris oscuro neutro */
+  color: #fff;
+  border-top: 2px solid #343a40;
+  margin-top: 3rem;
+  padding: 2rem 0;
+}
+
+.footer-logo h5 {
+  font-size: 1.4rem;
+  margin-bottom: 0.3rem;
+  color: #ffffff;
+}
+
+.footer-logo p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.95rem;
+}
+
+.footer-social .social-link {
+  color: #ffffff;
+  font-size: 1.5rem;
+  margin: 0 10px;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.footer-social .social-link:hover {
+  color: #f0ad4e; /* acento dorado */
+  transform: translateY(-3px);
+}
+
+.footer-global p {
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0.2rem 0;
+  font-size: 0.9rem;
+}
+
+/* Asegura que el footer siempre quede al fondo */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}

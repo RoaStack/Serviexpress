@@ -5,7 +5,9 @@ from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import Group
 from .forms import RegistroClienteForm, EditarPerfilForm
-
+from .models import Usuario
+from django.http import JsonResponse
+import json
 
 # 🧩 Registro de clientes (desde la web)
 def registro_cliente(request):
@@ -77,17 +79,45 @@ def dashboard(request):
     return redirect("usuarios:login_usuario")
 
 
-# 👤 Edición de perfil (solo cliente)
+@login_required
+def ver_perfil(request):
+    user = request.user
+    grupo = None
+
+    if user.is_staff or user.is_superuser:
+        grupo = "Administrador"
+        template = "usuarios/administrador/ver_perfil.html"
+    elif user.groups.filter(name="Mecanicos").exists():
+        grupo = "Mecánico"
+        template = "usuarios/mecanico/ver_perfil.html"
+    elif user.groups.filter(name="Clientes").exists():
+        grupo = "Cliente"
+        template = "usuarios/cliente/ver_perfil.html"
+    else:
+        messages.warning(request, "No tienes un rol asignado. Contacta al administrador.")
+        return redirect("usuarios:dashboard")
+
+    return render(request, template, {"user": user, "grupo": grupo})
 @login_required
 def editar_perfil(request):
-    perfil = request.user.perfil  # Relación OneToOne
-    if request.method == "POST":
-        form = EditarPerfilForm(request.POST, instance=perfil)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Perfil actualizado con éxito ✅")
-            return redirect("usuarios:dashboard")
-    else:
-        form = EditarPerfilForm(instance=perfil)
+    user = request.user
+    perfil = getattr(user, "perfil", None)
 
-    return render(request, "usuarios/cliente/editar_perfil.html", {"form": form})
+    if request.method == "POST" and request.headers.get("Content-Type") == "application/json":
+        data = json.loads(request.body)
+        field = data.get("field")
+        value = data.get("value")
+
+        # Validar y actualizar según el campo
+        if hasattr(user, field):
+            setattr(user, field, value)
+            user.save()
+        elif hasattr(perfil, field):
+            setattr(perfil, field, value)
+            perfil.save()
+        else:
+            return JsonResponse({"success": False})
+
+        return JsonResponse({"success": True})
+
+    return JsonResponse({"success": False})

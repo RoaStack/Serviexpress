@@ -105,3 +105,64 @@ footer {
   font-weight: 400;
   margin-bottom: 2rem;
 }
+/* ==== GRID UNIFORME Y AJUSTE VISUAL ==== */
+.dashboard-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  padding: 0 1rem;
+}
+
+/* ==== CARDS CON ALTURA FIJA ==== */
+.card {
+  background-color: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 12px;
+  width: 280px;       /* mismo tamaño que el cliente */
+  min-height: 220px;  /* altura uniforme */
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card:hover {
+  border-color: #f0ad4e;
+  transform: translateY(-5px);
+  box-shadow: 0 6px 18px rgba(240, 173, 78, 0.3);
+}
+
+.card h5 {
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.card p {
+  color: #ccc;
+  margin-bottom: 1.2rem;
+  flex-grow: 1; /* equilibra el texto */
+}
+
+/* ==== RESPONSIVE ==== */
+@media (max-width: 1200px) {
+  .dashboard-container {
+    flex-wrap: wrap;
+  }
+}
+
+/* ==== LIMITE DE 3 CARDS POR FILA ==== */
+.dashboard-container {
+  max-width: 960px; /* 3 x 300px + márgenes */
+  margin: 2rem auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
