@@ -1,15 +1,28 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-dark shadow-sm" style="background-color: #1c1f24; border-bottom: 2px solid #007bff;">
   <div class="container">
-    <a class="navbar-brand text-warning fw-bold" href="#">🔧 ServiExpress Mecánico</a>
-    <div class="collapse navbar-collapse">
-      <ul class="navbar-nav ms-auto">
+    <a class="navbar-brand text-primary fw-bold" href="#">🔧 ServiExpress Mecánico</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMecanico" aria-controls="navbarMecanico" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarMecanico">
+      <ul class="navbar-nav ms-auto align-items-center">
         <li class="nav-item">
-          <a class="nav-link text-light" href="#">Mis órdenes</a>
+          <a class="nav-link text-light" href="{% url 'usuarios:dashboard' %}">Inicio</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link text-light" href="#">Órdenes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" href="#">Servicios</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" href="{% url 'usuarios:ver_perfil' %}">Perfil</a>
+        </li>
+        <li class="nav-item ms-3">
           <form method="post" action="{% url 'usuarios:logout_usuario' %}">
             {% csrf_token %}
-            <button class="btn btn-outline-warning btn-sm" type="submit">Cerrar sesión</button>
+            <button class="btn btn-outline-primary btn-sm" type="submit">Cerrar sesión</button>
           </form>
         </li>
       </ul>

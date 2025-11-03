@@ -1,8 +1,15 @@
-<nav class="navbar navbar-expand-lg navbar-dark shadow-sm" style="background-color: #0d1117;">
+<nav class="navbar navbar-expand-lg navbar-dark shadow-sm" style="background-color: #0d1117; border-bottom: 1px solid #30363d;">
   <div class="container">
     <a class="navbar-brand text-warning fw-bold" href="#">🧑‍💼 ServiExpress Admin</a>
-    <div class="collapse navbar-collapse">
-      <ul class="navbar-nav ms-auto">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarAdmin" aria-controls="navbarAdmin" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarAdmin">
+      <ul class="navbar-nav ms-auto align-items-center">
+        <li class="nav-item">
+          <a class="nav-link text-light" href="{% url 'usuarios:dashboard' %}">Inicio</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link text-light" href="#">Panel</a>
         </li>
@@ -13,9 +20,12 @@
           <a class="nav-link text-light" href="#">Reportes</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link text-light" href="{% url 'usuarios:ver_perfil' %}">Perfil</a>
+        </li>
+        <li class="nav-item ms-3">
           <form method="post" action="{% url 'usuarios:logout_usuario' %}">
             {% csrf_token %}
-            <button class="btn btn-outline-light btn-sm" type="submit">Salir</button>
+            <button class="btn btn-outline-warning btn-sm" type="submit">Salir</button>
           </form>
         </li>
       </ul>

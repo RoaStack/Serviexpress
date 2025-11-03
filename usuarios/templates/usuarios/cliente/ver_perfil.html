@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Mi perfil (Cliente){% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'usuarios/css/cliente.css' %}">
+<link rel="stylesheet" href="{% static 'usuarios/css/perfil_cliente.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="perfil-container">
+  <div class="perfil-header">
+    <i class="bi bi-person-fill"></i>
+    <h2>Mi perfil (Cliente)</h2>
+  </div>
+
+  <div id="perfil-fields">
+    <div class="perfil-field">
+      <strong>Usuario:</strong>
+      <span id="username">{{ user.username }}</span>
+      <button class="edit-btn" onclick="editField('username')"><i class="bi bi-pencil-square"></i></button>
+    </div>
+
+    <div class="perfil-field">
+      <strong>Email:</strong>
+      <span id="email">{{ user.email }}</span>
+      <button class="edit-btn" onclick="editField('email')"><i class="bi bi-pencil-square"></i></button>
+    </div>
+
+    <div class="perfil-field">
+      <strong>Dirección:</strong>
+      <span id="direccion">{{ user.perfil.direccion }}</span>
+      <button class="edit-btn" onclick="editField('direccion')"><i class="bi bi-pencil-square"></i></button>
+    </div>
+
+    <div class="perfil-field">
+      <strong>Comuna:</strong>
+      <span id="comuna">{{ user.perfil.comuna }}</span>
+      <button class="edit-btn" onclick="editField('comuna')"><i class="bi bi-pencil-square"></i></button>
+    </div>
+
+    <div class="perfil-field">
+      <strong>Teléfono:</strong>
+      <span id="telefono">{{ user.perfil.telefono }}</span>
+      <button class="edit-btn" onclick="editField('telefono')"><i class="bi bi-pencil-square"></i></button>
+    </div>
+  </div>
+</div>
+
+<script>
+function editField(field) {
+  const span = document.getElementById(field);
+  if (span.querySelector('.editable')) return;
+  const oldValue = span.innerText;
+  span.innerHTML = `
+    <div class="editable">
+      <input type="text" id="${field}_input" value="${oldValue}">
+      <button class="save-btn" onclick="saveField('${field}')">Guardar</button>
+      <button class="cancel-btn" onclick="cancelEdit('${field}', '${oldValue}')">X</button>
+    </div>`;
+}
+
+function cancelEdit(field, oldValue) {
+  document.getElementById(field).innerText = oldValue;
+}
+
+function saveField(field) {
+  const value = document.getElementById(`${field}_input`).value;
+  fetch("{% url 'usuarios:editar_perfil' %}", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRFToken": "{{ csrf_token }}"
+    },
+    body: JSON.stringify({ field: field, value: value })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      document.getElementById(field).innerText = value;
+    } else {
+      alert("Error al actualizar campo");
+    }
+  });
+}
+</script>
+{% endblock %}

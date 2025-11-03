@@ -4,7 +4,8 @@ from .views import (
     registro_cliente,
     logout_usuario,
     dashboard,
-    editar_perfil
+    editar_perfil,
+    ver_perfil
 )
 from django.contrib.auth.views import LogoutView
 
@@ -16,4 +17,7 @@ urlpatterns = [
     path("logout/", LogoutView.as_view(next_page="usuarios:login_usuario"), name="logout_usuario"),
     path("dashboard/", dashboard, name="dashboard"),
     path("cliente/editar/", editar_perfil, name="editar_perfil"),
+    path("editar-perfil/", editar_perfil, name="editar_perfil"),
+    path("perfil/", ver_perfil, name="ver_perfil"),
+    path("perfil/editar/", editar_perfil, name="editar_perfil"),
 ]

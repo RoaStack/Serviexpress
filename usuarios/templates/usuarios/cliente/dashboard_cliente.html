@@ -8,26 +8,34 @@
 
 {% block content %}
 <div class="dashboard-cliente text-center mt-5">
-  <h2 class="fw-bold">Bienvenido, {{ request.user.first_name }} 👋</h2>
-  <p>Gestiona tus <strong>reservas</strong>, <strong>compras</strong> y <strong>perfil</strong>.</p>
+  <h2 class="fw-bold dashboard-title">Bienvenido, {{ request.user.first_name }} 👋</h2>
+  <p class="dashboard-subtitle">
+    Gestiona tus <strong>reservas</strong>, <strong>servicios</strong>, <strong>compras</strong> y tu <strong>perfil personal</strong>.
+  </p>
 
   <div class="dashboard-grid mt-5">
-    <div class="card shadow-sm">
-      <h5>Reservar servicio</h5>
-      <p>Agenda una hora para mantenimiento o reparación.</p>
-      <a href="#" class="btn btn-primary">Reservar</a>
+    <div class="card">
+      <h5>Reservar hora</h5>
+      <p>Agenda una cita para el servicio de tu vehículo de manera rápida y sencilla.</p>
+      <a href="#" class="btn btn-client-primary">Reservar</a>
     </div>
 
-    <div class="card shadow-sm">
-      <h5>Mis compras</h5>
-      <p>Revisa tus repuestos adquiridos y boletas.</p>
-      <a href="#" class="btn btn-info">Ver compras</a>
+    <div class="card">
+      <h5>Mis reservas</h5>
+      <p>Consulta tus reservas activas, su estado y los detalles de tus citas.</p>
+      <a href="#" class="btn btn-client-info">Ver reservas</a>
     </div>
 
-    <div class="card shadow-sm">
-      <h5>Mi perfil</h5>
-      <p>Edita tu información personal o cambia tu dirección.</p>
-      <a href="#" class="btn btn-secondary">Editar perfil</a>
+    <div class="card">
+      <h5>Servicios realizados</h5>
+      <p>Revisa el historial de servicios completados y mantenimientos realizados.</p>
+      <a href="#" class="btn btn-client-success">Ver historial</a>
+    </div>
+
+    <div class="card">
+      <h5>Comprar productos</h5>
+      <p>Explora el catálogo de repuestos y productos disponibles para tu vehículo.</p>
+      <a href="#" class="btn btn-client-warning">Ver productos</a>
     </div>
   </div>
 </div>

@@ -1,15 +1,25 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-dark bg-client shadow-sm">
   <div class="container">
-    <a class="navbar-brand text-primary fw-bold" href="#">🚗 ServiExpress Cliente</a>
-    <div class="collapse navbar-collapse">
-      <ul class="navbar-nav ms-auto">
+    <a class="navbar-brand fw-bold" href="#">🚗 ServiExpress Cliente</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCliente" aria-controls="navbarCliente" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarCliente">
+      <ul class="navbar-nav align-items-center">
         <li class="nav-item">
-          <a class="nav-link text-primary" href="#">Mi cuenta</a>
+          <a class="nav-link" href="{% url 'usuarios:dashboard' %}">Inicio</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" href="#">Mis Compras</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'usuarios:ver_perfil' %}">Perfil</a>
+        </li>
+        <li class="nav-item ms-3">
           <form method="post" action="{% url 'usuarios:logout_usuario' %}">
             {% csrf_token %}
-            <button class="btn btn-outline-danger btn-sm" type="submit">Cerrar sesión</button>
+            <button class="btn btn-client-logout btn-sm" type="submit">Cerrar sesión</button>
           </form>
         </li>
       </ul>
