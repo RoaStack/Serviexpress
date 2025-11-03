@@ -1,0 +1,106 @@
+/* === PERFIL MECÁNICO === */
+body {
+  background-color: #eef2f6;
+  color: #1e1f21;
+  font-family: 'Poppins', sans-serif;
+}
+
+.perfil-container {
+  max-width: 500px;
+  margin: 3rem auto;
+  background: #283241;
+  border-radius: 12px;
+  border: 1px solid #344055;
+  padding: 2rem 2.5rem;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+}
+
+.perfil-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.perfil-header i {
+  color: #66b2ff;
+  font-size: 1.8rem;
+}
+
+.perfil-header h2 {
+  font-weight: 700;
+  color: #fff;
+}
+
+.perfil-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #3a475a;
+}
+
+.perfil-field strong {
+  color: #66b2ff;
+  width: 35%;
+}
+
+.perfil-field span {
+  flex: 1;
+  color: #cfd8e3;
+}
+
+.edit-btn {
+  background: none;
+  border: none;
+  color: #66b2ff;
+  cursor: pointer;
+  transition: color 0.3s, transform 0.2s;
+}
+
+.edit-btn:hover {
+  color: #007bff;
+  transform: scale(1.2);
+}
+
+.editable {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.editable input {
+  background: #1c1f24;
+  border: 1px solid #3a475a;
+  border-radius: 6px;
+  color: #fff;
+  padding: 5px 8px;
+}
+
+.save-btn, .cancel-btn {
+  border: none;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  padding: 4px 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.save-btn {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.save-btn:hover {
+  background-color: #339cff;
+}
+
+.cancel-btn {
+  background-color: #475569;
+  color: #fff;
+}
+
+.cancel-btn:hover {
+  background-color: #5a6b7a;
+}

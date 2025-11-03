@@ -1,0 +1,104 @@
+.perfil-container {
+  max-width: 500px;
+  margin: 3rem auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  padding: 2rem 2.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.perfil-container:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.perfil-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.perfil-header i {
+  font-size: 1.8rem;
+  color: #1f6feb;
+}
+
+.perfil-header h2 {
+  font-weight: 700;
+  color: #1e1f21;
+}
+
+.perfil-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #eaecef;
+}
+
+.perfil-field strong {
+  color: #1e1f21;
+  width: 35%;
+}
+
+.perfil-field span {
+  flex: 1;
+  color: #555;
+}
+
+.edit-btn {
+  background: none;
+  border: none;
+  color: #1f6feb;
+  font-size: 1rem;
+  transition: transform 0.2s ease, color 0.3s ease;
+}
+
+.edit-btn:hover {
+  color: #1554b3;
+  transform: scale(1.2);
+}
+
+.editable {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.editable input {
+  width: 70%;
+  padding: 5px 8px;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.save-btn, .cancel-btn {
+  border: none;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  padding: 4px 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.save-btn {
+  background-color: #1f6feb;
+  color: white;
+}
+
+.save-btn:hover {
+  background-color: #1554b3;
+}
+
+.cancel-btn {
+  background-color: #6c757d;
+  color: white;
+}
+
+.cancel-btn:hover {
+  background-color: #5a6268;
+}

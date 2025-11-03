@@ -29,14 +29,17 @@ body {
 }
 
 /* ==== CONTENEDOR ==== */
-.dashboard-container {
+.dashboard-grid {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: flex-start;
-  gap: 2rem;
+  align-items: stretch; /* todas las cards misma altura */
+  gap: 1.5rem;
   margin-top: 3rem;
   padding: 0 1rem;
+  max-width: 960px; /* 3 cards por fila */
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* ==== CARDS ==== */
@@ -45,16 +48,20 @@ body {
   border: 1px solid #344055;
   border-radius: 12px;
   width: 300px;
+  min-height: 220px;
   padding: 1.5rem;
   text-align: center;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .card:hover {
   border-color: #007bff;
   transform: translateY(-5px);
-  box-shadow: 0 6px 18px rgba(0, 123, 255, 0.3);
+  box-shadow: 0 6px 18px rgba(0, 123, 255, 0.35);
 }
 
 .card h5 {
@@ -66,6 +73,7 @@ body {
 .card p {
   color: #cfd8e3;
   margin-bottom: 1.2rem;
+  flex-grow: 1;
 }
 
 /* ==== BOTONES ==== */
@@ -122,26 +130,9 @@ footer {
   font-size: 0.9rem;
 }
 
-/* ==== Dashboard Mecánico ==== */
-.dashboard-mecanico {
-  text-align: center;
-  margin-top: 2rem;
-  color: #1e1f21;
-}
-
-.dashboard-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 2rem;
-  margin-top: 2rem;
-  padding: 0 1rem;
-}
-
 /* ==== BOTÓN CERRAR SESIÓN ==== */
 .navbar .btn-outline-warning {
-  color: #66b2ff !important;        /* azul claro */
+  color: #66b2ff !important;
   border-color: #66b2ff !important;
 }
 
