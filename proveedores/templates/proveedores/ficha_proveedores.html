@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Proveedores</title>
+</head>
+<body style="background-color:#f8f9fa; font-family:Arial, sans-serif;">
+
+  <!-- Encabezado -->
+  <h1 style="text-align:center; color:#003366;">Proveedores</h1>
+
+  <!-- Navegación -->
+  <div style="text-align:center; margin-bottom:15px;">
+    <a href="/" style="color:#007bff; text-decoration:none; margin-right:10px;">Inicio</a> |
+    <a href="/admin/" style="color:#007bff; text-decoration:none; margin-left:10px;">Panel Admin</a>
+  </div>
+
+  <!-- Botón para agregar proveedor -->
+  <div style="text-align:center; margin-bottom:20px;">
+    {% if request.user.is_authenticated %}
+      <a href="{% url 'proveedores:crear' %}"
+          style="background-color:#0a6; color:white; padding:8px 12px; border-radius:5px; text-decoration:none; font-weight:bold;">
+          ➕ Agregar Proveedor
+      </a>
+    {% else %}
+      <a href="/accounts/login/" style="color:#07c;">Inicia sesión para agregar proveedores</a>
+    {% endif %}
+  </div>
+
+  <!-- Total de proveedores -->
+  <p style="text-align:center;">Cantidad de Proveedores: <b>{{ proveedores|length }}</b></p>
+
+  <!-- Contenedor principal -->
+  <div style="display:flex; justify-content:center;">
+    <table border="1" cellpadding="8" cellspacing="0"
+  ="border-collapse:collapse; background-color:white; text-align:center; width:80%; max-width:800px;">
+      <thead style="background-color:#003366; color:white;">
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>RUT</th>
+          <th>Teléfono</th>
+          <th>Correo</th>
+          <th>Dirección</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in proveedores %}
+        <tr>
+          <td>{{ p.id }}</td>
+          <td><b>{{ p.nombre }}</b></td>
+          <td>{{ p.rut }}</td>
+          <td><a href="tel:{{ p.telefono }}" style="color:#006400; text-decoration:none;">{{ p.telefono }}</a></td>
+          <td><a href="mailto:{{ p.correo }}" style="color:#800000; text-decoration:none;">{{ p.correo }}</a></td>
+          <td>{{ p.direccion }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="6" style="color:#999; padding:15px;">No hay proveedores registrados.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pie -->
+  <p style="text-align:center; margin-top:20px; color:#555;">
+    Sistema de Gestión Taller Mecánico SERVIEXPRESS © 2025
+  </p>
+
+</body>
+</html>
+
+
+
+
