@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Panel Mecánico{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'usuarios/css/mecanico.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-mecanico text-center mt-5">
+  <h2 class="fw-bold">Panel de Mecánico 🔧</h2>
+  <p>Accede a tus órdenes de trabajo y control de servicios.</p>
+
+  <div class="dashboard-grid mt-5">
+    <div class="card">
+      <h5>Órdenes asignadas</h5>
+      <p>Consulta tus trabajos activos o pendientes.</p>
+      <a href="#" class="btn btn-warning">Ver órdenes</a>
+    </div>
+
+    <div class="card">
+      <h5>Historial de servicios</h5>
+      <p>Revisa trabajos finalizados y observaciones.</p>
+      <a href="#" class="btn btn-dark">Ver historial</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Panel de Administración{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'usuarios/css/admin.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="text-center mt-4">
+  <h2 class="dashboard-title">Panel de Administración 👨‍💼</h2>
+  <p class="dashboard-subtitle">Control total de usuarios, servicios y repuestos.</p>
+</div>
+
+
+<div class="dashboard-container">
+  <div class="card">
+    <h5>Gestión de usuarios</h5>
+    <p>Administra clientes y mecánicos.</p>
+    <a href="#" class="btn btn-outline-warning">Ver usuarios</a>
+  </div>
+
+  <div class="card">
+    <h5>Gestión de repuestos</h5>
+    <p>Controla inventario y precios.</p>
+    <a href="#" class="btn btn-outline-warning">Ver repuestos</a>
+  </div>
+
+  <div class="card">
+    <h5>Reportes</h5>
+    <p>Visualiza estadísticas y resultados.</p>
+    <a href="#" class="btn btn-outline-warning">Ver reportes</a>
+  </div>
+
+  <div class="card">
+    <h5>Gestión de servicios</h5>
+    <p>Administra los servicios disponibles del taller.</p>
+    <a href="#" class="btn btn-outline-warning">Ver servicios</a>
+  </div>
+
+    <div class="card">
+    <h5>Gestion de proveedores</h5>
+    <p>Gestiona los proveedores.</p>
+    <a href="#" class="btn btn-outline-warning">Ver usuarios</a>
+  </div>
+</div>
+{% endblock %}

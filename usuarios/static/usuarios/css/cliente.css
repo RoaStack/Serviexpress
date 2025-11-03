@@ -1,0 +1,41 @@
+body {
+  background-color: #f6f9fc;
+  color: #222;
+  font-family: 'Poppins', sans-serif;
+}
+
+.dashboard-grid {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.card {
+  width: 280px;
+  padding: 1.5rem;
+  border-radius: 16px;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.btn {
+  border-radius: 10px;
+}
+
+.navbar {
+  background-color: #e9f4ff !important;
+}
+
+.navbar .nav-link {
+  color: #007bff !important;
+}
+
+.navbar .nav-link:hover {
+  text-decoration: underline;
+}
