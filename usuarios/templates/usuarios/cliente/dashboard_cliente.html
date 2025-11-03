@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Panel Cliente{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'usuarios/css/cliente.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-cliente text-center mt-5">
+  <h2 class="fw-bold dashboard-title">Bienvenido, {{ request.user.first_name }} 👋</h2>
+  <p class="dashboard-subtitle">
+    Gestiona tus <strong>reservas</strong>, <strong>servicios</strong>, <strong>compras</strong> y tu <strong>perfil personal</strong>.
+  </p>
+
+  <div class="dashboard-grid mt-5">
+    <div class="card">
+      <h5>Reservar hora</h5>
+      <p>Agenda una cita para el servicio de tu vehículo de manera rápida y sencilla.</p>
+      <a href="#" class="btn btn-client-primary">Reservar</a>
+    </div>
+
+    <div class="card">
+      <h5>Mis reservas</h5>
+      <p>Consulta tus reservas activas, su estado y los detalles de tus citas.</p>
+      <a href="#" class="btn btn-client-info">Ver reservas</a>
+    </div>
+
+    <div class="card">
+      <h5>Servicios realizados</h5>
+      <p>Revisa el historial de servicios completados y mantenimientos realizados.</p>
+      <a href="#" class="btn btn-client-success">Ver historial</a>
+    </div>
+
+    <div class="card">
+      <h5>Comprar productos</h5>
+      <p>Explora el catálogo de repuestos y productos disponibles para tu vehículo.</p>
+      <a href="#" class="btn btn-client-warning">Ver productos</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

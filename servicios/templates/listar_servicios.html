@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h2>🧾 Lista de Servicios</h2>
+
+  <a href="{% url 'servicios:crear_servicio' %}" class="btn btn-success mb-3">
+    ➕ Nuevo Servicio
+  </a>
+
+  {% if servicios %}
+  <!-- Si existen servicios, mostrar la tabla -->
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Precio</th>
+        <th>Duración estimada</th>
+        <th>Editar</th>
+        <th>Eliminar</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for servicio in servicios %}
+      <tr>
+        <td>{{ servicio.nombre }}</td>
+        <td>{{ servicio.descripcion }}</td>
+        <td>${{ servicio.precio }}</td>
+        <td>{{ servicio.duracion_estimada }}</td>
+        <td>
+          <a href="{% url 'servicios:editar_servicio' servicio.pk %}" class="btn btn-warning btn-sm">✏️ Editar</a>
+        </td>
+        <td>
+          <a href="{% url 'servicios:eliminar_servicio' servicio.pk %}" class="btn btn-danger btn-sm">🗑️ Eliminar</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% else %}
+  <!-- Si NO hay servicios registrados -->
+  <div class="alert alert-info mt-4 text-center" role="alert">
+    <h5>📭 No hay servicios registrados actualmente.</h5>
+    <p>Puedes agregar uno nuevo haciendo clic en el botón de arriba.</p>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
+
+

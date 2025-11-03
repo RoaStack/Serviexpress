@@ -1,10 +1,28 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-success px-3">
-  <a class="navbar-brand" href="{% url 'home' %}">ServiExpress Cliente</a>
-  <div class="ms-auto">
-    <a href="{% url 'usuarios:dashboard' %}" class="btn btn-outline-light btn-sm">Mi cuenta</a>
-    <form method="post" action="{% url 'usuarios:logout_usuario' %}" class="d-inline">
-      {% csrf_token %}
-      <button type="submit" class="btn btn-light btn-sm">Cerrar sesión</button>
-    </form>
+<nav class="navbar navbar-expand-lg navbar-dark bg-client shadow-sm">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="#">🚗 ServiExpress Cliente</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCliente" aria-controls="navbarCliente" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarCliente">
+      <ul class="navbar-nav align-items-center">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'usuarios:dashboard' %}">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Mis Compras</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'usuarios:ver_perfil' %}">Perfil</a>
+        </li>
+        <li class="nav-item ms-3">
+          <form method="post" action="{% url 'usuarios:logout_usuario' %}">
+            {% csrf_token %}
+            <button class="btn btn-client-logout btn-sm" type="submit">Cerrar sesión</button>
+          </form>
+        </li>
+      </ul>
+    </div>
   </div>
 </nav>

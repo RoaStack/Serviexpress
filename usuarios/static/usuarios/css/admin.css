@@ -1,0 +1,168 @@
+body {
+  background-color: #0d1117;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+/* ==== NAVBAR ==== */
+.navbar {
+  background-color: #0d1117 !important;
+  border-bottom: 1px solid #30363d;
+}
+
+.navbar .navbar-brand {
+  color: #f0ad4e !important;
+  font-weight: bold;
+}
+
+.navbar .nav-link {
+  color: #fff !important;
+  margin-right: 15px;
+  transition: color 0.3s;
+}
+
+.navbar .nav-link:hover {
+  color: #f0ad4e !important;
+}
+
+/* ==== CONTENEDOR DE DASHBOARD ==== */
+.dashboard-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
+  margin-top: 3rem;
+  padding: 0 1rem;
+}
+
+/* ==== CARDS ==== */
+.card {
+  background-color: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 10px;
+  width: 300px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.card:hover {
+  border-color: #f0ad4e;
+  transform: translateY(-5px);
+}
+
+.card h5 {
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.card p {
+  color: #ccc;
+  margin-bottom: 1.2rem;
+}
+
+.btn {
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.btn-outline-warning {
+  color: #f0ad4e;
+  border-color: #f0ad4e;
+}
+
+.btn-outline-warning:hover {
+  background-color: #f0ad4e;
+  color: #0d1117;
+}
+
+/* ==== FOOTER ==== */
+footer {
+  margin-top: 3rem;
+  padding: 1rem 0;
+  text-align: center;
+  color: #aaa;
+  border-top: 1px solid #30363d;
+  font-size: 0.9rem;
+}
+
+/* ==== TÍTULO Y SUBTÍTULO DEL DASHBOARD ==== */
+.dashboard-title {
+  color: black; 
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-subtitle {
+  color: black; 
+  font-size: 1rem;
+  font-weight: 400;
+  margin-bottom: 2rem;
+}
+/* ==== GRID UNIFORME Y AJUSTE VISUAL ==== */
+.dashboard-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  padding: 0 1rem;
+}
+
+/* ==== CARDS CON ALTURA FIJA ==== */
+.card {
+  background-color: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 12px;
+  width: 280px;       /* mismo tamaño que el cliente */
+  min-height: 220px;  /* altura uniforme */
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card:hover {
+  border-color: #f0ad4e;
+  transform: translateY(-5px);
+  box-shadow: 0 6px 18px rgba(240, 173, 78, 0.3);
+}
+
+.card h5 {
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.card p {
+  color: #ccc;
+  margin-bottom: 1.2rem;
+  flex-grow: 1; /* equilibra el texto */
+}
+
+/* ==== RESPONSIVE ==== */
+@media (max-width: 1200px) {
+  .dashboard-container {
+    flex-wrap: wrap;
+  }
+}
+
+/* ==== LIMITE DE 3 CARDS POR FILA ==== */
+.dashboard-container {
+  max-width: 960px; /* 3 x 300px + márgenes */
+  margin: 2rem auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
