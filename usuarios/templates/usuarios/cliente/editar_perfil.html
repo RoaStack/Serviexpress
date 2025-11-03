@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Editar Perfil{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <h2>Editar mis datos</h2>
+  <form method="POST" class="mt-3">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+    <a href="{% url 'usuarios:dashboard' %}" class="btn btn-secondary">Cancelar</a>
+  </form>
+</div>
+{% endblock %}

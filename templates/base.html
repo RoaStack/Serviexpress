@@ -5,9 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ServiExpress | {% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
+    <!-- Bootstrap (CDN) -->
+    <link 
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+        crossorigin="anonymous"
+    >
+
+    <!-- Bloque extra de CSS (para cliente, admin o mecánico) -->
+    {% block extra_css %}{% endblock %}
 </head>
-<body>
+
+<body class="bg-light">
     {% include 'includes/messages.html' %}
 
     {% if user.is_authenticated %}
@@ -28,6 +39,9 @@
         {% block content %}{% endblock %}
     </main>
 
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <!-- Bootstrap JS (CDN) -->
+    <script 
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js">
+    </script>
 </body>
 </html>

@@ -1,10 +1,24 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary px-3">
-  <a class="navbar-brand" href="{% url 'home' %}">Panel Admin</a>
-  <div class="ms-auto">
-    <a href="{% url 'usuarios:dashboard' %}" class="btn btn-outline-light btn-sm">Dashboard</a>
-    <form method="post" action="{% url 'usuarios:logout_usuario' %}" class="d-inline">
-      {% csrf_token %}
-      <button type="submit" class="btn btn-light btn-sm">Cerrar sesión</button>
-    </form>
+<nav class="navbar navbar-expand-lg navbar-dark shadow-sm" style="background-color: #0d1117;">
+  <div class="container">
+    <a class="navbar-brand text-warning fw-bold" href="#">🧑‍💼 ServiExpress Admin</a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link text-light" href="#">Panel</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" href="#">Usuarios</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" href="#">Reportes</a>
+        </li>
+        <li class="nav-item">
+          <form method="post" action="{% url 'usuarios:logout_usuario' %}">
+            {% csrf_token %}
+            <button class="btn btn-outline-light btn-sm" type="submit">Salir</button>
+          </form>
+        </li>
+      </ul>
+    </div>
   </div>
 </nav>

@@ -1,10 +1,18 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-secondary px-3">
-  <a class="navbar-brand" href="{% url 'home' %}">Panel Mecánico</a>
-  <div class="ms-auto">
-    <a href="{% url 'usuarios:dashboard' %}" class="btn btn-outline-light btn-sm">Mis tareas</a>
-    <form method="post" action="{% url 'usuarios:logout_usuario' %}" class="d-inline">
-      {% csrf_token %}
-      <button type="submit" class="btn btn-light btn-sm">Salir</button>
-    </form>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+  <div class="container">
+    <a class="navbar-brand text-warning fw-bold" href="#">🔧 ServiExpress Mecánico</a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link text-light" href="#">Mis órdenes</a>
+        </li>
+        <li class="nav-item">
+          <form method="post" action="{% url 'usuarios:logout_usuario' %}">
+            {% csrf_token %}
+            <button class="btn btn-outline-warning btn-sm" type="submit">Cerrar sesión</button>
+          </form>
+        </li>
+      </ul>
+    </div>
   </div>
 </nav>
