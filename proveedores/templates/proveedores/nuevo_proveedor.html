@@ -5,12 +5,24 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'usuarios/css/admin.css' %}">
+<style>
+  /* --- Botón dorado ServiExpress --- */
+    .btn-serviexpress {
+        background-color: #ffc107;
+        color: #000;
+        border: none;
+        font-weight: 600;
+        transition: all 0.2s ease-in-out;
+    }
+    .btn-serviexpress:hover {
+        background-color: #e0a800;
+        color: #000;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
 <div class="container mt-4">
-
-
     <div class="text-center mb-4">
         <h2 class="dashboard-title">Registrar nuevo proveedor</h2>
         <p class="dashboard-subtitle">Agrega un nuevo proveedor al sistema ServiExpress.</p>
@@ -24,11 +36,11 @@
         {{ form.as_p }}
 
         <div class="d-flex justify-content-between mt-3">
-            <button type="submit" class="btn btn-success fw-semibold">💾 Guardar</button>
-            <a href="{% url 'proveedores:ficha_proveedores' %}" class="btn btn-outline-secondary">Cancelar</a>
+            <button type="submit" class="btn btn-serviexpress">Guardar</button>
+            <a href="{% url 'proveedores:ficha_proveedores' %}" class="btn btn-outline-secondary fw-semibold">Cancelar</a>
         </div>
         </form>
     </div>
-
 </div>
 {% endblock %}
+
