@@ -15,13 +15,13 @@
     <div class="card">
       <h5>Órdenes asignadas</h5>
       <p>Revisa y gestiona tus órdenes de trabajo asignadas dentro del sistema.</p>
-      <a href="#" class="btn btn-dark">Ver órdenes</a>
+      <a href="{% url 'reservas:ordenes_asignadas' %}" class="btn btn-dark">Ver órdenes</a>
     </div>
 
     <div class="card">
       <h5>Registrar servicios realizados</h5>
       <p>Accede al registro de los servicios completados y actualiza su estado.</p>
-      <a href="#" class="btn btn-dark">Registrar servicio</a>
+      <a href="{% url 'reservas:servicios_en_proceso' %}" class="btn btn-dark">Registrar servicio</a>
     </div>
 
     <div class="card">
@@ -39,7 +39,7 @@
     <div class="card">
       <h5>Historial de servicios</h5>
       <p>Visualiza el historial de los servicios realizados y mantenimientos completados.</p>
-      <a href="#" class="btn btn-dark">Ver historial</a>
+      <a href="{% url 'reservas:historial_servicios' %}" class="btn btn-dark">Ver historial</a>
     </div>
   </div>
 </div>
