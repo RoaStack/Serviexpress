@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Nuevo Proveedor{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'usuarios/css/admin.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+
+
+    <div class="text-center mb-4">
+        <h2 class="dashboard-title">Registrar nuevo proveedor</h2>
+        <p class="dashboard-subtitle">Agrega un nuevo proveedor al sistema ServiExpress.</p>
+    </div>
+
+    {% include 'includes/messages.html' %}
+
+    <div class="d-flex justify-content-center">
+        <form method="post" class="bg-white p-4 rounded shadow-sm" style="width:90%; max-width:520px;">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <div class="d-flex justify-content-between mt-3">
+            <button type="submit" class="btn btn-success fw-semibold">💾 Guardar</button>
+            <a href="{% url 'proveedores:ficha_proveedores' %}" class="btn btn-outline-secondary">Cancelar</a>
+        </div>
+        </form>
+    </div>
+
+</div>
+{% endblock %}
