@@ -9,32 +9,28 @@
 
 {% block content %}
 <div class="container mt-4">
-
   <div class="text-center">
     <h2 class="dashboard-title">Proveedores</h2>
     <p class="dashboard-subtitle">Listado y gestión de proveedores.</p>
   </div>
 
-  {# Si base.html no muestra messages, deja esta línea; si ya lo hace, quítala #}
   {% include 'includes/messages.html' %}
 
-  <!-- Botón para agregar proveedor -->
-  <div class="text-center my-3">
-    {% if request.user.is_authenticated %}
-      <a href="{% url 'proveedores:crear' %}" class="btn btn-success fw-semibold">
-        ➕ Agregar Proveedor
-      </a>
-    {% else %}
-      <a href="{% url 'usuarios:login_usuario' %}" class="btn btn-primary">
-        Inicia sesión para agregar proveedores
-      </a>
-    {% endif %}
-  </div>
+  <!-- Botón crear: solo admin -->
+<div class="text-center my-3">
+  {% if request.user.is_staff or request.user.is_superuser %}
+    <a href="{% url 'proveedores:crear' %}"
+        class="btn fw-semibold"
+        style="background-color:#ff9800; color:#fff; border:none; font-weight:600;">
+          Agregar Proveedor
+    </a>
+  {% endif %}
+</div>
 
-  <!-- Total de proveedores -->
+
+
   <p class="text-center text-muted">Cantidad de Proveedores: <b>{{ proveedores|length }}</b></p>
 
-  <!-- Tabla de proveedores -->
   <div class="table-responsive">
     <table class="table table-striped table-bordered align-middle">
       <thead class="table-dark">
@@ -45,6 +41,9 @@
           <th>Teléfono</th>
           <th>Correo</th>
           <th>Dirección</th>
+          {% if request.user.is_staff or request.user.is_superuser %}
+          <th style="width:160px;">Acciones</th>
+          {% endif %}
         </tr>
       </thead>
       <tbody>
@@ -56,15 +55,23 @@
           <td><a href="tel:{{ p.telefono }}">{{ p.telefono }}</a></td>
           <td><a href="mailto:{{ p.correo }}">{{ p.correo }}</a></td>
           <td>{{ p.direccion }}</td>
+
+          {% if request.user.is_staff or request.user.is_superuser %}
+          <td>
+            <a href="{% url 'proveedores:editar' p.id %}" class="btn btn-sm btn-outline-primary">Editar</a>
+            <a href="{% url 'proveedores:eliminar' p.id %}" class="btn btn-sm btn-outline-danger">Eliminar</a>
+          </td>
+          {% endif %}
         </tr>
         {% empty %}
         <tr>
-          <td colspan="6" class="text-center text-muted py-3">No hay proveedores registrados.</td>
+          <td colspan="{% if request.user.is_staff or request.user.is_superuser %}7{% else %}6{% endif %}"
+              class="text-center text-muted py-3">No hay proveedores registrados.</td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
-
 </div>
 {% endblock %}
+
