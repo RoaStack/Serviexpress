@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% block title %}Boleta #{{ boleta.id }}{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="card shadow-lg border-0">
+    <div class="card-header bg-primary text-white text-center py-3">
+      <h3 class="mb-0">🧾 Boleta de Servicio #{{ boleta.id }}</h3>
+    </div>
+
+    <div class="card-body px-5 py-4">
+      <!-- Datos del cliente -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <h5 class="text-secondary">👤 Cliente</h5>
+          <p class="mb-1"><strong>Nombre:</strong> {{ boleta.cliente.user.get_full_name }}</p>
+          <p class="mb-1"><strong>Usuario:</strong> {{ boleta.cliente.user.username }}</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <h5 class="text-secondary">📅 Información</h5>
+          <p class="mb-1"><strong>Fecha emisión:</strong> {{ boleta.fecha }}</p>
+          <p class="mb-1"><strong>Reserva asociada:</strong> #{{ boleta.reserva.id }}</p>
+        </div>
+      </div>
+
+      <hr>
+
+      <!-- Detalle de servicios -->
+      <h5 class="mt-4">🧰 Servicios Realizados</h5>
+      <table class="table table-bordered table-hover align-middle text-center mt-3">
+        <thead class="table-light">
+          <tr>
+            <th>Servicio</th>
+            <th>Precio</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for s in boleta.detalles_servicios.all %}
+          <tr>
+            <td>{{ s.servicio.nombre }}</td>
+            <td>${{ s.precio_servicio|floatformat:0 }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="2" class="text-muted">No hay servicios registrados.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr class="fw-bold">
+            <td>Total Servicios</td>
+            <td>${{ total_servicios|floatformat:0 }}</td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <!-- Detalle de repuestos -->
+      <h5 class="mt-4">🔩 Repuestos Utilizados</h5>
+      <table class="table table-bordered table-hover align-middle text-center mt-3">
+        <thead class="table-light">
+          <tr>
+            <th>Repuesto</th>
+            <th>Cantidad</th>
+            <th>Precio Unitario</th>
+            <th>Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in boleta.detalles_repuestos.all %}
+          <tr>
+            <td>{{ r.repuesto.descripcion }}</td>
+            <td>{{ r.cantidad }}</td>
+            <td>${{ r.precio_unitario|floatformat:0 }}</td>
+            <td>${{ r.subtotal|floatformat:0 }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="4" class="text-muted">No se registraron repuestos.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr class="fw-bold">
+            <td colspan="3">Total Repuestos</td>
+            <td>${{ total_repuestos|floatformat:0 }}</td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <!-- Total general -->
+      <div class="text-end mt-4">
+        <h4 class="fw-bold text-primary">
+          Total General: ${{ total_general|floatformat:0 }}
+        </h4>
+      </div>
+
+      <!-- Botones -->
+      <div class="d-flex justify-content-between mt-4">
+        <a href="{% url 'reservas:mis_reservas' %}" class="btn btn-secondary">
+          ← Volver a Reservas
+        </a>
+        <a href="#" class="btn btn-outline-success disabled">
+          💾 Descargar PDF (próximamente)
+        </a>
+      </div>
+    </div>
+
+    <div class="card-footer text-center text-muted small">
+      © ServiExpress — Sistema de Gestión de Taller Mecánico
+    </div>
+  </div>
+</div>
+{% endblock %}

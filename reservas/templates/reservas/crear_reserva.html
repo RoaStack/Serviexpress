@@ -2,7 +2,6 @@
 {% block title %}Nueva Reserva{% endblock %}
 
 {% block content %}
-
 <div class="card shadow p-4 mt-4">
   <h3 class="mb-4 text-center">🧾 Crear nueva reserva</h3>
 
@@ -15,5 +14,58 @@
       <a href="{% url 'reservas:mis_reservas' %}" class="btn btn-secondary ms-2">Volver</a>
     </div>
   </form>
+
+  <!-- 🎨 Estilos para el selector de hora -->
+  <style>
+    #id_hora {
+      border-radius: 10px;
+      padding: 8px 10px;
+      border: 1px solid #ced4da;
+      background-color: #f8f9fa;
+      transition: all 0.2s ease;
+    }
+
+    #id_hora:focus {
+      background-color: #ffffff;
+      box-shadow: 0 0 5px rgba(13, 110, 253, 0.5);
+      border-color: #0d6efd;
+    }
+  </style>
+
+  <!-- ⚙️ Script para mostrar las horas disponibles automáticamente -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const fechaInput = document.querySelector("#id_fecha");
+      const horaSelect = document.querySelector("#id_hora");
+
+      fechaInput.addEventListener("change", function() {
+        const fecha = this.value;
+        horaSelect.innerHTML = '<option value="">Cargando horas disponibles...</option>';
+        horaSelect.disabled = true;
+
+        fetch(`/reservas/horas_disponibles/?fecha=${fecha}`)
+          .then(response => response.json())
+          .then(data => {
+            horaSelect.innerHTML = "";
+            horaSelect.disabled = false;
+
+            if (data.horas && data.horas.length > 0) {
+              data.horas.forEach(hora => {
+                const option = document.createElement("option");
+                option.value = hora;
+                option.textContent = `🕓 ${hora}`;
+                horaSelect.appendChild(option);
+              });
+            } else {
+              horaSelect.innerHTML = '<option value="">No hay horas disponibles</option>';
+            }
+          })
+          .catch(() => {
+            horaSelect.innerHTML = '<option value="">Error al cargar horas</option>';
+            horaSelect.disabled = false;
+          });
+      });
+    });
+  </script>
 </div>
 {% endblock %}
