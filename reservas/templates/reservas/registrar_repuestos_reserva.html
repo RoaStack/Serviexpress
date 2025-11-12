@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% block title %}Registrar repuestos — Reserva #{{ reserva.id }}{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="card shadow border-0">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+      <h4 class="mb-0">🔩 Registrar repuestos — Reserva #{{ reserva.id }}</h4>
+      <div>
+        <a href="{% url 'reservas:ordenes_asignadas' %}" class="btn btn-light btn-sm me-2">⬅️ Volver</a>
+
+        {% if detalles %}
+        <!-- ✅ Solo se muestra si hay repuestos agregados -->
+        <a href="{% url 'reservas:actualizar_estado_mecanico' reserva.id 'finalizada' %}"
+           class="btn btn-success btn-sm"
+           onclick="return confirm('¿Seguro que deseas finalizar esta reserva? Se generará la boleta automáticamente.');">
+           ✅ Finalizar servicio
+        </a>
+        {% else %}
+        <!-- 🚫 Si no hay repuestos, muestra aviso deshabilitado -->
+        <button class="btn btn-secondary btn-sm" disabled title="Agrega al menos un repuesto para finalizar.">
+          🔒 Finalizar servicio
+        </button>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="card-body">
+      <!-- 🔔 Alerta visual -->
+      <div class="alert alert-info text-center fw-semibold">
+        💡 Los repuestos agregados descuentan stock automáticamente.<br>
+        Si eliminas un repuesto, su cantidad se devolverá al inventario.
+      </div>
+
+      <!-- Formulario de registro -->
+      <form method="POST" class="row g-3 mb-4">
+        {% csrf_token %}
+        <div class="col-md-4">
+          {{ form.repuesto.label_tag }}
+          {{ form.repuesto }}
+        </div>
+        <div class="col-md-3">
+          {{ form.cantidad.label_tag }}
+          {{ form.cantidad }}
+        </div>
+        <div class="col-md-3">
+          {{ form.precio_unitario.label_tag }}
+          {{ form.precio_unitario }}
+        </div>
+        <div class="col-md-2 d-flex align-items-end">
+          <button class="btn btn-success w-100" type="submit">➕ Agregar</button>
+        </div>
+      </form>
+
+      <hr>
+
+      <h5 class="mt-4 mb-3 text-danger fw-bold">
+        <i class="bi bi-clipboard2-check-fill"></i> Repuestos registrados
+      </h5>
+
+      {% if detalles %}
+      <table class="table table-striped text-center align-middle mt-3 shadow-sm">
+        <thead class="table-dark">
+          <tr>
+            <th>Repuesto</th>
+            <th>Cantidad</th>
+            <th>Precio Unitario</th>
+            <th>Subtotal</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for d in detalles %}
+          <tr>
+            <td>{{ d.repuesto.descripcion }}</td>
+            <td>{{ d.cantidad }}</td>
+            <td>${{ d.precio_unitario|floatformat:0 }}</td>
+            <td>${{ d.subtotal|floatformat:0 }}</td>
+            <td>
+              <form method="POST" action="{% url 'reservas:eliminar_repuesto_detalle' reserva.id d.id %}" style="display:inline;">
+                {% csrf_token %}
+                <button class="btn btn-sm btn-outline-danger"
+                        type="submit"
+                        onclick="return confirm('¿Seguro que deseas eliminar este repuesto y restaurar el stock?')">
+                  🗑️ Eliminar
+                </button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot class="table-secondary fw-bold">
+          <tr>
+            <td colspan="3" class="text-end">💰 Total</td>
+            <td colspan="2">${{ total_repuestos|floatformat:0 }}</td>
+          </tr>
+        </tfoot>
+      </table>
+      {% else %}
+        <div class="alert alert-secondary text-center">
+          No hay repuestos registrados aún.
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<!-- ✅ Script para autocompletar el precio -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const repuestoSelect = document.getElementById("id_repuesto");
+    const precioInput = document.getElementById("id_precio_unitario");
+
+    repuestoSelect.addEventListener("change", function() {
+        const selectedOption = repuestoSelect.options[repuestoSelect.selectedIndex];
+        const text = selectedOption.text;
+
+        // Buscar el precio dentro del texto entre paréntesis, ej: (Stock: 20, $5000)
+        const match = text.match(/\$(\d+)/);
+        if (match) {
+            precioInput.value = match[1];
+        } else {
+            precioInput.value = "";
+        }
+    });
+});
+</script>
+
+{% endblock %}
+
+

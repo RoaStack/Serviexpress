@@ -34,8 +34,8 @@
         <td>{{ r.cliente.user.get_full_name|default:r.cliente.user.username }}</td>
         <td>
           <a href="{% url 'reservas:actualizar_estado_mecanico' r.id 'en_proceso' %}"
-             class="btn btn-sm btn-warning">
-             Iniciar servicio
+            class="btn btn-primary btn-sm">
+            Iniciar servicio
           </a>
         </td>
       </tr>

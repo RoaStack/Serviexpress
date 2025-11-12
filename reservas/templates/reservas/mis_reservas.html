@@ -81,6 +81,14 @@
           <td>
             {% if reserva.estado == 'pendiente' %}
               <a href="{% url 'reservas:cancelar_reserva' reserva.id %}" class="btn btn-danger btn-sm">Cancelar</a>
+            {% elif reserva.estado == 'finalizada' %}
+              {% if reserva.boleta %}
+                <a href="{% url 'boletas:detalle_boleta' reserva.boleta.id %}" class="btn btn-primary btn-sm">
+                  🧾 Ver Boleta
+                </a>
+              {% else %}
+                <span class="text-muted small">Boleta no disponible</span>
+              {% endif %}
             {% else %}
               <span class="text-muted">Sin acciones</span>
             {% endif %}
