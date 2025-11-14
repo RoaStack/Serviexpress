@@ -1,21 +1,13 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 from usuarios.models import Usuario
 from servicios.models import Servicio
 from datetime import time
-
+import holidays
 
 class Disponibilidad(models.Model):
-    DIAS_SEMANA = [
-        ('lunes', 'Lunes'),
-        ('martes', 'Martes'),
-        ('miercoles', 'Miércoles'),
-        ('jueves', 'Jueves'),
-        ('viernes', 'Viernes'),
-        ('sabado', 'Sábado'),
-    ]
-
-    mecanico = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name="disponibilidades")
-    dia_semana = models.CharField(max_length=15, choices=DIAS_SEMANA)
+    mecanico = models.ForeignKey(Usuario,on_delete=models.CASCADE, related_name="disponibilidades")
+    fecha = models.DateField(help_text="Selecciona la fecha exacta de disponibilidad")
     hora_inicio = models.TimeField(default=time(8, 0))
     hora_termino = models.TimeField(default=time(18, 0))
     duracion_bloque = models.IntegerField(default=30)  # minutos
@@ -23,8 +15,19 @@ class Disponibilidad(models.Model):
     colacion_termino = models.TimeField(default=time(14, 0))
     activo = models.BooleanField(default=True)
 
+    def clean(self):
+        """
+        Evita que se registre disponibilidad en días feriados en Chile.
+        """
+        feriados = holidays.Chile()  # 🇨🇱 Lista oficial de feriados chilenos
+        if self.fecha in feriados:
+            raise ValidationError(
+                f"La fecha {self.fecha.strftime('%d/%m/%Y')} es feriado en Chile ({feriados.get(self.fecha)}). "
+                "No se puede registrar disponibilidad ese día."
+            )
+
     def __str__(self):
-        return f"{self.mecanico.user.username} - {self.dia_semana}"
+        return f"{self.mecanico.user.username} - {self.fecha}"
 
 
 

@@ -6,12 +6,19 @@ from servicios.models import Servicio
 
 class Boleta(models.Model):
     cliente = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-    reserva = models.OneToOneField(Reserva, on_delete=models.CASCADE)
+    reserva = models.OneToOneField(Reserva, on_delete=models.CASCADE, related_name="boleta")
     fecha = models.DateField(auto_now_add=True)
     monto_total = models.PositiveIntegerField(default=0)
 
+    def calcular_total(self):
+        total_servicios = sum([ds.subtotal() for ds in self.detalles_servicios.all()])
+        total_repuestos = sum([dr.subtotal() for dr in self.detalles_repuestos.all()])
+        self.monto_total = total_servicios + total_repuestos
+        self.save()
+
     def __str__(self):
         return f"Boleta #{self.id} - {self.cliente.user.username}"
+
 
 class DetalleBoleta(models.Model):
     boleta = models.ForeignKey(Boleta, on_delete=models.CASCADE, related_name='detalles_repuestos')
