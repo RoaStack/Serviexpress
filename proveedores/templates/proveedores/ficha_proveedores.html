@@ -1,40 +1,39 @@
-<!doctype html>
-<html lang="es">
-<head>
-  <meta charset="utf-8">
-  <title>Proveedores</title>
-</head>
-<body style="background-color:#f8f9fa; font-family:Arial, sans-serif;">
+{% extends 'base.html' %}
+{% load static %}
 
-  <!-- Encabezado -->
-  <h1 style="text-align:center; color:#003366;">Proveedores</h1>
+{% block title %}Proveedores{% endblock %}
 
-  <!-- Navegación -->
-  <div style="text-align:center; margin-bottom:15px;">
-    <a href="/" style="color:#007bff; text-decoration:none; margin-right:10px;">Inicio</a> |
-    <a href="/admin/" style="color:#007bff; text-decoration:none; margin-left:10px;">Panel Admin</a>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'usuarios/css/admin.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="text-center">
+    <h2 class="dashboard-title">Proveedores</h2>
+    <p class="dashboard-subtitle">Listado y gestión de proveedores.</p>
   </div>
 
-  <!-- Botón para agregar proveedor -->
-  <div style="text-align:center; margin-bottom:20px;">
-    {% if request.user.is_authenticated %}
-      <a href="{% url 'proveedores:crear' %}"
-          style="background-color:#0a6; color:white; padding:8px 12px; border-radius:5px; text-decoration:none; font-weight:bold;">
-          ➕ Agregar Proveedor
-      </a>
-    {% else %}
-      <a href="/accounts/login/" style="color:#07c;">Inicia sesión para agregar proveedores</a>
-    {% endif %}
-  </div>
+  {% include 'includes/messages.html' %}
 
-  <!-- Total de proveedores -->
-  <p style="text-align:center;">Cantidad de Proveedores: <b>{{ proveedores|length }}</b></p>
+  <!-- Botón crear: solo admin -->
+<div class="text-center my-3">
+  {% if request.user.is_staff or request.user.is_superuser %}
+    <a href="{% url 'proveedores:crear' %}"
+        class="btn fw-semibold"
+        style="background-color:#ff9800; color:#fff; border:none; font-weight:600;">
+          Agregar Proveedor
+    </a>
+  {% endif %}
+</div>
 
-  <!-- Contenedor principal -->
-  <div style="display:flex; justify-content:center;">
-    <table border="1" cellpadding="8" cellspacing="0"
-  ="border-collapse:collapse; background-color:white; text-align:center; width:80%; max-width:800px;">
-      <thead style="background-color:#003366; color:white;">
+
+
+  <p class="text-center text-muted">Cantidad de Proveedores: <b>{{ proveedores|length }}</b></p>
+
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered align-middle">
+      <thead class="table-dark">
         <tr>
           <th>ID</th>
           <th>Nombre</th>
@@ -42,6 +41,9 @@
           <th>Teléfono</th>
           <th>Correo</th>
           <th>Dirección</th>
+          {% if request.user.is_staff or request.user.is_superuser %}
+          <th style="width:160px;">Acciones</th>
+          {% endif %}
         </tr>
       </thead>
       <tbody>
@@ -50,27 +52,26 @@
           <td>{{ p.id }}</td>
           <td><b>{{ p.nombre }}</b></td>
           <td>{{ p.rut }}</td>
-          <td><a href="tel:{{ p.telefono }}" style="color:#006400; text-decoration:none;">{{ p.telefono }}</a></td>
-          <td><a href="mailto:{{ p.correo }}" style="color:#800000; text-decoration:none;">{{ p.correo }}</a></td>
+          <td><a href="tel:{{ p.telefono }}">{{ p.telefono }}</a></td>
+          <td><a href="mailto:{{ p.correo }}">{{ p.correo }}</a></td>
           <td>{{ p.direccion }}</td>
+
+          {% if request.user.is_staff or request.user.is_superuser %}
+          <td>
+            <a href="{% url 'proveedores:editar' p.id %}" class="btn btn-sm btn-outline-primary">Editar</a>
+            <a href="{% url 'proveedores:eliminar' p.id %}" class="btn btn-sm btn-outline-danger">Eliminar</a>
+          </td>
+          {% endif %}
         </tr>
         {% empty %}
         <tr>
-          <td colspan="6" style="color:#999; padding:15px;">No hay proveedores registrados.</td>
+          <td colspan="{% if request.user.is_staff or request.user.is_superuser %}7{% else %}6{% endif %}"
+              class="text-center text-muted py-3">No hay proveedores registrados.</td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
-
-  <!-- Pie -->
-  <p style="text-align:center; margin-top:20px; color:#555;">
-    Sistema de Gestión Taller Mecánico SERVIEXPRESS © 2025
-  </p>
-
-</body>
-</html>
-
-
-
+</div>
+{% endblock %}
 

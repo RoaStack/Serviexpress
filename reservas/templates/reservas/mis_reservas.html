@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% block title %}Mis Reservas{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4">📅 Mis Reservas</h2>
+
+{% if reservas %}
+  <table class="table table-striped align-middle text-center">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Fecha</th>
+        <th>Hora</th>
+        <th>Servicios</th>
+        <th>Auto</th>
+        <th>Estado</th>
+
+        {% if es_mecanico or es_admin %}
+          <th>Cliente</th>
+        {% endif %}
+        
+        <th>Mecánico asignado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for reserva in reservas %}
+      <tr>
+        <td>{{ reserva.id }}</td>
+        <td>{{ reserva.fecha }}</td>
+        <td>{{ reserva.hora }}</td>
+        <td>
+          {% for s in reserva.servicios.all %}
+            <span class="badge text-bg-info">{{ s.nombre }}</span>
+          {% empty %}
+            <span class="text-muted">Sin servicios</span>
+          {% endfor %}
+        </td>
+        <td>{{ reserva.marca_auto }} {{ reserva.modelo_auto }} ({{ reserva.anio }})</td>
+        <td>
+          {% if reserva.estado == 'pendiente' %}
+            <span class="badge text-bg-warning">Pendiente</span>
+          {% elif reserva.estado == 'en_proceso' %}
+            <span class="badge text-bg-primary">En proceso</span>
+          {% elif reserva.estado == 'finalizada' %}
+            <span class="badge text-bg-success">Finalizada</span>
+          {% elif reserva.estado == 'cancelada' %}
+            <span class="badge text-bg-secondary">Cancelada</span>
+          {% endif %}
+        </td>
+
+        {% if es_mecanico or es_admin %}
+          <td>{{ reserva.cliente.user.get_full_name|default:reserva.cliente.user.username }}</td>
+        {% endif %}
+
+        <td>
+          {% if reserva.mecanico %}
+            {{ reserva.mecanico.user.get_full_name|default:reserva.mecanico.user.username }}
+          {% else %}
+            <span class="text-muted">No asignado</span>
+          {% endif %}
+        </td>
+
+        {% if es_mecanico or es_admin %}
+          <td>
+            <div class="dropdown">
+              <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                Cambiar estado
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{% url 'reservas:cambiar_estado_reserva' reserva.id 'pendiente' %}">Pendiente</a></li>
+                <li><a class="dropdown-item" href="{% url 'reservas:cambiar_estado_reserva' reserva.id 'en_proceso' %}">En proceso</a></li>
+                <li><a class="dropdown-item" href="{% url 'reservas:cambiar_estado_reserva' reserva.id 'finalizada' %}">Finalizar</a></li>
+                <li><a class="dropdown-item text-danger" href="{% url 'reservas:cambiar_estado_reserva' reserva.id 'cancelada' %}">Cancelar</a></li>
+              </ul>
+            </div>
+          </td>
+
+        {% elif es_cliente %}
+          <td>
+            {% if reserva.estado == 'pendiente' %}
+              <a href="{% url 'reservas:cancelar_reserva' reserva.id %}" class="btn btn-danger btn-sm">Cancelar</a>
+            {% elif reserva.estado == 'finalizada' %}
+              {% if reserva.boleta %}
+                <a href="{% url 'boletas:detalle_boleta' reserva.boleta.id %}" class="btn btn-primary btn-sm">
+                  🧾 Ver Boleta
+                </a>
+              {% else %}
+                <span class="text-muted small">Boleta no disponible</span>
+              {% endif %}
+            {% else %}
+              <span class="text-muted">Sin acciones</span>
+            {% endif %}
+          </td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <div class="alert alert-info text-center">
+    No tienes reservas registradas.
+  </div>
+{% endif %}
+
+{% if es_cliente %}
+  <div class="d-flex justify-content-end">
+    <a href="{% url 'reservas:crear_reserva' %}" class="btn btn-success">+ Nueva Reserva</a>
+  </div>
+{% endif %}
+{% endblock %}

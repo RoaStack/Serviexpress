@@ -17,13 +17,13 @@
     <div class="card">
       <h5>Reservar hora</h5>
       <p>Agenda una cita para el servicio de tu vehículo de manera rápida y sencilla.</p>
-      <a href="#" class="btn btn-client-primary">Reservar</a>
+      <a href="{% url 'reservas:crear_reserva' %}" class="btn btn-client-primary">Reservar</a>
     </div>
 
     <div class="card">
       <h5>Mis reservas</h5>
       <p>Consulta tus reservas activas, su estado y los detalles de tus citas.</p>
-      <a href="#" class="btn btn-client-info">Ver reservas</a>
+      <a href="{% url 'reservas:mis_reservas' %}" class="btn btn-client-info">Ver reservas</a>
     </div>
 
     <div class="card">
