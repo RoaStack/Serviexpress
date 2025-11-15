@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.shortcuts import render
+from django.utils import timezone
 from django.template.loader import render_to_string
 from django.views.decorators.csrf import csrf_exempt
 from .models import Repuesto, Carrito, ItemCarrito
@@ -113,5 +113,6 @@ def generar_comprobante(request):
     return render(request, 'comprobante.html', {
         'items': items_para_comprobante,
         'total': total,
-        'usuario': request.user
+        'usuario': request.user,
+        'fecha': timezone.now(),
     })
