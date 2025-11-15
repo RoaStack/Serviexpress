@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
-from django.shortcuts import render
 from .models import Repuesto
 from .forms import RepuestoForm
+
 
 # Helper para restringir solo a administradores
 def es_admin(user):
@@ -28,3 +28,4 @@ def registrar_repuesto(request):
 def listar_repuestos(request):
     repuestos = Repuesto.objects.all()
     return render(request, 'listar_repuestos.html', {'repuestos': repuestos})
+
