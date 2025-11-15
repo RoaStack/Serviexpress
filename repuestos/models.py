@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Repuesto(models.Model):
     descripcion = models.CharField(max_length=200)
     marca = models.CharField(max_length=100)
@@ -10,3 +11,4 @@ class Repuesto(models.Model):
 
     def __str__(self):
         return self.descripcion
+
