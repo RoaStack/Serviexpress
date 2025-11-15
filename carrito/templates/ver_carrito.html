@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h2>🛒 Tu Carrito</h2>
+
+  {% if carrito.items.all %}
+    <table class="table table-striped mt-3">
+      <thead>
+        <tr>
+          <th>Repuesto</th>
+          <th>Cantidad</th>
+          <th>Precio unitario</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in carrito.items.all %}
+        <tr>
+          <td>{{ item.repuesto.descripcion }}</td>
+          <td>{{ item.cantidad }}</td>
+          <td>${{ item.repuesto.precio_venta }}</td>
+          <td>${{ item.subtotal }}</td>
+        </tr>
+        {% endfor %}
+        <tr class="table-success">
+          <td colspan="3" class="text-end"><strong>Total:</strong></td>
+          <td><strong>${{ carrito.total }}</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="d-flex gap-2 mt-3">
+      <!-- Botón volver -->
+      <a href="{% url 'ecommerce:ver_repuestos' %}" class="btn btn-secondary">
+        ⬅️ Volver a los repuestos
+      </a>
+
+      <!-- Botón vaciar -->
+      <form method="post" action="{% url 'ecommerce:vaciar_carrito' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">
+          🗑️ Vaciar carrito
+        </button>
+      </form>
+    </div>
+
+  {% else %}
+    <div class="alert alert-info mt-4 text-center">
+      <h5>📭 Tu carrito está vacío.</h5>
+      <a href="{% url 'repuestos:ver_repuestos' %}" class="btn btn-primary mt-3">
+        🔩 Ver repuestos
+      </a>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
+
+

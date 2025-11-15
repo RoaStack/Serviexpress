@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- 🛒 Botón flotante del carrito con contador -->
+<div class="position-fixed top-2 end-0 mt-3 me-4 z-3" style="margin-top:70px;">
+  <button class="btn btn-primary rounded-circle shadow position-relative"
+          style="width:60px; height:60px;"
+          type="button" data-bs-toggle="offcanvas"
+          data-bs-target="#carritoOffcanvas" aria-controls="carritoOffcanvas">
+    🛒
+    <!-- 🔴 Indicador de cantidad -->
+    <span id="cart-badge"
+          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+          style="font-size: 0.75rem; display: none;">
+      0
+    </span>
+  </button>
+</div>
+
+<div class="container mt-4">
+  <h2 class="mb-4 text-center">🔩 Nuestros Repuestos</h2>
+
+  <div class="row g-4">
+    {% for repuesto in repuestos %}
+    <div class="col-sm-6 col-md-4 col-lg-3">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title text-primary">{{ repuesto.descripcion }}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{ repuesto.marca }}</h6>
+          <p><strong>💲 Precio:</strong> ${{ repuesto.precio_venta }}</p>
+          <p><strong>📦 Stock:</strong> {{ repuesto.stock }}</p>
+
+          <form class="form-agregar" data-id="{{ repuesto.id }}">
+            {% csrf_token %}
+            <div class="input-group mt-2">
+              <input type="number" name="cantidad" value="1" min="1" class="form-control text-center">
+              <button type="submit" class="btn btn-success">➕ Agregar al carrito</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- 🛍️ Offcanvas Carrito -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="carritoOffcanvas" aria-labelledby="carritoLabel">
+  <div class="offcanvas-header bg-light border-bottom">
+    <h5 id="carritoLabel">🛒 Carrito de Compras</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+  </div>
+  <div class="offcanvas-body" id="carrito-detalle">
+    <!-- Aquí se cargará el detalle del carrito -->
+    <div class="text-center text-muted">Cargando...</div>
+  </div>
+</div>
+
+<script>
+// 🔹 Actualiza el contador (badge rojo del carrito)
+function actualizarIndicador(items) {
+  const badge = document.getElementById('cart-badge');
+  if (items > 0) {
+    badge.textContent = items;
+    badge.style.display = 'inline';
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+// 🔹 Cargar el detalle del carrito y actualizar contador
+function cargarCarrito() {
+  fetch("{% url 'ecommerce:detalle_carrito_ajax' %}")
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById('carrito-detalle').innerHTML = data.html;
+
+      // Contar número total de ítems (sumando cantidades)
+      const filas = document.querySelectorAll('#carrito-detalle tbody tr');
+      let totalItems = 0;
+      filas.forEach(fila => {
+        const cantidadCelda = fila.children[1];
+        if (cantidadCelda) {
+          const valor = parseInt(cantidadCelda.textContent);
+          if (!isNaN(valor)) totalItems += valor;
+        }
+      });
+      actualizarIndicador(totalItems);
+    });
+}
+
+// 🔹 Vaciar carrito (AJAX)
+function vaciarCarrito() {
+  fetch("{% url 'ecommerce:vaciar_carrito' %}", {
+    method: 'POST',
+    headers: {
+      'X-CSRFToken': getCSRFToken(),
+      'X-Requested-With': 'XMLHttpRequest'
+    }
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      cargarCarrito(); // refresca el carrito
+    }
+  });
+}
+
+// 🔹 Obtener el token CSRF desde las cookies
+function getCSRFToken() {
+  const cookieValue = document.cookie
+    .split('; ')
+    .find(row => row.startsWith('csrftoken='));
+  return cookieValue ? cookieValue.split('=')[1] : '';
+}
+
+// 🔹 Escuchar clic en “Vaciar carrito”
+document.addEventListener('click', function (e) {
+  if (e.target && e.target.id === 'vaciar-btn') {
+    e.preventDefault();
+    if (confirm('¿Seguro que deseas vaciar el carrito? 🗑️')) {
+      vaciarCarrito();
+    }
+  }
+});
+
+// 🔹 Inicialización de eventos
+document.addEventListener('DOMContentLoaded', () => {
+  // Cargar detalle al abrir el carrito
+  const offcanvasEl = document.getElementById('carritoOffcanvas');
+  offcanvasEl.addEventListener('show.bs.offcanvas', cargarCarrito);
+
+  // Manejar agregar al carrito por AJAX
+  document.querySelectorAll('.form-agregar').forEach(form => {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const repuestoId = this.dataset.id;
+      const cantidad = this.querySelector('input[name="cantidad"]').value;
+      const csrftoken = this.querySelector('[name=csrfmiddlewaretoken]').value;
+
+      fetch(`/ecommerce/carrito/agregar_ajax/${repuestoId}/`, {
+        method: 'POST',
+        headers: {'X-CSRFToken': csrftoken, 'X-Requested-With': 'XMLHttpRequest'},
+        body: new URLSearchParams({cantidad: cantidad})
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          cargarCarrito(); // 🔄 actualizar offcanvas si está abierto
+          actualizarIndicador(data.items); // 🔴 actualizar el número del badge
+        }
+      });
+    });
+  });
+
+  // Cargar contador inicial
+  cargarCarrito();
+});
+</script>
+{% endblock %}
+
+
+

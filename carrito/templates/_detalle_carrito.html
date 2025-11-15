@@ -1,0 +1,36 @@
+{% if carrito.items.all %}
+  <table class="table table-sm align-middle">
+    <thead>
+      <tr>
+        <th>Producto</th>
+        <th>Cant.</th>
+        <th>Precio</th>
+        <th>Subtotal</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in carrito.items.all %}
+      <tr>
+        <td>{{ item.repuesto.descripcion }}</td>
+        <td>{{ item.cantidad }}</td>
+        <td>${{ item.repuesto.precio_venta }}</td>
+        <td>${{ item.subtotal }}</td>
+      </tr>
+      {% endfor %}
+      <tr class="table-success">
+        <td colspan="3" class="text-end"><strong>Total:</strong></td>
+        <td><strong>${{ carrito.total }}</strong></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="d-flex justify-content-between mt-3">
+    <a href="{% url 'ecommerce:generar_comprobante' %}" class="btn btn-primary w-50 me-2">
+      💳 Comprar
+    </a>
+    <button id="vaciar-btn" class="btn btn-danger w-50">🗑️ Vaciar</button>
+  </div>
+{% else %}
+  <div class="alert alert-info text-center">📭 Tu carrito está vacío.</div>
+{% endif %}
+
+

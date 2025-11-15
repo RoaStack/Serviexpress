@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-4">
+  <div class="card shadow p-4">
+
+    <h2 class="text-center mb-4">🧾 Comprobante de Compra</h2>
+
+    <p><strong>Cliente:</strong> {{ usuario.username }}</p>
+    <p><strong>Fecha:</strong> {{ now|date:"d/m/Y H:i" }}</p>
+    <hr>
+
+    <table class="table table-bordered mt-3">
+      <thead class="table-light">
+        <tr>
+          <th>Repuesto</th>
+          <th>Cantidad</th>
+          <th>Precio</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for item in items %}
+        <tr>
+          <td>{{ item.repuesto.descripcion }}</td>
+          <td>{{ item.cantidad }}</td>
+          <td>${{ item.repuesto.precio_venta }}</td>
+          <td>${{ item.subtotal }}</td>
+        </tr>
+        {% endfor %}
+        <tr class="table-success">
+          <td colspan="3" class="text-end"><strong>Total:</strong></td>
+          <td><strong>${{ total }}</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="d-flex justify-content-end mt-4">
+      <a href="{% url 'ecommerce:ver_repuestos' %}" class="btn btn-primary">
+        ⬅️ Volver a la tienda
+      </a>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
