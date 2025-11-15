@@ -1,0 +1,277 @@
+/* ===== Ajuste principal del main para ocupar toda la pantalla ===== */
+.full-width-main {
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+/* ===== HERO SECTION ===== */
+.hero-section {
+    width: 100%;
+    height: 100vh;
+    background: url("/static/img/home/hero.jpg") center/cover no-repeat;
+    position: relative;
+}
+
+.hero-overlay {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.35);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+}
+
+.hero-title {
+    font-size: 6rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+    font-size: 1.6rem;
+    margin-bottom: 2rem;
+}
+
+.hero-btn {
+    padding: 12px 28px;
+    background: #4A6CFF;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.hero-btn:hover {
+    background: #3a55d8;
+}
+
+/* ===== ABOUT ===== */
+.about-section {
+    width: 100%;
+    padding: 100px 10%;
+}
+
+.about-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.about-img img {
+    width: 85%;
+    max-height: 420px;
+    object-fit: cover;
+    border-radius: 18px;
+    display: block;
+    margin: 0 auto; /* centra */
+}
+
+
+.about-text h2 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+}
+
+.about-text p {
+    font-size: 1.1rem;
+    color: #444;
+    margin-bottom: 15px;
+}
+
+/* ===== SERVICIOS (MEJORADO) ===== */
+.services-section {
+    width: 100%;
+    background: #000;
+    color: #fff;
+    padding: 120px 6%;
+}
+
+.services-title {
+    font-size: 3.2rem;
+    font-weight: 800;
+    margin-bottom: 50px;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+}
+
+.service-card {
+    background: #111;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    transition: all 0.35s ease;
+    cursor: pointer;
+    border: 1px solid #222;
+}
+
+/* Efecto hover pro */
+.service-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.55);
+    border-color: #4A6CFF;
+}
+
+/* Imagen */
+.service-card img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+}
+
+/* Texto */
+.service-card h3 {
+    font-size: 1.6rem;
+    margin: 18px 18px 8px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.service-card p {
+    color: #cfcfcf;
+    margin: 0 18px 25px;
+    font-size: 1rem;
+    line-height: 1.45;
+}
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+    .services-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 650px) {
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ===== TESTIMONIOS ===== */
+.testimonials-section {
+    width: 100%;
+    padding: 120px 10%;
+    background: #f7f7f7;
+}
+
+.testimonials-section h2 {
+    font-size: 2.6rem;
+    font-weight: 800;
+    margin-bottom: 40px;
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+}
+
+.testimonial img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.testimonial h4 {
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+
+/* ===== CONTACT SECTION ===== */
+.contact-section {
+    width: 100%;
+    padding: 140px 8%;
+    background: url("/static/img//home/MecanicoIMG.png") center/cover no-repeat;
+    color: white;
+    position: relative;
+}
+
+.contact-overlay {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.55);
+    padding: 70px;
+    border-radius: 10px;
+}
+
+.contact-overlay h2 {
+    font-size: 2.8rem;
+    font-weight: 800;
+    margin-bottom: 40px;
+}
+
+.contact-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.contact-grid h4 {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.contact-grid p {
+    margin: 0;
+    font-size: 1rem;
+}
+
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 992px) {
+    .about-content {
+        grid-template-columns: 1fr;
+    }
+
+    .testimonials-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .services-grid {
+        flex-direction: column;
+    }
+
+    .hero-title {
+        font-size: 4rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-title {
+        font-size: 3rem;
+    }
+
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-grid {
+        flex-direction: column;
+    }
+}
+.full-width-main {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100%;
+    max-width: 100%;
+}
+.contact-section {
+    width: 100%;
+    display: block;
+    margin: 0;
+    padding: 120px 0;
+    background-size: cover;
+}
