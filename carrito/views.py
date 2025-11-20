@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.utils import timezone
 from django.template.loader import render_to_string
@@ -7,19 +7,25 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import Repuesto, Carrito, ItemCarrito
 from django.http import JsonResponse
 
+def es_cliente(user):
+    return user.is_authenticated and user.groups.filter(name='Clientes').exists()
+
 
 @login_required
+@user_passes_test(es_cliente)
 def ver_repuestos(request):
     repuestos = Repuesto.objects.all()
     return render(request, 'ver_repuestos.html', {'repuestos': repuestos})
 
 
 @login_required
+@user_passes_test(es_cliente)
 def ver_carrito(request):
     carrito, _ = Carrito.objects.get_or_create(usuario=request.user)
     return render(request, 'ver_carrito.html', {'carrito': carrito})
 
 @login_required
+@user_passes_test(es_cliente)
 def agregar_al_carrito(request, repuesto_id):
     repuesto = get_object_or_404(Repuesto, id=repuesto_id)
     cantidad = int(request.POST.get('cantidad', 1))
@@ -38,6 +44,7 @@ def agregar_al_carrito(request, repuesto_id):
 
 
 @login_required
+@user_passes_test(es_cliente)
 def agregar_al_carrito_ajax(request, repuesto_id):
     if request.method == "POST":
         repuesto = get_object_or_404(Repuesto, id=repuesto_id)
@@ -64,6 +71,7 @@ def agregar_al_carrito_ajax(request, repuesto_id):
 
 
 @login_required
+@user_passes_test(es_cliente)
 def detalle_carrito_ajax(request):
     carrito, _ = Carrito.objects.get_or_create(usuario=request.user)
     html = render_to_string('_detalle_carrito.html', {'carrito': carrito})
@@ -71,6 +79,7 @@ def detalle_carrito_ajax(request):
 
 
 @login_required
+@user_passes_test(es_cliente)
 def vaciar_carrito(request):
     carrito, _ = Carrito.objects.get_or_create(usuario=request.user)
     carrito.items.all().delete()
@@ -82,6 +91,7 @@ def vaciar_carrito(request):
     return redirect('ecommerce:ver_repuestos')
 
 @login_required
+@user_passes_test(es_cliente)
 def generar_comprobante(request):
     carrito, _ = Carrito.objects.get_or_create(usuario=request.user)
 
@@ -89,13 +99,13 @@ def generar_comprobante(request):
         messages.warning(request, "Tu carrito está vacío, no puedes generar un comprobante.")
         return redirect('repuestos:ver_repuestos')
 
-    # 🔸 Primero validamos que haya stock suficiente
+    # Primero validamos que haya stock suficiente
     for item in carrito.items.all():
         if item.cantidad > item.repuesto.stock:
             messages.error(request, f"No hay stock suficiente de: {item.repuesto.descripcion}")
             return redirect('ecommerce:ver_carrito')
 
-    # 🔸 Descontar stock de cada repuesto
+    # Descontar stock de cada repuesto
     for item in carrito.items.all():
         repuesto = item.repuesto
         repuesto.stock -= item.cantidad
@@ -103,13 +113,13 @@ def generar_comprobante(request):
 
     total = carrito.total
 
-    # 🔸 Guardar datos para mostrar en el comprobante ANTES de vaciar el carrito
+    # Guardar datos para mostrar en el comprobante ANTES de vaciar el carrito
     items_para_comprobante = list(carrito.items.all())  
 
-    # 🔸 Vaciar carrito después de la compra
+    # Vaciar carrito después de la compra
     carrito.items.all().delete()
 
-    # 🔸 Enviar datos al template
+    # Enviar datos al template
     return render(request, 'comprobante.html', {
         'items': items_para_comprobante,
         'total': total,
