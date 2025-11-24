@@ -7,6 +7,7 @@ class OrdenPedido(models.Model):
     fecha = models.DateField(auto_now_add=True)
     proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE)
     mecanico = models.ForeignKey(Usuario, on_delete=models.SET_NULL, null=True, related_name='ordenes_creadas')
+    fecha_creacion = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
         return f"Orden #{self.id} - {self.proveedor.nombre}"
