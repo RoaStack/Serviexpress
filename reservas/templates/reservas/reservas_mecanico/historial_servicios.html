@@ -1,11 +1,19 @@
 {% extends 'base.html' %}
-{% block title %}Servicios Realizados{% endblock %}
+{% block title %}Historial de Servicios{% endblock %}
 
 {% block content %}
-<h2 class="mb-4 text-center">🧾 Servicios Realizados</h2>
+
+<!-- 🔙 Botón de regreso al dashboard del mecánico -->
+<div class="mb-3">
+    <a href="{% url 'usuarios:dashboard' %}" class="btn btn-secondary">
+        ← Volver al Panel
+    </a>
+</div>
+
+<h2 class="mb-4 text-center">📜 Historial de Servicios Finalizados</h2>
 
 {% if reservas %}
-  <table class="table table-striped align-middle text-center shadow-sm">
+  <table class="table table-striped align-middle text-center">
     <thead class="table-dark">
       <tr>
         <th>ID</th>
@@ -13,7 +21,8 @@
         <th>Hora</th>
         <th>Servicios</th>
         <th>Auto</th>
-        <th>Mecánico</th>
+        <th>Cliente</th>
+        <th>Estado</th>
         <th>Boleta</th>
       </tr>
     </thead>
@@ -23,6 +32,7 @@
         <td>{{ r.id }}</td>
         <td>{{ r.fecha }}</td>
         <td>{{ r.hora }}</td>
+
         <td>
           {% for s in r.servicios.all %}
             <span class="badge text-bg-info">{{ s.nombre }}</span>
@@ -30,12 +40,20 @@
             <span class="text-muted">Sin servicios</span>
           {% endfor %}
         </td>
+
         <td>{{ r.marca_auto }} {{ r.modelo_auto }} ({{ r.anio }})</td>
-        <td>{{ r.mecanico.user.get_full_name|default:"No asignado" }}</td>
+
+        <td>{{ r.cliente.user.get_full_name|default:r.cliente.user.username }}</td>
+
+        <td>
+          <span class="badge text-bg-success">{{ r.get_estado_display }}</span>
+        </td>
+
         <td>
           {% if r.boleta %}
-            <a href="{% url 'boletas:detalle_boleta' r.boleta.id %}" class="btn btn-outline-primary btn-sm">
-              Ver Boleta
+            <a href="{% url 'boletas:detalle_boleta' r.boleta.id %}"
+               class="btn btn-outline-primary btn-sm">
+              🧾 Ver Boleta
             </a>
           {% else %}
             <span class="text-muted small">No generada</span>
@@ -45,9 +63,11 @@
       {% endfor %}
     </tbody>
   </table>
+
 {% else %}
   <div class="alert alert-info text-center">
-    No tienes servicios finalizados aún.
+    No tienes servicios finalizados registrados.
   </div>
 {% endif %}
+
 {% endblock %}

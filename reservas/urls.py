@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 
 app_name = "reservas"
+app_name = "reservas"
 
 urlpatterns = [
     path("nueva/", views.crear_reserva, name="crear_reserva"),
@@ -20,5 +21,9 @@ urlpatterns = [
 
     # 🔹 Vista del cliente: servicios finalizados
     path("servicios_realizados/", views.servicios_realizados_cliente, name="servicios_realizados_cliente"),
+
+    # Admin genera disponibilidades masivas
+    path("admin/disponibilidades/masivas/", views.crear_disponibilidades_masivas, name="crear_disponibilidades_masivas"),
+
 ]
 

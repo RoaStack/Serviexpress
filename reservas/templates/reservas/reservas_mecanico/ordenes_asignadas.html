@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
-{% block title %}Historial de Servicios{% endblock %}
+{% block title %}Órdenes Asignadas{% endblock %}
 
 {% block content %}
-<h2 class="mb-4 text-center">📜 Historial de Servicios Finalizados</h2>
+<h2 class="mb-4 text-center">🧰 Órdenes Asignadas</h2>
 
 {% if reservas %}
   <table class="table table-striped align-middle text-center">
@@ -14,7 +14,7 @@
         <th>Servicios</th>
         <th>Auto</th>
         <th>Cliente</th>
-        <th>Estado</th>
+        <th>Acción</th>
       </tr>
     </thead>
     <tbody>
@@ -33,7 +33,10 @@
         <td>{{ r.marca_auto }} {{ r.modelo_auto }} ({{ r.anio }})</td>
         <td>{{ r.cliente.user.get_full_name|default:r.cliente.user.username }}</td>
         <td>
-          <span class="badge text-bg-success">{{ r.get_estado_display }}</span>
+          <a href="{% url 'reservas:actualizar_estado_mecanico' r.id 'en_proceso' %}"
+            class="btn btn-primary btn-sm">
+            Iniciar servicio
+          </a>
         </td>
       </tr>
       {% endfor %}
@@ -41,7 +44,7 @@
   </table>
 {% else %}
   <div class="alert alert-info text-center">
-    No tienes servicios finalizados registrados.
+    No tienes órdenes asignadas pendientes.
   </div>
 {% endif %}
 {% endblock %}
