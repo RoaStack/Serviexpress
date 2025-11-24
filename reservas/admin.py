@@ -21,14 +21,40 @@ class DisponibilidadAdminForm(forms.ModelForm):
 # ============================================================
 # 🔹 ADMIN DISPONIBILIDAD
 # ============================================================
+# ============================================================
+# 🔹 ADMIN DISPONIBILIDAD
+# ============================================================
 @admin.register(Disponibilidad)
 class DisponibilidadAdmin(admin.ModelAdmin):
     form = DisponibilidadAdminForm
-    list_display = ('mecanico', 'dia_semana', 'hora_inicio', 'hora_termino', 'colacion_inicio', 'colacion_termino', 'activo')
-    list_filter = ('dia_semana', 'activo')
-    search_fields = ('mecanico__user__username',)
-    ordering = ('mecanico', 'dia_semana')
+
+    list_display = (
+        'mecanico',
+        'fecha',
+        'hora_inicio',
+        'hora_termino',
+        'colacion_inicio',
+        'colacion_termino',
+        'activo',
+    )
+
+    list_filter = (
+        'fecha',
+        'mecanico',
+        'activo',
+    )
+
+    search_fields = (
+        'mecanico__user__username',
+    )
+
+    ordering = (
+        'fecha',
+        'hora_inicio',
+    )
+
     list_per_page = 20
+
 
 
 # ============================================================
