@@ -39,7 +39,15 @@ class Reserva(models.Model):
         ('cancelada', 'Cancelada'),
     ]
 
+    ESTADOS = [
+        ('pendiente', 'Pendiente'),
+        ('en_proceso', 'En proceso'),
+        ('finalizada', 'Finalizada'),
+        ('cancelada', 'Cancelada'),
+    ]
+
     cliente = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='reservas_cliente')
+    mecanico = models.ForeignKey(Usuario, on_delete=models.SET_NULL, null=True, blank=True, related_name='reservas_mecanico')
     mecanico = models.ForeignKey(Usuario, on_delete=models.SET_NULL, null=True, blank=True, related_name='reservas_mecanico')
     servicios = models.ManyToManyField(Servicio, related_name='reservas')
     descripcion = models.TextField()
@@ -52,13 +60,30 @@ class Reserva(models.Model):
     # 🔹 Asociación (opcional) a una disponibilidad concreta
     disponibilidad = models.ForeignKey(Disponibilidad, on_delete=models.SET_NULL, null=True, blank=True, related_name="reservas")
 
+
+    # 🔹 Nuevo campo opcional: bloque horario de la reserva
+    bloque_inicio = models.TimeField(null=True, blank=True)
+
+    # 🔹 Asociación (opcional) a una disponibilidad concreta
+    disponibilidad = models.ForeignKey(Disponibilidad, on_delete=models.SET_NULL, null=True, blank=True, related_name="reservas")
+
     marca_auto = models.CharField(max_length=50)
     modelo_auto = models.CharField(max_length=50)
     anio = models.IntegerField()
     estado = models.CharField(max_length=20, choices=ESTADOS, default='pendiente')
+    estado = models.CharField(max_length=20, choices=ESTADOS, default='pendiente')
 
     def __str__(self):
         return f"Reserva #{self.id} - {self.cliente.user.username}"
+
+    # 🔧 Método auxiliar para saber si la reserva está dentro del horario del mecánico
+    def dentro_de_horario(self):
+        if not self.disponibilidad:
+            return False
+        return (
+            self.disponibilidad.hora_inicio <= self.hora < self.disponibilidad.hora_termino
+            and not (self.disponibilidad.colacion_inicio <= self.hora < self.disponibilidad.colacion_termino)
+        )
 
     # 🔧 Método auxiliar para saber si la reserva está dentro del horario del mecánico
     def dentro_de_horario(self):
