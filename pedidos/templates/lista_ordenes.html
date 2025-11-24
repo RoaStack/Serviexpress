@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">Mis Órdenes de Pedido</h3>
+        </div>
+
+        <div class="card-body">
+
+            {% if ordenes %}
+            
+                <table class="table table-hover table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Proveedor</th>
+                            <th>Fecha</th>
+                            <th>Total</th>
+                            <th>Detalles</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for orden in ordenes %}
+                        <tr>
+                            <td>{{ orden.id }}</td>
+                            <td>{{ orden.proveedor.nombre }}</td>
+                            <td>{{ orden.fecha_creacion|date:"d/m/Y H:i" }}</td>
+                            <td>
+                                ${{ orden.monto_total|floatformat:0 }}
+                            </td>
+                            <td>
+                                <a href="{% url 'pedidos:detalle_orden' orden.id %}" 
+                                   class="btn btn-sm btn-info">
+                                    Ver
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            {% else %}
+                <div class="alert alert-warning text-center">
+                    No tienes órdenes de pedido registradas.
+                </div>
+            {% endif %}
+
+            <div class="text-end mt-3">
+                <a href="{% url 'pedidos:crear' %}" class="btn btn-success">
+                    + Crear Nueva Orden
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}
