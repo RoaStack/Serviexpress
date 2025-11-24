@@ -14,7 +14,7 @@
         <th>Servicios</th>
         <th>Auto</th>
         <th>Cliente</th>
-        <th>Acciones</th>
+        <th>Acción</th>
       </tr>
     </thead>
     <tbody>
@@ -32,17 +32,9 @@
         </td>
         <td>{{ r.marca_auto }} {{ r.modelo_auto }} ({{ r.anio }})</td>
         <td>{{ r.cliente.user.get_full_name|default:r.cliente.user.username }}</td>
-        <td class="d-flex justify-content-center gap-2">
-          <!-- 🔩 Botón para registrar repuestos -->
-          <a href="{% url 'reservas:registrar_repuestos_reserva' r.id %}"
-            class="btn btn-outline-warning btn-sm">
-              🔩 Registrar Repuestos
-          </a>
-
-
-          <!-- ✅ Botón para finalizar el servicio -->
+        <td>
           <a href="{% url 'reservas:actualizar_estado_mecanico' r.id 'finalizada' %}"
-             class="btn btn-success btn-sm">
+             class="btn btn-sm btn-success">
              Finalizar servicio
           </a>
         </td>

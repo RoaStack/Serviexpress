@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
-{% block title %}Historial de Servicios{% endblock %}
+{% block title %}Servicios en Proceso{% endblock %}
 
 {% block content %}
-<h2 class="mb-4 text-center">📜 Historial de Servicios Finalizados</h2>
+<h2 class="mb-4 text-center">⚙️ Servicios en Proceso</h2>
 
 {% if reservas %}
   <table class="table table-striped align-middle text-center">
@@ -14,7 +14,7 @@
         <th>Servicios</th>
         <th>Auto</th>
         <th>Cliente</th>
-        <th>Estado</th>
+        <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
@@ -32,8 +32,19 @@
         </td>
         <td>{{ r.marca_auto }} {{ r.modelo_auto }} ({{ r.anio }})</td>
         <td>{{ r.cliente.user.get_full_name|default:r.cliente.user.username }}</td>
-        <td>
-          <span class="badge text-bg-success">{{ r.get_estado_display }}</span>
+        <td class="d-flex justify-content-center gap-2">
+          <!-- 🔩 Botón para registrar repuestos -->
+          <a href="{% url 'reservas:registrar_repuestos_reserva' r.id %}"
+            class="btn btn-outline-warning btn-sm">
+              🔩 Registrar Repuestos
+          </a>
+
+
+          <!-- ✅ Botón para finalizar el servicio -->
+          <a href="{% url 'reservas:actualizar_estado_mecanico' r.id 'finalizada' %}"
+             class="btn btn-success btn-sm">
+             Finalizar servicio
+          </a>
         </td>
       </tr>
       {% endfor %}
@@ -41,7 +52,7 @@
   </table>
 {% else %}
   <div class="alert alert-info text-center">
-    No tienes servicios finalizados registrados.
+    No tienes servicios actualmente en proceso.
   </div>
 {% endif %}
 {% endblock %}

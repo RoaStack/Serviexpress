@@ -3,6 +3,7 @@ from django import forms
 from .models import Reserva, Disponibilidad
 from usuarios.models import Usuario
 
+
 # ============================================================
 # 🔹 FORMULARIO PERSONALIZADO para Disponibilidad
 # ============================================================
@@ -13,21 +14,47 @@ class DisponibilidadAdminForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # ✅ Solo mostrar usuarios que pertenecen al grupo de Mecanicos
+        # ✅ Corregido: el filtro debe apuntar a user__groups
         self.fields['mecanico'].queryset = Usuario.objects.filter(user__groups__name="Mecanicos")
 
 
 # ============================================================
 # 🔹 ADMIN DISPONIBILIDAD
 # ============================================================
+# ============================================================
+# 🔹 ADMIN DISPONIBILIDAD
+# ============================================================
 @admin.register(Disponibilidad)
 class DisponibilidadAdmin(admin.ModelAdmin):
     form = DisponibilidadAdminForm
-    list_display = ('mecanico', 'fecha', 'hora_inicio', 'hora_termino', 'colacion_inicio', 'colacion_termino', 'activo')
-    list_filter = ('activo', 'fecha')
-    search_fields = ('mecanico__user__username',)
-    ordering = ('mecanico', 'fecha')
+
+    list_display = (
+        'mecanico',
+        'fecha',
+        'hora_inicio',
+        'hora_termino',
+        'colacion_inicio',
+        'colacion_termino',
+        'activo',
+    )
+
+    list_filter = (
+        'fecha',
+        'mecanico',
+        'activo',
+    )
+
+    search_fields = (
+        'mecanico__user__username',
+    )
+
+    ordering = (
+        'fecha',
+        'hora_inicio',
+    )
+
     list_per_page = 20
+
 
 
 # ============================================================

@@ -1,8 +1,13 @@
 {% extends 'base.html' %}
+{% load static %}
+
 {% block title %}Nueva Reserva{% endblock %}
 
-{% block content %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/reservas/crear_reserva.css' %}">
+{% endblock %}
 
+{% block content %}
 <div class="card shadow p-4 mt-4">
   <h3 class="mb-4 text-center">🧾 Crear nueva reserva</h3>
 
@@ -16,4 +21,8 @@
     </div>
   </form>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/reservas/crear_reserva.js' %}"></script>
 {% endblock %}
