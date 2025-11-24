@@ -23,6 +23,12 @@
     <!-- Estilos globales -->
     <link rel="stylesheet" href="{% static 'css/global.css' %}">
 
+    <!-- ✅ AGREGADO: Estilos de todos los navbars -->
+    <link rel="stylesheet" href="{% static 'css/navbar/navbar_admin.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar/navbar_cliente.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar/navbar_mecanico.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar/navbar_public.css' %}">
+
     <!-- Estilos específicos (cliente, mecánico o admin) -->
     {% block extra_css %}{% endblock %}
 </head>

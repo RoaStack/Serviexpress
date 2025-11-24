@@ -7,27 +7,6 @@ body {
   min-height: 100vh;
 }
 
-/* ==== NAVBAR ==== */
-.navbar {
-  background-color: #0d1117 !important;
-  border-bottom: 1px solid #30363d;
-}
-
-.navbar .navbar-brand {
-  color: #f0ad4e !important;
-  font-weight: bold;
-}
-
-.navbar .nav-link {
-  color: #fff !important;
-  margin-right: 15px;
-  transition: color 0.3s;
-}
-
-.navbar .nav-link:hover {
-  color: #f0ad4e !important;
-}
-
 /* ==== CONTENEDOR DE DASHBOARD ==== */
 .dashboard-container {
   display: flex;
