@@ -20,5 +20,9 @@ urlpatterns = [
 
     # 🔹 Vista del cliente: servicios finalizados
     path("servicios_realizados/", views.servicios_realizados_cliente, name="servicios_realizados_cliente"),
+
+    # Admin genera disponibilidades masivas
+    path("admin/disponibilidades/masivas/", views.crear_disponibilidades_masivas, name="crear_disponibilidades_masivas"),
+
 ]
 

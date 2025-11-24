@@ -2,11 +2,22 @@
 {% block title %}Cancelar Reserva{% endblock %}
 
 {% block content %}
+
+<!-- 🔙 Botón de regreso al dashboard -->
+<div class="mb-3">
+    <a href="{% url 'usuarios:dashboard' %}" class="btn btn-secondary">
+        ← Volver al Dashboard
+    </a>
+</div>
+
 <div class="card shadow p-4 mt-4">
   <h3 class="text-center mb-4 text-danger">⚠️ Confirmar cancelación</h3>
+
   <p class="text-center">
-    ¿Estás seguro de que deseas cancelar la reserva <strong>#{{ reserva.id }}</strong>
-    del día <strong>{{ reserva.fecha }}</strong> a las <strong>{{ reserva.hora }}</strong>?
+    ¿Estás seguro de que deseas cancelar la reserva
+    <strong>#{{ reserva.id }}</strong>
+    del día <strong>{{ reserva.fecha }}</strong>
+    a las <strong>{{ reserva.hora }}</strong>?
   </p>
 
   <div class="d-flex justify-content-center mt-3">
@@ -17,4 +28,5 @@
     </form>
   </div>
 </div>
+
 {% endblock %}

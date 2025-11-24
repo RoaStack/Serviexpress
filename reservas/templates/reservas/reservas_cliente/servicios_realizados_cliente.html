@@ -1,11 +1,19 @@
 {% extends 'base.html' %}
-{% block title %}Historial de Servicios{% endblock %}
+{% block title %}Servicios Realizados{% endblock %}
 
 {% block content %}
-<h2 class="mb-4 text-center">📜 Historial de Servicios Finalizados</h2>
+
+<!-- 🔙 Botón de regreso al dashboard -->
+<div class="mb-3">
+    <a href="{% url 'usuarios:dashboard' %}" class="btn btn-secondary">
+        ← Volver al Dashboard
+    </a>
+</div>
+
+<h2 class="mb-4 text-center">🧾 Servicios Realizados</h2>
 
 {% if reservas %}
-  <table class="table table-striped align-middle text-center">
+  <table class="table table-striped align-middle text-center shadow-sm">
     <thead class="table-dark">
       <tr>
         <th>ID</th>
@@ -13,8 +21,7 @@
         <th>Hora</th>
         <th>Servicios</th>
         <th>Auto</th>
-        <th>Cliente</th>
-        <th>Estado</th>
+        <th>Mecánico</th>
         <th>Boleta</th>
       </tr>
     </thead>
@@ -32,14 +39,19 @@
           {% endfor %}
         </td>
         <td>{{ r.marca_auto }} {{ r.modelo_auto }} ({{ r.anio }})</td>
-        <td>{{ r.cliente.user.get_full_name|default:r.cliente.user.username }}</td>
+
         <td>
-          <span class="badge text-bg-success">{{ r.get_estado_display }}</span>
+          {% if r.mecanico %}
+            {{ r.mecanico.user.get_full_name|default:r.mecanico.user.username }}
+          {% else %}
+            <span class="text-muted">No asignado</span>
+          {% endif %}
         </td>
+
         <td>
           {% if r.boleta %}
             <a href="{% url 'boletas:detalle_boleta' r.boleta.id %}" class="btn btn-outline-primary btn-sm">
-              🧾 Ver Boleta
+              Ver Boleta
             </a>
           {% else %}
             <span class="text-muted small">No generada</span>
@@ -51,7 +63,8 @@
   </table>
 {% else %}
   <div class="alert alert-info text-center">
-    No tienes servicios finalizados registrados.
+    No tienes servicios finalizados aún.
   </div>
 {% endif %}
+
 {% endblock %}
