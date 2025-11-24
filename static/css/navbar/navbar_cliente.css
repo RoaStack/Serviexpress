@@ -1,0 +1,17 @@
+.navbar-cliente {
+  background-color: #1f6feb !important;
+  border-bottom: 2px solid #1554b3;
+}
+
+.navbar-cliente .navbar-brand {
+  color: #ffffff !important;
+}
+
+.navbar-cliente .nav-link {
+  color: #ffffff !important;
+  transition: color 0.3s;
+}
+
+.navbar-cliente .nav-link:hover {
+  color: #ffd43b !important;
+}

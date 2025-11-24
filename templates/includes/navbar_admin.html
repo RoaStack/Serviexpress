@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark shadow-sm" style="background-color: #0d1117; border-bottom: 1px solid #30363d;">
+<nav class="navbar navbar-expand-lg navbar-admin">
   <div class="container">
     <a class="navbar-brand text-warning fw-bold" href="#">🧑‍💼 ServiExpress Admin</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarAdmin" aria-controls="navbarAdmin" aria-expanded="false" aria-label="Toggle navigation">
@@ -8,19 +8,19 @@
     <div class="collapse navbar-collapse" id="navbarAdmin">
       <ul class="navbar-nav ms-auto align-items-center">
         <li class="nav-item">
-          <a class="nav-link text-light" href="{% url 'usuarios:dashboard' %}">Inicio</a>
+          <a class="nav-link" href="{% url 'usuarios:dashboard' %}">Inicio</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-light" href="#">Panel</a>
+          <a class="nav-link" href="#">Panel</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-light" href="#">Usuarios</a>
+          <a class="nav-link" href="#">Usuarios</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-light" href="#">Reportes</a>
+          <a class="nav-link" href="#">Reportes</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-light" href="{% url 'usuarios:ver_perfil' %}">Perfil</a>
+          <a class="nav-link" href="{% url 'usuarios:ver_perfil' %}">Perfil</a>
         </li>
         <li class="nav-item ms-3">
           <form method="post" action="{% url 'usuarios:logout_usuario' %}">
