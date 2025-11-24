@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+        <div class="card-header bg-success text-white">
+            <h3 class="mb-0">Comprobante de Orden #{{ orden.id }}</h3>
+        </div>
+
+        <div class="card-body">
+
+            <h5><strong>Fecha:</strong> {{ orden.fecha }}</h5>
+            <h5><strong>Proveedor:</strong> {{ orden.proveedor.nombre }}</h5>
+            <h5><strong>Mecánico:</strong> {{ orden.mecanico.user.get_full_name }}</h5>
+
+            <hr>
+
+            <h4>Detalles de la Orden</h4>
+
+            <table class="table table-striped mt-3">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Repuesto</th>
+                        <th>Cantidad</th>
+                        <th>Precio Unitario</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for d in detalles %}
+                        <tr>
+                            <td>{{ d.repuesto.descripcion }}</td>
+                            <td>{{ d.cantidad }}</td>
+                            <td>${{ d.precio_unitario }}</td>
+                            <td>${{ d.subtotal }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="text-end mt-4">
+                <h3><strong>Total:</strong> ${{ total }}</h3>
+            </div>
+
+            <div class="text-end mt-4">
+                <a href="{% url 'pedidos:lista_ordenes' %}" class="btn btn-primary">
+                    Volver al Listado de Órdenes
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

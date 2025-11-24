@@ -39,6 +39,7 @@ class Reserva(models.Model):
         ('cancelada', 'Cancelada'),
     ]
 
+
     cliente = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='reservas_cliente')
     mecanico = models.ForeignKey(Usuario, on_delete=models.SET_NULL, null=True, blank=True, related_name='reservas_mecanico')
     servicios = models.ManyToManyField(Servicio, related_name='reservas')
@@ -52,6 +53,8 @@ class Reserva(models.Model):
     # 🔹 Asociación (opcional) a una disponibilidad concreta
     disponibilidad = models.ForeignKey(Disponibilidad, on_delete=models.SET_NULL, null=True, blank=True, related_name="reservas")
 
+
+    
     marca_auto = models.CharField(max_length=50)
     modelo_auto = models.CharField(max_length=50)
     anio = models.IntegerField()

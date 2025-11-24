@@ -3,6 +3,13 @@
 
 {% block content %}
 
+<!-- 🔙 Botón de regreso al dashboard -->
+<div class="mb-3">
+    <a href="{% url 'usuarios:dashboard' %}" class="btn btn-secondary">
+        ← Volver al Dashboard
+    </a>
+</div>
+
 <h2 class="mb-4">📅 Mis Reservas</h2>
 
 {% if reservas %}
@@ -30,6 +37,7 @@
         <td>{{ reserva.id }}</td>
         <td>{{ reserva.fecha }}</td>
         <td>{{ reserva.hora }}</td>
+
         <td>
           {% for s in reserva.servicios.all %}
             <span class="badge text-bg-info">{{ s.nombre }}</span>
@@ -37,7 +45,9 @@
             <span class="text-muted">Sin servicios</span>
           {% endfor %}
         </td>
+
         <td>{{ reserva.marca_auto }} {{ reserva.modelo_auto }} ({{ reserva.anio }})</td>
+
         <td>
           {% if reserva.estado == 'pendiente' %}
             <span class="badge text-bg-warning">Pendiente</span>
@@ -81,6 +91,15 @@
           <td>
             {% if reserva.estado == 'pendiente' %}
               <a href="{% url 'reservas:cancelar_reserva' reserva.id %}" class="btn btn-danger btn-sm">Cancelar</a>
+
+            {% elif reserva.estado == 'finalizada' %}
+              {% if reserva.boleta %}
+                <a href="{% url 'boletas:detalle_boleta' reserva.boleta.id %}" class="btn btn-primary btn-sm">
+                  🧾 Ver Boleta
+                </a>
+              {% else %}
+                <span class="text-muted small">Boleta no disponible</span>
+              {% endif %}
             {% else %}
               <span class="text-muted">Sin acciones</span>
             {% endif %}
@@ -90,6 +109,7 @@
       {% endfor %}
     </tbody>
   </table>
+
 {% else %}
   <div class="alert alert-info text-center">
     No tienes reservas registradas.
@@ -101,4 +121,5 @@
     <a href="{% url 'reservas:crear_reserva' %}" class="btn btn-success">+ Nueva Reserva</a>
   </div>
 {% endif %}
+
 {% endblock %}

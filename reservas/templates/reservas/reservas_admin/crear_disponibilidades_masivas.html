@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Disponibilidades masivas{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/disponibilidades_masivas.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-3">Crear disponibilidades masivas</h2>
+    <p class="text-muted">
+        Selecciona un mecánico, un rango de fechas y los días de la semana
+        en los que trabajará con los mismos horarios.
+    </p>
+
+    <form method="post" class="card p-4 shadow-sm">
+        {% csrf_token %}
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">{{ form.mecanico.label }}</label>
+                {{ form.mecanico }}
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <label class="form-label">{{ form.fecha_inicio.label }}</label>
+                {{ form.fecha_inicio }}
+            </div>
+            <div class="col-md-3 mb-3">
+                <label class="form-label">{{ form.fecha_fin.label }}</label>
+                {{ form.fecha_fin }}
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">{{ form.dias_semana.label }}</label>
+            <div class="d-flex flex-wrap gap-3">
+                {{ form.dias_semana }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 mb-3">
+                <label class="form-label">{{ form.hora_inicio.label }}</label>
+                {{ form.hora_inicio }}
+            </div>
+            <div class="col-md-3 mb-3">
+                <label class="form-label">{{ form.hora_termino.label }}</label>
+                {{ form.hora_termino }}
+            </div>
+            <div class="col-md-3 mb-3">
+                <label class="form-label">{{ form.colacion_inicio.label }}</label>
+                {{ form.colacion_inicio }}
+            </div>
+            <div class="col-md-3 mb-3">
+                <label class="form-label">{{ form.colacion_termino.label }}</label>
+                {{ form.colacion_termino }}
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <label class="form-label">{{ form.duracion_bloque.label }}</label>
+            {{ form.duracion_bloque }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            Crear disponibilidades
+        </button>
+    </form>
+</div>
+{% endblock %}

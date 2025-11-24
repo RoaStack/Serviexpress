@@ -1,0 +1,20 @@
+/* ==== NAVBAR ADMIN ==== */
+.navbar-admin {
+  background-color: #0d1117 !important;
+  border-bottom: 1px solid #30363d;
+}
+
+.navbar-admin .navbar-brand {
+  color: #f0ad4e !important;
+  font-weight: bold;
+}
+
+.navbar-admin .nav-link {
+  color: #fff !important;
+  margin-right: 15px;
+  transition: color 0.3s;
+}
+
+.navbar-admin .nav-link:hover {
+  color: #f0ad4e !important;
+}
