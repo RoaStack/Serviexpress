@@ -6,45 +6,6 @@ body {
   padding: 0;
 }
 
-/* ==== NAVBAR ==== */
-.bg-client {
-  background-color: #1f6feb !important;
-  border-bottom: 2px solid #1554b3;
-}
-
-.navbar-brand {
-  color: #ffffff !important;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-}
-
-.navbar .nav-link {
-  color: #f8f9fa !important;
-  margin-right: 15px;
-  transition: color 0.3s, transform 0.2s;
-  font-weight: 500;
-}
-
-.navbar .nav-link:hover {
-  color: #ffd43b !important;
-  transform: translateY(-2px);
-}
-
-.btn-client-logout {
-  background-color: transparent;
-  color: #ffffff;
-  border: 1px solid #ffffff;
-  border-radius: 6px;
-  transition: all 0.3s ease;
-}
-
-.btn-client-logout:hover {
-  background-color: #ffd43b;
-  color: #1f6feb;
-  border-color: #ffd43b;
-  transform: translateY(-2px);
-}
-
 /* ==== TITULOS ==== */
 .dashboard-title {
   color: #1e1f21;

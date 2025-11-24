@@ -7,16 +7,9 @@ from repuestos.models import Repuesto
 class OrdenPedidoForm(forms.ModelForm):
     class Meta:
         model = OrdenPedido
-<<<<<<< HEAD
         fields = ['proveedor']
         widgets = {
             'proveedor': forms.Select(attrs={'class': 'form-control'})
-=======
-        fields = ['proveedor', 'mecanico']
-        widgets = {
-            'proveedor': forms.Select(attrs={'class': 'form-control'}),
-            'mecanico': forms.Select(attrs={'class': 'form-control'}),
->>>>>>> staging
         }
 
 
