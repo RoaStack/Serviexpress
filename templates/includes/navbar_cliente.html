@@ -19,7 +19,7 @@
         <li class="nav-item ms-3">
           <form method="post" action="{% url 'usuarios:logout_usuario' %}">
             {% csrf_token %}
-            <button class="btn btn-client-logout btn-sm" type="submit">Cerrar sesión</button>
+            <button class="btn btn-outline-light btn-sm" type="submit">Cerrar sesión</button>
           </form>
         </li>
       </ul>
