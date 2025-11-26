@@ -25,5 +25,10 @@ urlpatterns = [
     # Admin genera disponibilidades masivas
     path("admin/disponibilidades/masivas/", views.crear_disponibilidades_masivas, name="crear_disponibilidades_masivas"),
 
+     # 🔹 Admin: gestionar disponibilidades existentes
+    path("admin/disponibilidades/", views.gestionar_disponibilidades, name="gestionar_disponibilidades"),
+    path("admin/disponibilidades/<int:pk>/editar/", views.editar_disponibilidad, name="editar_disponibilidad"),
+    path("admin/disponibilidades/<int:pk>/eliminar/", views.eliminar_disponibilidad, name="eliminar_disponibilidad"),
+
 ]
 
