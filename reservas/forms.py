@@ -1,6 +1,7 @@
 from django import forms
-from .models import Reserva
+from .models import Reserva, Disponibilidad
 from usuarios.models import Usuario
+
 
 class ReservaForm(forms.ModelForm):
     class Meta:
@@ -120,3 +121,81 @@ class DisponibilidadMasivaForm(forms.Form):
         self.fields["mecanico"].queryset = Usuario.objects.filter(
             user__groups__name="Mecanicos"
         )
+
+
+
+class DisponibilidadForm(forms.ModelForm):
+    """
+    Formulario para editar una sola Disponibilidad (admin).
+    Usa la misma lógica visual que DisponibilidadMasivaForm:
+    horas en dropdown de 08:00 a 18:00.
+    """
+
+    class Meta:
+        model = Disponibilidad
+        fields = [
+            "mecanico",
+            "fecha",
+            "hora_inicio",
+            "hora_termino",
+            "colacion_inicio",
+            "colacion_termino",
+            "duracion_bloque",
+            "activo",
+        ]
+        widgets = {
+            "fecha": forms.DateInput(
+                attrs={"type": "date", "class": "form-control"}
+            ),
+            # ⚠️ Aquí pasamos de <input type="time"> a <select> con HORAS_TRABAJO,
+            # igual que en DisponibilidadMasivaForm
+            "hora_inicio": forms.Select(
+                choices=HORAS_TRABAJO,
+                attrs={"class": "form-select"},
+            ),
+            "hora_termino": forms.Select(
+                choices=HORAS_TRABAJO,
+                attrs={"class": "form-select"},
+            ),
+            "colacion_inicio": forms.Select(
+                choices=HORAS_TRABAJO,
+                attrs={"class": "form-select"},
+            ),
+            "colacion_termino": forms.Select(
+                choices=HORAS_TRABAJO,
+                attrs={"class": "form-select"},
+            ),
+            "duracion_bloque": forms.NumberInput(
+                attrs={"class": "form-control", "min": 10, "step": 5}
+            ),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Solo usuarios que son mecánicos
+        self.fields["mecanico"].queryset = Usuario.objects.filter(
+            user__groups__name="Mecanicos"
+        )
+
+        # Aseguramos clases Bootstrap por si acaso
+        for name, field in self.fields.items():
+            if name == "activo":
+                # checkbox, lo dejamos tranquilo
+                continue
+            css = field.widget.attrs.get("class", "")
+            field.widget.attrs["class"] = (css + " form-control").strip()
+
+        # 🔹 Ajustar valores iniciales de horas para que coincidan con las opciones "HH:MM"
+        # (porque la instancia trae time(8, 0, 0) y las options son "08:00")
+        if self.instance and self.instance.pk:
+            for campo in [
+                "hora_inicio",
+                "hora_termino",
+                "colacion_inicio",
+                "colacion_termino",
+            ]:
+                valor = getattr(self.instance, campo, None)
+                if valor:
+                    # formateamos a "HH:MM" para que el <select> marque la opción correcta
+                    self.initial[campo] = valor.strftime("%H:%M")
