@@ -17,6 +17,8 @@ from boletas.models import Boleta, DetalleBoleta, DetalleServicioBoleta
 from boletas.forms import DetalleBoletaForm
 from django.db import transaction
 from .forms import ReservaForm, DisponibilidadMasivaForm
+from django.core.exceptions import ValidationError
+
 
 # ================================================================
 # 🔐 HELPERS DE ROLES
@@ -63,18 +65,20 @@ def crear_reserva(request):
             reserva = form.save(commit=False)
             reserva.cliente = cliente
 
-            # === Asignar mecánico automáticamente según disponibilidad ===
+            # === Buscar disponibilidades del día ===
             disponibilidades = (
                 Disponibilidad.objects.filter(fecha=reserva.fecha, activo=True)
                 .select_related("mecanico")
             )
 
+            # === Mecánicos ocupados en ese horario ===
             mecanicos_ocupados = Reserva.objects.filter(
                 fecha=reserva.fecha,
                 hora=reserva.hora,
                 estado__in=["pendiente", "en_proceso"],
             ).values_list("mecanico_id", flat=True)
 
+            # === Filtrar mecánicos disponibles ===
             disponibles = [
                 disp.mecanico
                 for disp in disponibilidades
@@ -93,16 +97,25 @@ def crear_reserva(request):
                     {"form": form},
                 )
 
+            # === Seleccionar mecánico aleatorio ===
             mecanico_asignado = random.choice(disponibles)
             reserva.mecanico = mecanico_asignado
             reserva.estado = "pendiente"
             reserva.save()
             form.save_m2m()
 
+            # ============================
+            #     NOMBRE DEL MECÁNICO
+            # ============================
+            nombre_mecanico = (
+                mecanico_asignado.user.get_full_name()
+                if mecanico_asignado.user.get_full_name().strip()
+                else mecanico_asignado.user.username
+            )
+
             messages.success(
                 request,
-                "✅ ¡Tu reserva fue creada correctamente! "
-                f"Mecánico asignado: {mecanico_asignado.user.get_full_name()}.",
+                f"✅ ¡Tu reserva fue creada correctamente! Mecánico asignado: {nombre_mecanico}.",
             )
             return redirect("reservas:mis_reservas")
 
@@ -115,7 +128,6 @@ def crear_reserva(request):
         "reservas/reservas_cliente/crear_reserva.html",
         {"form": form},
     )
-
 
 
 
@@ -488,6 +500,8 @@ def eliminar_repuesto_detalle(request, reserva_id, detalle_id):
 
 
 
+from django.core.exceptions import ValidationError
+
 @login_required
 @user_passes_test(es_admin, login_url="usuarios:dashboard")
 def crear_disponibilidades_masivas(request):
@@ -509,16 +523,16 @@ def crear_disponibilidades_masivas(request):
         colacion_termino = form.cleaned_data["colacion_termino"]
         duracion_bloque = form.cleaned_data["duracion_bloque"]
 
-        from datetime import timedelta
-
         creados = 0
         fecha_actual = fecha_inicio
 
         with transaction.atomic():
             while fecha_actual <= fecha_fin:
-                # weekday(): 0 = lunes ... 6 = domingo
+
+                # 0=Lunes ... 6=Domingo
                 if fecha_actual.weekday() in dias_semana:
-                    # evitar duplicar disponibilidades para mismo mecánico y día
+
+                    # Evitar duplicados
                     existe = Disponibilidad.objects.filter(
                         mecanico=mecanico,
                         fecha=fecha_actual,
@@ -526,7 +540,8 @@ def crear_disponibilidades_masivas(request):
                     ).exists()
 
                     if not existe:
-                        Disponibilidad.objects.create(
+
+                        disp = Disponibilidad(
                             mecanico=mecanico,
                             fecha=fecha_actual,
                             hora_inicio=hora_inicio,
@@ -536,15 +551,30 @@ def crear_disponibilidades_masivas(request):
                             duracion_bloque=duracion_bloque,
                             activo=True,
                         )
-                        creados += 1
+
+                        try:
+                            # 🔥 Ejecuta validaciones del modelo (incluye feriados)
+                            disp.full_clean()
+                            disp.save()
+                            creados += 1
+
+                        except ValidationError as e:
+                            # Solo mostramos el mensaje si es feriado
+                            messages.warning(
+                                request,
+                                f"⚠️ No se creó disponibilidad el {fecha_actual.strftime('%d/%m/%Y')} porque es feriado."
+                            )
 
                 fecha_actual += timedelta(days=1)
 
+        # Nombre seguro del mecánico
+        nombre_mecanico = mecanico.user.get_full_name() or mecanico.user.username
+
         messages.success(
             request,
-            f"✅ Se crearon {creados} disponibilidades nuevas para {mecanico.user.get_full_name()}."
+            f"✅ Se crearon {creados} disponibilidades nuevas para {nombre_mecanico}."
         )
-        # Rediriges a la misma vista para que el form vuelva vacío
+
         return redirect("reservas:crear_disponibilidades_masivas")
 
     return render(
@@ -552,3 +582,115 @@ def crear_disponibilidades_masivas(request):
         "reservas/reservas_admin/crear_disponibilidades_masivas.html",
         {"form": form},
     )
+
+
+
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+
+from .models import Disponibilidad
+from .forms import DisponibilidadForm
+from usuarios.models import Usuario
+
+
+# 🧰 Helper (ya lo tienes, lo recuerdo solo por contexto)
+# def es_admin(user):
+#     return user.is_staff or user.groups.filter(name="Administradores").exists()
+
+
+# ================================================================
+# 👀 LISTAR / GESTIONAR DISPONIBILIDADES (ADMIN)
+# ================================================================
+@login_required
+@user_passes_test(es_admin, login_url="usuarios:dashboard")
+def gestionar_disponibilidades(request):
+    """
+    Lista las disponibilidades existentes y permite filtrarlas por mecánico.
+    Desde aquí el admin puede ir a editar o eliminar cada disponibilidad.
+    """
+    mecanico_id = request.GET.get("mecanico")
+
+    mecanicos = Usuario.objects.filter(user__groups__name="Mecanicos").select_related("user")
+
+    disponibilidades = (
+        Disponibilidad.objects.select_related("mecanico__user")
+        .order_by("fecha", "hora_inicio")
+    )
+
+    if mecanico_id:
+        disponibilidades = disponibilidades.filter(mecanico_id=mecanico_id)
+
+    context = {
+        "mecanicos": mecanicos,
+        "disponibilidades": disponibilidades,
+        "mecanico_seleccionado": mecanico_id,
+    }
+    return render(
+        request,
+        "reservas/reservas_admin/gestionar_disponibilidades.html",
+        context,
+    )
+
+
+# ================================================================
+# ✏️ EDITAR UNA DISPONIBILIDAD (ADMIN)
+# ================================================================
+@login_required
+@user_passes_test(es_admin, login_url="usuarios:dashboard")
+def editar_disponibilidad(request, pk):
+    """
+    Permite al administrador editar una disponibilidad específica.
+    Respeta las validaciones del modelo (incluye feriados).
+    """
+    disponibilidad = get_object_or_404(Disponibilidad, pk=pk)
+
+    if request.method == "POST":
+        form = DisponibilidadForm(request.POST, instance=disponibilidad)
+        if form.is_valid():
+            form.save()
+            messages.success(
+                request,
+                f"✅ Disponibilidad del {disponibilidad.fecha.strftime('%d/%m/%Y')} actualizada correctamente.",
+            )
+            return redirect("reservas:gestionar_disponibilidades")
+    else:
+        form = DisponibilidadForm(instance=disponibilidad)
+
+    return render(
+        request,
+        "reservas/reservas_admin/editar_disponibilidad.html",
+        {"form": form, "disponibilidad": disponibilidad},
+    )
+
+
+# ================================================================
+# 🗑️ ELIMINAR UNA DISPONIBILIDAD (ADMIN)
+# ================================================================
+@login_required
+@user_passes_test(es_admin, login_url="usuarios:dashboard")
+def eliminar_disponibilidad(request, pk):
+    """
+    Permite al administrador eliminar una disponibilidad.
+    Se pide confirmación mediante POST.
+    """
+    disponibilidad = get_object_or_404(Disponibilidad, pk=pk)
+
+    if request.method == "POST":
+        fecha = disponibilidad.fecha
+        mecanico = disponibilidad.mecanico
+        disponibilidad.delete()
+        nombre_mecanico = mecanico.user.get_full_name() or mecanico.user.username
+        messages.success(
+            request,
+            f"♻️ Disponibilidad del {fecha.strftime('%d/%m/%Y')} para {nombre_mecanico} fue eliminada.",
+        )
+        return redirect("reservas:gestionar_disponibilidades")
+
+    return render(
+        request,
+        "reservas/reservas_admin/confirmar_eliminar_disponibilidad.html",
+        {"disponibilidad": disponibilidad},
+    )
+
+
