@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <div class="mb-3">
+        <a href="{% url 'pedidos:lista_ordenes' %}" class="btn btn-secondary">
+            ← Volver al Listado
+        </a>
+    </div>
+
+    <div class="card shadow">
+        <div class="card-header bg-warning text-dark">
+            <h3 class="mb-0">Recepción de Orden #{{ orden.id }}</h3>
+        </div>
+
+        <div class="card-body">
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <p><strong>Proveedor:</strong> {{ orden.proveedor.nombre }}</p>
+                <p><strong>Fecha Orden:</strong> {{ orden.fecha_creacion }}</p>
+                <p><strong>Estado Actual:</strong> {{ orden.get_estado_display }}</p>
+
+                <hr>
+
+                <h4>Repuestos Recibidos</h4>
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Repuesto</th>
+                            <th>Cantidad Recibida</th>
+                            <th>Precio U.</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for d in detalles %}
+                        <tr>
+                            <td>{{ d.repuesto.descripcion }}</td>
+                            <td>
+                                <input type="number"
+                                       class="form-control"
+                                       name="cantidad_{{ d.id }}"
+                                       value="{{ d.cantidad }}"
+                                       min="0">
+                            </td>
+
+                            <td>${{ d.precio_unitario }}</td>
+                            <td>${{ d.subtotal }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <div class="text-end mt-3">
+                    <button type="submit" class="btn btn-success btn-lg">
+                        Confirmar Recepción
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

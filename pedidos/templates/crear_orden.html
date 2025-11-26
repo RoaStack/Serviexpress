@@ -4,6 +4,12 @@
 {% block content %}
 <div class="container mt-4">
 
+    <div class="mb-3">
+        <a href="{% url 'usuarios:dashboard' %}" class="btn btn-secondary">
+            ← Volver al Dashboard
+        </a>
+    </div>
+
     <div class="card shadow">
         <div class="card-header bg-primary text-white">
             <h3 class="mb-0">Crear Nueva Orden de Pedido</h3>
@@ -77,16 +83,10 @@
 
                 <div class="text-end">
                     <button type="submit" class="btn btn-primary btn-lg">
-                        Guardar Orden
+                        Generar Orden
                     </button>
                 </div>
-                <div class="text-end mt-4">
-                <a href="{% url 'pedidos:lista_ordenes' %}" class="btn btn-danger">
-                    Volver al Listado de Órdenes
-                </a>
-            </div>
-                
-
+        
             </form>
 
         </div>
