@@ -27,13 +27,13 @@
     <div class="card">
       <h5>Solicitar repuestos</h5>
       <p>Consulta el inventario disponible y genera solicitudes de repuestos necesarios.</p>
-      <a href="#" class="btn btn-dark">Solicitar repuesto</a>
+      <a href="{% url 'pedidos:crear' %}" class="btn btn-dark">Solicitar repuesto</a>
     </div>
 
     <div class="card">
       <h5>Recepción de productos</h5>
       <p>Confirma la recepción de los productos o repuestos solicitados al taller.</p>
-      <a href="#" class="btn btn-dark">Registrar recepción</a>
+      <a href="{% url 'pedidos:lista_ordenes' %}" class="btn btn-dark">Registrar recepción</a>
     </div>
 
     <div class="card">

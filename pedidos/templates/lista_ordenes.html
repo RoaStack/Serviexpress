@@ -3,6 +3,11 @@
 
 {% block content %}
 <div class="container mt-4">
+    <div class="mb-3">
+        <a href="{% url 'usuarios:dashboard' %}" class="btn btn-secondary">
+            ← Volver al Dashboard
+        </a>
+    </div>
 
     <div class="card shadow">
         <div class="card-header bg-primary text-white">
@@ -20,6 +25,7 @@
                             <th>Proveedor</th>
                             <th>Fecha</th>
                             <th>Total</th>
+                            <th>Estado</th>
                             <th>Detalles</th>
                         </tr>
                     </thead>
@@ -33,12 +39,25 @@
                             <td>
                                 ${{ orden.monto_total|floatformat:0 }}
                             </td>
+                            <td>{{ orden.get_estado_display }}</td>
                             <td>
-                                <a href="{% url 'pedidos:detalle_orden' orden.id %}" 
-                                   class="btn btn-sm btn-info">
-                                    Ver
-                                </a>
-                            </td>
+                            {% if orden.estado == "pendiente" %}
+                            <a href="{% url 'pedidos:recepcionar_orden' orden.id %}" 
+                                class="btn btn-sm btn-info">
+                                Ver
+                            </a>
+
+                            {% elif orden.estado == "recibido" %}
+                            <a href="{% url 'pedidos:detalle_orden' orden.id %}" 
+                                class="btn btn-sm btn-primary">
+                                Ver
+                            </a>
+
+                            {% else %}
+                                <span class="badge bg-secondary">Sin acción</span>
+                            {% endif %}
+                        </td>
+
                         </tr>
                         {% endfor %}
                     </tbody>

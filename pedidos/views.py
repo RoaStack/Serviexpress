@@ -73,4 +73,27 @@ def obtener_precio_repuesto(request, repuesto_id):
     rep = Repuesto.objects.get(id=repuesto_id)
     return JsonResponse({'precio': rep.precio_compra})
 
+@login_required
+@user_passes_test(es_mecanico)
+def recepcionar_orden(request, orden_id):
+    orden = get_object_or_404(OrdenPedido, id=orden_id, mecanico=request.user.perfil)
+
+    if request.method == "POST":
+        for det in orden.detalles.all():
+            cantidad_recibida = int(request.POST.get(f"cantidad_{det.id}", det.cantidad))
+            det.cantidad = cantidad_recibida
+            det.save()
+
+        # Cambiar estado a recibido
+        orden.estado = "recibido"
+        orden.save()
+
+        return redirect("pedidos:detalle_orden", orden_id=orden.id)
+
+    return render(request, "recepcionar_orden.html", {
+        "orden": orden,
+        "detalles": orden.detalles.all(),
+        "total": orden.monto_total,
+    })
+
 
