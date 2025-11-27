@@ -1,13 +1,87 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
+
 {% block title %}Iniciar sesión{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'usuarios/css/login.css' %}">
+{% endblock %}
+
+{% block body_class %}login-body{% endblock %}
+
 {% block content %}
-<div class="container mt-5 col-md-4">
-  <h2>Iniciar sesión</h2>
-  <form method="POST">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <button type="submit" class="btn btn-success mt-3">Entrar</button>
-  </form>
+
+<div class="login-overlay">
+
+    <div class="login-box animate-login">
+
+        <!-- LOGO -->
+        <div class="login-logo">
+            <img src="{% static 'img/logoServiexpressCarbonoo.png' %}" alt="Logo">
+        </div>
+
+        <h2 class="login-title">Inicio de Sesión</h2>
+
+        <!-- MENSAJE DE ERROR -->
+        {% if form.errors %}
+        <div class="error-box">
+            ❌ Usuario o contraseña incorrectos
+        </div>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <!-- Campo usuario -->
+            <div class="input-group-custom {% if form.username.errors %}input-error{% endif %}">
+                <span class="input-icon">👤</span>
+                <input type="text"
+                      name="username"
+                      placeholder="Nombre de usuario"
+                      required>
+            </div>
+
+            <!-- Campo contraseña -->
+            <div class="input-group-custom {% if form.password.errors %}input-error{% endif %}">
+                <span class="input-icon">🔒</span>
+
+                <input type="password"
+                      id="password-field"
+                      name="password"
+                      placeholder="Contraseña"
+                      required>
+
+                <!-- Ojo SVG -->
+                <span class="toggle-password" onclick="togglePassword()">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                        stroke="#d3d7ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                </span>
+            </div>
+
+            <!-- Link Olvidaste contraseña -->
+            <div class="forgot-container">
+                <a href="#" class="forgot-link">¿Olvidaste tu contraseña?</a>
+            </div>
+            <!-- Botón -->
+            <button type="submit" class="login-btn">Inicia Sesión</button>
+            
+            <div class="forgot-container">
+                <p class="login-note">¿Aún no tienes cuenta?</p>
+                <a href="{% url 'usuarios:registro_usuario' %}" class="forgot-liink">Registrate aqui.</a>
+            </div>
+        </form>
+    </div>
 </div>
+
+<script>
+function togglePassword() {
+    let field = document.getElementById("password-field");
+    field.type = field.type === "password" ? "text" : "password";
+}
+</script>
+
 {% endblock %}

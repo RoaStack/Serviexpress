@@ -1,46 +1,53 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block title %}Panel de Administración{% endblock %}
+
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'usuarios/css/admin.css' %}">
 {% endblock %}
 
+{# Body especial solo para este dashboard #}
+{% block body_class %}dashboard-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
+
 {% block content %}
-<div class="text-center mt-4">
-  <h2 class="dashboard-title">Panel de Administración 👨‍💼</h2>
-  <p class="dashboard-subtitle">Control total de usuarios, servicios y repuestos.</p>
-</div>
+<div class="dashboard-wrapper">
+    <div class="overlay">
 
+        <div class="dashboard-header">
+            <h2 class="dashboard-title">Panel de Administración</h2>
+            <p class="dashboard-subtitle">Control total del sistema</p>
+        </div>
 
-<div class="dashboard-container">
-  <div class="card">
-    <h5>Gestión de usuarios</h5>
-    <p>Administra clientes y mecánicos.</p>
-    <a href="#" class="btn btn-outline-warning">Ver usuarios</a>
-  </div>
+        <div class="dashboard-container">
 
-  <div class="card">
-    <h5>Gestión de repuestos</h5>
-    <p>Controla inventario y precios.</p>
-    <a href="{% url 'repuestos:listar_repuestos' %}" class="btn btn-outline-warning">Ver repuestos</a>
-  </div>
+            <a href="#" class="dash-item item-1">
+                <img src="{% static 'img/icons/icons_admin/gestionUsuarios.png' %}" alt="Gestión de usuarios">
+                <span>Gestión de Usuarios</span>
+            </a>
 
-  <div class="card">
-    <h5>Reportes</h5>
-    <p>Visualiza estadísticas y resultados.</p>
-    <a href="#" class="btn btn-outline-warning">Ver reportes</a>
-  </div>
+            <a href="{% url 'repuestos:listar_repuestos' %}" class="dash-item item-2">
+                <img src="{% static 'img/icons/icons_admin/gestionRepuestos.png' %}" alt="Gestión de repuestos">
+                <span>Gestión de Repuestos</span>
+            </a>
 
-  <div class="card">
-    <h5>Gestión de servicios</h5>
-    <p>Administra los servicios disponibles del taller.</p>
-    <a href="{% url 'servicios:listar_servicios' %}" class="btn btn-outline-warning">Ver servicios</a>
-  </div>
+            <a href="#" class="dash-item item-3">
+                <img src="{% static 'img/icons/icons_admin/reportes.png' %}" alt="Reportes">
+                <span>Reportes</span>
+            </a>
 
-    <div class="card">
-    <h5>Gestion de proveedores</h5>
-    <p>Gestiona los proveedores.</p>
-    <a href="#" class="btn btn-outline-warning">Ver usuarios</a>
-  </div>
+            <a href="{% url 'servicios:listar_servicios' %}" class="dash-item item-4">
+                <img src="{% static 'img/icons/icons_admin/gestionServicios.png' %}" alt="Gestión de servicios">
+                <span>Gestión de Servicios</span>
+            </a>
+
+            <a href="#" class="dash-item item-5">
+                <img src="{% static 'img/icons/icons_admin/gestionProveedores.png' %}" alt="Gestión de proveedores">
+                <span>Gestión de Proveedores</span>
+            </a>
+
+        </div>
+    </div>
 </div>
 {% endblock %}
