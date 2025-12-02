@@ -1,13 +1,206 @@
-#id_hora {
-    border-radius: 10px;
-    padding: 8px 10px;
-    border: 1px solid #ced4da;
-    background-color: #f8f9fa;
-    transition: all 0.2s ease;
+/* ============================================================
+   FONDO CLIENTE (ya existe en tu dashboard)
+   ============================================================ */
+body.cliente-body {
+    background: url("/static/img/panelCliente.png") no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
 }
 
-#id_hora:focus {
-    background-color: #ffffff;
-    box-shadow: 0 0 5px rgba(13, 110, 253, 0.5);
-    border-color: #0d6efd;
+/* Capa oscura encima del fondo */
+.reserva-overlay {
+    width: 100%;
+    min-height: calc(100vh - 80px);
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 40px;
+}
+
+
+/* ============================================================
+   BOTÓN VOLVER CON FONDO VISIBILE
+   ============================================================ */
+.reserva-back-link {
+    background: rgba(255, 255, 255, 0.20);
+    padding: 8px 18px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+    text-decoration: none;
+    backdrop-filter: blur(6px);
+    font-size: 0.95rem;
+    transition: .25s;
+}
+
+.reserva-back-link:hover {
+    background: rgba(255, 255, 255, 0.30);
+    border-color: #5bb8ff;
+    box-shadow: 0 0 10px #5bb8ff;
+}
+
+
+/* ============================================================
+   TÍTULO
+   ============================================================ */
+.reserva-main-title {
+    color: #ffffff;
+    font-size: 2.4rem;
+    font-weight: 700;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 25px;
+
+    background: rgba(0,0,0,0.45);
+    padding: 10px 25px;
+    border-radius: 18px;
+    backdrop-filter: blur(5px);
+}
+
+
+/* ============================================================
+   TARJETA PRINCIPAL (estilo c-item × XL)
+   ============================================================ */
+
+.reserva-card {
+    width: 90%;
+    max-width: 620px;
+
+    background: rgba(255, 255, 255, 0.17);
+    border-radius: 25px;
+    border: 2px solid transparent;
+
+    padding: 32px 35px;
+
+    backdrop-filter: blur(10px);
+
+    display: flex;
+    flex-direction: column;
+
+    transition: 0.25s ease;
+}
+
+
+
+/* ============================================================
+   TÍTULO DENTRO DE LA TARJETA
+   ============================================================ */
+.reserva-card-title {
+    text-align: center;
+    color: white;
+    font-size: 1.4rem;
+    margin-bottom: 25px;
+}
+
+
+/* ============================================================
+   FORMULARIO
+   ============================================================ */
+.reserva-form label {
+    color: white;
+    font-weight: 500;
+}
+
+.reserva-form input,
+.reserva-form select,
+.reserva-form textarea {
+    width: 100%;
+    background: rgba(0,0,0,0.55);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 14px;
+    backdrop-filter: blur(6px);
+    transition: .25s;
+}
+
+.reserva-form input:focus,
+.reserva-form select:focus,
+.reserva-form textarea:focus {
+    border-color: #5bb8ff;
+    box-shadow: 0 0 10px #5bb8ff;
+}
+
+.reserva-form input::placeholder,
+.reserva-form textarea::placeholder {
+    color: #c7cbd1;
+}
+
+/* ============================================================
+   BOTONES
+   ============================================================ */
+.reserva-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+}
+
+.btn-reserva-secondary {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.30);
+    padding: 10px 20px;
+    border-radius: 14px;
+    color: white;
+    text-decoration: none;
+    transition: .25s;
+}
+
+.btn-reserva-secondary:hover {
+    background: rgba(255,255,255,0.25);
+    border-color: #5bb8ff;
+    box-shadow: 0 0 10px #5bb8ff;
+}
+
+.btn-reserva-primary {
+    background: #3ba8ff;
+    padding: 10px 25px;
+    border-radius: 14px;
+    color: white;
+    border: none;
+    font-weight: 600;
+    transition: .25s;
+}
+
+.btn-reserva-primary:hover {
+    background: #1e90ff;
+    box-shadow: 0 0 12px #5bb8ff;
+}
+
+
+/* ============================================================
+   SCROLL INTERNO EN EL FORMULARIO
+   ============================================================ */
+.reserva-card {
+    max-height: 70vh;        /* la tarjeta no crecerá más de 70% pantalla */
+    overflow-y: auto;        /* activa scroll vertical */
+    overflow-x: hidden;      /* evita scroll horizontal */
+    scrollbar-width: thin;   /* Firefox */
+    scrollbar-color: #5bb8ff rgba(255,255,255,0.1);
+}
+
+/* Scroll en Chrome / Edge */
+.reserva-card::-webkit-scrollbar {
+    width: 8px;
+}
+
+.reserva-card::-webkit-scrollbar-thumb {
+    background: #5bb8ff;
+    border-radius: 10px;
+}
+
+.reserva-card::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.1);
+}
+
+/* ============================================================
+   INPUT ENFOCADO SIN FONDO BLANCO (COLOR SUAVE)
+   ============================================================ */
+.reserva-form input:focus,
+.reserva-form select:focus,
+.reserva-form textarea:focus {
+    background: rgba(255,255,255,0.10);   /* color suave, NO blanco */
+    border-color: #5bb8ff;
+    box-shadow: 0 0 10px #5bb8ff;
 }
