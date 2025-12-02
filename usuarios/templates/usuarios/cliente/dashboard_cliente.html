@@ -1,42 +1,57 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block title %}Panel Cliente{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'usuarios/css/cliente.css' %}">
 {% endblock %}
 
+{% block body_class %}cliente-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
+
 {% block content %}
-<div class="dashboard-cliente text-center mt-5">
-  <h2 class="fw-bold dashboard-title">Bienvenido, {{ request.user.first_name }} 👋</h2>
-  <p class="dashboard-subtitle">
-    Gestiona tus <strong>reservas</strong>, <strong>servicios</strong>, <strong>compras</strong> y tu <strong>perfil personal</strong>.
-  </p>
 
-  <div class="dashboard-grid mt-5">
-    <div class="card">
-      <h5>Reservar hora</h5>
-      <p>Agenda una cita para el servicio de tu vehículo de manera rápida y sencilla.</p>
-      <a href="{% url 'reservas:crear_reserva' %}" class="btn btn-client-primary">Reservar</a>
-    </div>
+<div class="cliente-wrapper">
+    <div class="cliente-overlay">
 
-    <div class="card">
-      <h5>Mis reservas</h5>
-      <p>Consulta tus reservas activas, su estado y los detalles de tus citas.</p>
-      <a href="{% url 'reservas:mis_reservas' %}" class="btn btn-client-info">Ver reservas</a>
-    </div>
+        <div class="cliente-header">
+            <h2 class="cliente-title">Bienvenido, {{ request.user.first_name }} 👋</h2>
+            <p class="cliente-subtitle">
+                Gestiona tus <strong>reservas</strong>, <strong>servicios</strong>, 
+                <strong>compras</strong>.
+            </p>
+        </div>
 
-    <div class="card">
-      <h5>Servicios realizados</h5>
-      <p>Revisa el historial de servicios completados y mantenimientos realizados.</p>
-      <a href="{% url 'reservas:servicios_realizados_cliente' %}" class="btn btn-client-success">Ver historial</a>
-    </div>
+        <div class="cliente-container">
 
-    <div class="card">
-      <h5>Comprar productos</h5>
-      <p>Explora el catálogo de repuestos y productos disponibles para tu vehículo.</p>
-      <a href="{% url 'ecommerce:ver_repuestos' %}" class="btn btn-client-warning">Ver productos</a>
+            <a href="{% url 'reservas:crear_reserva' %}" class="c-item c1">
+                <img src="{% static 'img/icons/icons_cliente/reservar.png' %}">
+                <span>Reservar hora</span>
+            </a>
+
+            <a href="{% url 'reservas:mis_reservas' %}" class="c-item c2">
+                <img src="{% static 'img/icons/icons_cliente/misReservas.png' %}">
+                <span>Mis reservas</span>
+            </a>
+
+            <a href="{% url 'reservas:servicios_realizados_cliente' %}" class="c-item c3">
+                <img src="{% static 'img/icons/icons_cliente/servicios.png' %}">
+                <span>Servicios realizados</span>
+            </a>
+
+            <a href="{% url 'ecommerce:ver_repuestos' %}" class="c-item c4">
+                <img src="{% static 'img/icons/icons_cliente/compras.png' %}">
+                <span>Comprar productos</span>
+            </a>
+
+            <a href="#" class="c-item c5">
+                <img src="{% static 'img/icons/icons_cliente/misCompras.png' %}">
+                <span>Mis Compras</span>
+            </a>
+
+        </div>
     </div>
-  </div>
 </div>
+
 {% endblock %}

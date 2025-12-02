@@ -1,46 +1,56 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block title %}Panel Mecánico{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'usuarios/css/mecanico.css' %}">
 {% endblock %}
 
+{# Clase especial en el body #}
+{% block body_class %}mecanico-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
+
 {% block content %}
-<div class="dashboard-mecanico text-center mt-5">
-  <h2 class="fw-bold">Panel de Mecánico 🔧</h2>
-  <p>Accede a tus órdenes de trabajo y control de servicios.</p>
 
-  <div class="dashboard-grid mt-5">
-    <div class="card">
-      <h5>Órdenes asignadas</h5>
-      <p>Revisa y gestiona tus órdenes de trabajo asignadas dentro del sistema.</p>
-      <a href="{% url 'reservas:ordenes_asignadas' %}" class="btn btn-dark">Ver órdenes</a>
-    </div>
+<div class="mecanico-wrapper">
+    <div class="overlay-mecanico">
 
-    <div class="card">
-      <h5>Registrar servicios realizados</h5>
-      <p>Accede al registro de los servicios completados y actualiza su estado.</p>
-      <a href="{% url 'reservas:servicios_en_proceso' %}" class="btn btn-dark">Registrar servicio</a>
-    </div>
+        <div class="mecanico-header">
+            <h1 class="mecanico-title">Panel de Mecánico 🔧</h1>
+            <p class="mecanico-subtitle">Accede a tus órdenes y servicios asignados</p>
+        </div>
 
-    <div class="card">
-      <h5>Solicitar repuestos</h5>
-      <p>Consulta el inventario disponible y genera solicitudes de repuestos necesarios.</p>
-      <a href="{% url 'pedidos:crear' %}" class="btn btn-dark">Solicitar repuesto</a>
-    </div>
+        <div class="mecanico-container">
 
-    <div class="card">
-      <h5>Recepción de productos</h5>
-      <p>Confirma la recepción de los productos o repuestos solicitados al taller.</p>
-      <a href="{% url 'pedidos:lista_ordenes' %}" class="btn btn-dark">Registrar recepción</a>
-    </div>
+            <a href="{% url 'reservas:ordenes_asignadas' %}" class="m-item m1">
+                <img src="{% static 'img/icons/icons_mecanico/ordenes.png' %}" alt="">
+                <span>Órdenes asignadas</span>
+            </a>
 
-    <div class="card">
-      <h5>Historial de servicios</h5>
-      <p>Visualiza el historial de los servicios realizados y mantenimientos completados.</p>
-      <a href="{% url 'reservas:historial_servicios' %}" class="btn btn-dark">Ver historial</a>
+            <a href="{% url 'reservas:servicios_en_proceso' %}" class="m-item m2">
+                <img src="{% static 'img/icons/icons_mecanico/servicios.png' %}" alt="">
+                <span>Servicios realizados</span>
+            </a>
+
+            <a href="{% url 'pedidos:crear' %}" class="m-item m3">
+                <img src="{% static 'img/icons/icons_mecanico/repuestos.png' %}" alt="">
+                <span>Solicitar repuestos</span>
+            </a>
+
+            <a href="{% url 'pedidos:lista_ordenes' %}" class="m-item m4">
+                <img src="{% static 'img/icons/icons_mecanico/recepcion.png' %}" alt="">
+                <span>Recepción de productos</span>
+            </a>
+
+            <a href="{% url 'reservas:historial_servicios' %}" class="m-item m5">
+                <img src="{% static 'img/icons/icons_mecanico/historial.png' %}" alt="">
+                <span>Historial de servicios</span>
+            </a>
+
+        </div>
+
     </div>
-  </div>
 </div>
+
 {% endblock %}
