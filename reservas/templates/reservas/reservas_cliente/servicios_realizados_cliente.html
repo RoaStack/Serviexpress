@@ -1,70 +1,93 @@
 {% extends 'base.html' %}
+{% load static %}
+
 {% block title %}Servicios Realizados{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/reservas/servicios_realizados_cliente.css' %}">
+{% endblock %}
+
+{% block body_class %}cliente-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
+
 {% block content %}
+<div class="sr-overlay">
+    <div class="sr-inner">
 
-<!-- 🔙 Botón de regreso al dashboard -->
-<div class="mb-3">
-    <a href="{% url 'usuarios:dashboard' %}" class="btn btn-secondary">
-        ← Volver al Dashboard
-    </a>
-</div>
-
-<h2 class="mb-4 text-center">🧾 Servicios Realizados</h2>
-
-{% if reservas %}
-  <table class="table table-striped align-middle text-center shadow-sm">
-    <thead class="table-dark">
-      <tr>
-        <th>ID</th>
-        <th>Fecha</th>
-        <th>Hora</th>
-        <th>Servicios</th>
-        <th>Auto</th>
-        <th>Mecánico</th>
-        <th>Boleta</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for r in reservas %}
-      <tr>
-        <td>{{ r.id }}</td>
-        <td>{{ r.fecha }}</td>
-        <td>{{ r.hora }}</td>
-        <td>
-          {% for s in r.servicios.all %}
-            <span class="badge text-bg-info">{{ s.nombre }}</span>
-          {% empty %}
-            <span class="text-muted">Sin servicios</span>
-          {% endfor %}
-        </td>
-        <td>{{ r.marca_auto }} {{ r.modelo_auto }} ({{ r.anio }})</td>
-
-        <td>
-          {% if r.mecanico %}
-            {{ r.mecanico.user.get_full_name|default:r.mecanico.user.username }}
-          {% else %}
-            <span class="text-muted">No asignado</span>
-          {% endif %}
-        </td>
-
-        <td>
-          {% if r.boleta %}
-            <a href="{% url 'boletas:detalle_boleta' r.boleta.id %}" class="btn btn-outline-primary btn-sm">
-              Ver Boleta
+        <!-- 🔙 Botón volver -->
+        <div class="sr-back-row">
+            <a href="{% url 'usuarios:dashboard' %}" class="sr-back-link">
+                ← Volver al Dashboard
             </a>
-          {% else %}
-            <span class="text-muted small">No generada</span>
-          {% endif %}
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-{% else %}
-  <div class="alert alert-info text-center">
-    No tienes servicios finalizados aún.
-  </div>
-{% endif %}
+        </div>
 
+        <!-- Título -->
+        <h1 class="sr-title">Servicios realizados</h1>
+
+        <!-- Cuadro principal -->
+        <div class="sr-card">
+            <div class="sr-table-wrapper">
+
+                {% if reservas %}
+                <table class="sr-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Servicios</th>
+                            <th>Auto</th>
+                            <th>Mecánico</th>
+                            <th>Boleta</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for r in reservas %}
+                        <tr>
+                            <td>{{ r.id }}</td>
+                            <td>{{ r.fecha }}</td>
+                            <td>{{ r.hora }}</td>
+
+                            <td>
+                                {% for s in r.servicios.all %}
+                                    <span class="sr-service-pill">{{ s.nombre }}</span>
+                                {% empty %}
+                                    <span class="sr-service-empty">Sin servicios</span>
+                                {% endfor %}
+                            </td>
+
+                            <td>{{ r.marca_auto }} {{ r.modelo_auto }} ({{ r.anio }})</td>
+
+                            <td>
+                                {% if r.mecanico %}
+                                    {{ r.mecanico.user.get_full_name|default:r.mecanico.user.username }}
+                                {% else %}
+                                    <span class="sr-muted">No asignado</span>
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                {% if r.boleta %}
+                                    <a href="{% url 'boletas:detalle_boleta' r.boleta.id %}" class="sr-btn-boleta">
+                                        🧾 Ver Boleta
+                                    </a>
+                                {% else %}
+                                    <span class="sr-muted">No generada</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                {% else %}
+                <div class="sr-empty">
+                    No tienes servicios finalizados aún.
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
