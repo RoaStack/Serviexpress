@@ -1,0 +1,182 @@
+/* ==========================================
+   Fondo del mecánico
+   ========================================== */
+body.mecanico-body {
+    background: url("/static/img/panelMecanico.png") no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+}
+
+/* Capa oscura encima del fondo */
+.oa-overlay {
+    width: 100%;
+    min-height: calc(100vh - 80px);
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 0 60px;
+}
+
+.oa-inner {
+    width: 95%;
+    max-width: 1150px;
+}
+
+/* ==========================================
+   Botón Volver
+   ========================================== */
+.oa-back-row {
+    margin-bottom: 10px;
+}
+
+.oa-back-link {
+    background: rgba(255, 255, 255, 0.18);
+    padding: 7px 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    color: #ffffff;
+    text-decoration: none;
+    backdrop-filter: blur(6px);
+    font-size: 0.9rem;
+    transition: 0.25s;
+}
+
+.oa-back-link:hover {
+    background: rgba(255, 255, 255, 0.26);
+    border-color: #5bb8ff;
+    box-shadow: 0 0 10px #5bb8ff;
+}
+
+/* ==========================================
+   Título principal
+   ========================================== */
+.oa-title {
+    color: #ffffff;
+    font-size: 2.4rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 25px;
+
+    background: rgba(0, 0, 0, 0.45);
+    padding: 10px 24px;
+    border-radius: 20px;
+    backdrop-filter: blur(5px);
+}
+
+/* ==========================================
+   Tarjeta / cuadro principal
+   ========================================== */
+.oa-card {
+    background: rgba(0, 0, 0, 0.92);
+    border-radius: 22px;
+    border: 2px solid rgba(59, 130, 246, 0.75);
+    padding: 18px 22px 20px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.9);
+}
+
+/* Scroll interno para la tabla */
+.oa-table-wrapper {
+    max-height: 420px;
+    overflow-y: auto;
+}
+
+/* ==========================================
+   Tabla
+   ========================================== */
+.oa-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #ffffff;
+    font-size: 0.9rem;
+}
+
+/* Cabecera */
+.oa-table thead tr {
+    background-color: #1f3b63;
+}
+
+.oa-table th {
+    padding: 10px 12px;
+    text-align: center;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+/* Filas */
+.oa-table tbody tr:nth-child(odd) {
+    background-color: #020617;
+}
+
+.oa-table tbody tr:nth-child(even) {
+    background-color: #050b1a;
+}
+
+.oa-table tbody tr:hover {
+    background-color: #0b1220;
+}
+
+.oa-table td {
+    padding: 9px 12px;
+    text-align: center;
+    border-top: 1px solid #111827;
+}
+
+/* Píldoras de servicio */
+.oa-service-pill {
+    display: inline-block;
+    background: #00bcd4;
+    color: #00141f;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.oa-muted {
+    color: #9ca3af;
+    font-size: 0.8rem;
+}
+
+/* Botón iniciar servicio */
+.oa-btn-primary {
+    display: inline-block;
+    background: #10b981;
+    color: #022c22;
+    font-weight: 600;
+    font-size: 0.8rem;
+    padding: 6px 14px;
+    border-radius: 999px;
+    text-decoration: none;
+    border: 1px solid #34d399;
+    transition: 0.2s ease;
+}
+
+.oa-btn-primary:hover {
+    background: #059669;
+    border-color: #6ee7b7;
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.9);
+}
+
+/* Mensaje vacío */
+.oa-empty {
+    text-align: center;
+    color: #ffffff;
+    padding: 40px 0;
+    font-size: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .oa-inner {
+        padding: 0 10px;
+    }
+    .oa-card {
+        padding: 14px 10px;
+    }
+    .oa-title {
+        font-size: 2rem;
+    }
+}

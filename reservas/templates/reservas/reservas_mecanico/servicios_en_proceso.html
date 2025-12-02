@@ -1,58 +1,93 @@
 {% extends 'base.html' %}
+{% load static %}
+
 {% block title %}Servicios en Proceso{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/reservas/servicios_en_proceso.css' %}">
+{% endblock %}
+
+{% block body_class %}mecanico-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
+
 {% block content %}
-<h2 class="mb-4 text-center">⚙️ Servicios en Proceso</h2>
 
-{% if reservas %}
-  <table class="table table-striped align-middle text-center">
-    <thead class="table-dark">
-      <tr>
-        <th>ID</th>
-        <th>Fecha</th>
-        <th>Hora</th>
-        <th>Servicios</th>
-        <th>Auto</th>
-        <th>Cliente</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for r in reservas %}
-      <tr>
-        <td>{{ r.id }}</td>
-        <td>{{ r.fecha }}</td>
-        <td>{{ r.hora }}</td>
-        <td>
-          {% for s in r.servicios.all %}
-            <span class="badge text-bg-info">{{ s.nombre }}</span>
-          {% empty %}
-            <span class="text-muted">Sin servicios</span>
-          {% endfor %}
-        </td>
-        <td>{{ r.marca_auto }} {{ r.modelo_auto }} ({{ r.anio }})</td>
-        <td>{{ r.cliente.user.get_full_name|default:r.cliente.user.username }}</td>
-        <td class="d-flex justify-content-center gap-2">
-          <!-- 🔩 Botón para registrar repuestos -->
-          <a href="{% url 'reservas:registrar_repuestos_reserva' r.id %}"
-            class="btn btn-outline-warning btn-sm">
-              🔩 Registrar Repuestos
-          </a>
+<div class="sep-overlay">
+    <div class="sep-inner">
 
+        <!-- 🔙 Volver -->
+        <div class="sep-back-row">
+            <a href="{% url 'usuarios:dashboard' %}" class="sep-back-link">
+                ← Volver al Dashboard
+            </a>
+        </div>
 
-          <!-- ✅ Botón para finalizar el servicio -->
-          <a href="{% url 'reservas:actualizar_estado_mecanico' r.id 'finalizada' %}"
-             class="btn btn-success btn-sm">
-             Finalizar servicio
-          </a>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-{% else %}
-  <div class="alert alert-info text-center">
-    No tienes servicios actualmente en proceso.
-  </div>
-{% endif %}
+        <!-- Título -->
+        <h1 class="sep-title">Servicios en proceso</h1>
+
+        <!-- Tarjeta -->
+        <div class="sep-card">
+            <div class="sep-table-wrapper">
+
+                {% if reservas %}
+                    <table class="sep-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                                <th>Servicios</th>
+                                <th>Auto</th>
+                                <th>Cliente</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for r in reservas %}
+                            <tr>
+                                <td>{{ r.id }}</td>
+                                <td>{{ r.fecha }}</td>
+                                <td>{{ r.hora }}</td>
+
+                                <td>
+                                    {% for s in r.servicios.all %}
+                                        <span class="sep-service-pill">{{ s.nombre }}</span>
+                                    {% empty %}
+                                        <span class="sep-muted">Sin servicios</span>
+                                    {% endfor %}
+                                </td>
+
+                                <td>{{ r.marca_auto }} {{ r.modelo_auto }} ({{ r.anio }})</td>
+
+                                <td>{{ r.cliente.user.get_full_name|default:r.cliente.user.username }}</td>
+
+                                <td class="sep-actions">
+                                    <a href="{% url 'reservas:registrar_repuestos_reserva' r.id %}"
+                                       class="sep-btn-warning">
+                                       🔩 Registrar Repuestos
+                                    </a>
+
+                                    <a href="{% url 'reservas:actualizar_estado_mecanico' r.id 'finalizada' %}"
+                                       class="sep-btn-success">
+                                        Finalizar servicio
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                {% else %}
+                    <div class="sep-empty">
+                        No tienes servicios en proceso actualmente.
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
 {% endblock %}
