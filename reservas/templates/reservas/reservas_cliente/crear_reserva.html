@@ -24,7 +24,6 @@
 
     <!-- Tarjeta -->
     <div class="reserva-card">
-
         <h2 class="reserva-card-title">Registrar nueva reserva</h2>
 
         <form method="post" class="reserva-form">
@@ -40,9 +39,11 @@
                 </button>
             </div>
         </form>
-
     </div>
-
 </div>
 
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/reservas/crear_reserva.js' %}"></script>
 {% endblock %}
