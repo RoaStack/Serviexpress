@@ -22,7 +22,7 @@
 
         <div class="dashboard-container">
 
-            <a href="#" class="dash-item item-1">
+            <a href="{% url 'reservas:selector_usuario' %}" class="dash-item item-1">
                 <img src="{% static 'img/icons/icons_admin/gestionUsuarios.png' %}" alt="Gestión de usuarios">
                 <span>Gestión de Usuarios</span>
             </a>
@@ -42,7 +42,7 @@
                 <span>Gestión de Servicios</span>
             </a>
 
-            <a href="#" class="dash-item item-5">
+            <a href="{% url 'proveedores:ficha_proveedores' %}" class="dash-item item-5">
                 <img src="{% static 'img/icons/icons_admin/gestionProveedores.png' %}" alt="Gestión de proveedores">
                 <span>Gestión de Proveedores</span>
             </a>
