@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Seleccionar Tipo de Usuario{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'usuarios/css/admin.css' %}">
+{% endblock %}
+
+{% block body_class %}dashboard-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
+
+{% block content %}
+<div class="dashboard-wrapper">
+    <div class="overlay">
+
+        <div class="dashboard-header">
+            <h2 class="dashboard-title">Selecciona tu tipo de cuenta</h2>
+            <p class="dashboard-subtitle">Elige cómo deseas continuar</p>
+        </div>
+
+        <div class="dashboard-container">
+            <!-- BOTÓN MECANICOS -->
+            <a href="{% url 'usuarios:gestion_mecanicos' %}" class="dash-item item-1">
+                <img src="{% static 'img/icons/icons_admin/gestionUsuarios.png' %}" alt="Cliente">
+                <span>Mecánico</span>
+            </a>
+
+            <!-- BOTÓN CLIENTES -->
+            <a href="{% url 'usuarios:gestion_clientes' %}" class="dash-item item-2">
+                <img src="{% static 'img/icons/icons_admin/gestionUsuarios.png' %}" alt="Mecánico">
+                <span>Cliente</span>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
