@@ -696,5 +696,5 @@ def eliminar_disponibilidad(request, pk):
 @login_required
 @user_passes_test(es_admin, login_url="usuarios:dashboard")
 def selector_usuario(request):
-    return render(request,"selector_usuario.html")
+    return render(request,"reservas/reservas_admin/selector_usuario.html")
 

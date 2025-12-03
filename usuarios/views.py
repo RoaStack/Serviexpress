@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import render,get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
@@ -8,6 +8,9 @@ from .forms import RegistroClienteForm, EditarPerfilForm
 from .models import Usuario
 from django.http import JsonResponse
 import json
+from .forms import RegistroMecanicoForm, EditarMecanicoForm   # los creas tú, similar a RegistroClienteForm
+
+
 
 # 🧩 Registro de clientes (desde la web)
 def registro_cliente(request):
@@ -121,3 +124,98 @@ def editar_perfil(request):
         return JsonResponse({"success": True})
 
     return JsonResponse({"success": False})
+
+
+def es_admin(user):
+    # Ajusta esta función a tu lógica real de admin
+    return user.is_staff or user.groups.filter(name="Admin").exists()
+
+
+# usuarios/views.py
+
+@login_required
+@user_passes_test(es_admin, login_url="usuarios:dashboard")
+def gestion_mecanicos(request):
+    mecanicos = (
+        Usuario.objects
+        .filter(user__groups__name="Mecanicos")
+        .select_related("user")
+        .order_by("user__username")
+    )
+    contexto = {
+        "mecanicos": mecanicos,
+        "total_mecanicos": mecanicos.count(),
+    }
+    # 👇 CAMBIA ESTA LÍNEA
+    return render(request, "usuarios/administrador/gestion_mecanicos.html", contexto)
+
+
+@login_required
+@user_passes_test(es_admin, login_url="usuarios:dashboard")
+def crear_mecanico(request):
+    if request.method == "POST":
+        form = RegistroMecanicoForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            grupo_mecanicos, _ = Group.objects.get_or_create(name="Mecanicos")
+            user.groups.add(grupo_mecanicos)
+            messages.success(request, "✅ Mecánico creado correctamente.")
+            return redirect("usuarios:gestion_mecanicos")
+        else:
+            messages.error(request, "Corrige los errores del formulario.")
+    else:
+        form = RegistroMecanicoForm()
+
+    # 👇 CAMBIA ESTA LÍNEA
+    return render(request, "usuarios/administrador/crear_mecanico.html", {"form": form})
+
+
+@login_required
+@user_passes_test(es_admin, login_url="usuarios:dashboard")
+def editar_mecanico(request, usuario_id):
+    mecanico = get_object_or_404(
+        Usuario,
+        id=usuario_id,
+        user__groups__name="Mecanicos"
+    )
+
+    if request.method == "POST":
+        form = EditarMecanicoForm(request.POST, instance=mecanico)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "✅ Datos del mecánico actualizados.")
+            return redirect("usuarios:gestion_mecanicos")
+        else:
+            messages.error(request, "Corrige los errores del formulario.")
+    else:
+        form = EditarMecanicoForm(instance=mecanico)
+
+    # 👇 CAMBIA ESTA LÍNEA
+    return render(
+        request,
+        "usuarios/administrador/editar_mecanico.html",
+        {"form": form, "mecanico": mecanico},
+    )
+
+
+@login_required
+@user_passes_test(es_admin, login_url="usuarios:dashboard")
+def eliminar_mecanico(request, usuario_id):
+    mecanico = get_object_or_404(
+        Usuario,
+        id=usuario_id,
+        user__groups__name="Mecanicos"
+    )
+
+    if request.method == "POST":
+        nombre = mecanico.user.username
+        mecanico.user.delete()
+        messages.success(request, f"🗑️ Mecánico '{nombre}' eliminado correctamente.")
+        return redirect("usuarios:gestion_mecanicos")
+
+    # Si quieres una página de confirmación:
+    return render(
+        request,
+        "usuarios/administrador/confirmar_eliminar_mecanico.html",
+        {"mecanico": mecanico},
+    )
