@@ -1,0 +1,178 @@
+/* ============================================
+   FONDO Y CENTRADO DEL FORMULARIO
+   ============================================ */
+
+body.dashboard-body {
+    background: url("/static/img/panelAdmin.png") no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+}
+
+.gm-form-overlay {
+    width: 100%;
+    min-height: calc(100vh - 80px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0;
+}
+
+
+/* ============================================
+   TARJETA DEL FORMULARIO (scroll interno)
+   ============================================ */
+
+.gm-form-card {
+    width: 90%;
+    max-width: 520px;
+    max-height: 85vh;
+    overflow-y: auto;
+
+    background: rgba(0, 0, 0, 0.80);
+    border-radius: 22px;
+    border: 2px solid #f97316;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.95);
+
+    padding: 30px;
+    color: #f1f5f9;
+
+    backdrop-filter: blur(6px);
+
+    /* 👇 NUEVO: todo el contenido del card alineado a la izquierda */
+    text-align: left;
+}
+
+/* Scrollbar */
+.gm-form-card::-webkit-scrollbar {
+    width: 8px;
+}
+.gm-form-card::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+}
+.gm-form-card::-webkit-scrollbar-thumb {
+    background: #f97316;
+    border-radius: 10px;
+}
+.gm-form-card::-webkit-scrollbar-thumb:hover {
+    background: #fb923c;
+}
+
+
+/* ============================================
+   TITULO
+   ============================================ */
+
+.gm-form-title {
+    font-size: 1.5rem;
+    /* 👇 el título sí centrado */
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+
+/* ============================================
+   CAMPOS DEL FORMULARIO
+   ============================================ */
+
+.gm-form-card form p {
+    margin-bottom: 14px;
+}
+
+.gm-form-card label {
+    display: block;
+    font-weight: 500;
+    color: #e5e7eb;
+    margin-bottom: 4px;
+    /* por si acaso, reforzamos izquierda */
+    text-align: left;
+}
+
+.gm-form-card input,
+.gm-form-card textarea,
+.gm-form-card select {
+    width: 100%;
+    padding: 10px 14px;
+
+    background: rgba(15, 23, 42, 0.95);
+    border: 1px solid #4b5563;
+    color: #f1f5f9;
+
+    border-radius: 12px;
+    outline: none;
+
+    transition: .2s;
+}
+
+.gm-form-card input:focus,
+.gm-form-card textarea:focus,
+.gm-form-card select:focus {
+    border-color: #f97316;
+    box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.45);
+}
+
+
+/* ============================================
+   BOTONES
+   ============================================ */
+
+.gm-form-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.gm-btn {
+    padding: 10px 22px;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: .2s;
+    cursor: pointer;
+    border: none;
+}
+
+.gm-btn-orange {
+    background: #f97316;
+    color: white;
+}
+.gm-btn-orange:hover {
+    background: #fb923c;
+    box-shadow: 0 0 12px rgba(249, 115, 22, 0.6);
+}
+
+.gm-btn-secondary {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    color: white;
+}
+.gm-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: #f97316;
+    box-shadow: 0 0 10px #f97316;
+}
+
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 650px) {
+    .gm-form-card {
+        padding: 25px;
+        max-height: 80vh;
+    }
+
+    .gm-form-actions {
+        flex-direction: column-reverse;
+        gap: 14px;
+    }
+
+    .gm-btn {
+        width: 100%;
+        text-align: center;
+    }
+}

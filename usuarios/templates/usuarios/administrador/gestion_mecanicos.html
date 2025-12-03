@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Gestión de Mecánicos{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'usuarios/css/gestion_mecanicos.css' %}">
+{% endblock %}
+
+{% block body_class %}dashboard-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
+
+{% block content %}
+
+<div class="gm-wrapper">
+  <div class="gm-overlay">
+
+    <!-- 🔙 Botón volver alineado a la izquierda -->
+    <div class="gm-back-container">
+      <a href="{% url 'reservas:selector_usuario' %}" class="gm-btn-back">
+        ← Volver al selector de usuarios
+      </a>
+    </div>
+
+    <!-- Título principal -->
+    <h1 class="gm-title">Gestión De Mecánicos</h1>
+    <p class="gm-subtitle">
+      Creación, listado y gestión de usuarios (Mecánicos)
+    </p>
+
+    <!-- Botones superiores -->
+    <div class="gm-top-actions">
+      <a href="{% url 'reservas:crear_disponibilidades_masivas' %}" class="gm-btn gm-btn-orange">
+        Gestionar horarios
+      </a>
+
+      <a href="{% url 'usuarios:crear_mecanico' %}" class="gm-btn gm-btn-orange">
+        Crear Usuario
+      </a>
+    </div>
+
+    <!-- Contador -->
+    <div class="gm-counter">
+      Cantidad de Usuarios: {{ total_mecanicos }}
+    </div>
+
+    <!-- Tabla con scroll -->
+    <div class="gm-table-wrapper">
+      <table class="gm-table">
+        <thead>
+          <tr>
+            <th>RUT</th>
+            <th>Dirección</th>
+            <th>Comuna</th>
+            <th>Teléfono</th>
+            <th>Nombre Usuario</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Correo</th>
+            <th>Tipo de Usuario</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        {% for m in mecanicos %}
+          <tr>
+            <td>{{ m.rut }}</td>
+            <td>{{ m.direccion }}</td>
+            <td>{{ m.comuna }}</td>
+            <td>{{ m.telefono }}</td>
+            <td>{{ m.user.username }}</td>
+            <td>{{ m.user.first_name }}</td>
+            <td>{{ m.user.last_name }}</td>
+            <td>{{ m.user.email }}</td>
+            <td>Mecánico</td>
+            <td class="gm-actions-cell">
+              <a href="{% url 'usuarios:editar_mecanico' m.id %}"
+                 class="gm-btn-table gm-btn-edit">
+                Editar
+              </a>
+
+              <form method="post"
+                    action="{% url 'usuarios:eliminar_mecanico' m.id %}"
+                    class="d-inline eliminar-form">
+                {% csrf_token %}
+                <button type="submit"
+                        class="gm-btn-table gm-btn-delete btn-eliminar">
+                  Eliminar
+                </button>
+              </form>
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="10" class="gm-empty">
+              No hay mecánicos registrados aún.
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const botonesEliminar = document.querySelectorAll(".btn-eliminar");
+
+  botonesEliminar.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      const confirmado = confirm(
+        "⚠️ ¿Estás seguro de eliminar este mecánico?\nEsta acción no se puede deshacer."
+      );
+      if (!confirmado) {
+        e.preventDefault();
+      }
+    });
+  });
+});
+</script>
+{% endblock %}
