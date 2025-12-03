@@ -1,0 +1,220 @@
+/* ============================================
+   FONDO MECÁNICO
+============================================ */
+body.mecanico-body {
+    background: url("/static/img/panelMecanico.png") no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+}
+
+/* Overlay */
+.mo-wrapper {
+    width: 100%;
+    min-height: calc(100vh - 80px);
+}
+
+.mo-overlay {
+    width: 100%;
+    min-height: calc(100vh - 80px);
+    background: rgba(0, 0, 0, 0.55);
+    padding: 40px 0 60px;
+    display: flex;
+    justify-content: center;
+}
+
+.mo-inner {
+    width: 95%;
+    max-width: 1150px;
+}
+
+/* ============================================
+   BOTÓN VOLVER
+============================================ */
+.mo-back-row {
+    margin-bottom: 14px;
+}
+
+.mo-back-link {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    padding: 7px 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.35);
+    color: #ffffff;
+    text-decoration: none;
+    backdrop-filter: blur(6px);
+    transition: .25s;
+}
+
+.mo-back-link:hover {
+    background: rgba(255,255,255,0.25);
+    border-color: #5bb8ff;
+    box-shadow: 0 0 10px #5bb8ff;
+}
+
+/* ============================================
+   TÍTULO
+============================================ */
+.mo-title {
+    color: #ffffff;
+    font-size: 2.2rem;
+    font-weight: 700;
+    text-align: center;
+    background: rgba(0,0,0,0.45);
+    padding: 12px 28px;
+    border-radius: 20px;
+    backdrop-filter: blur(5px);
+    margin-bottom: 25px;
+}
+
+/* ============================================
+   CARD
+============================================ */
+.mo-card {
+    background: rgba(0,0,0,0.92);
+    border-radius: 22px;
+    border: 2px solid rgba(59,130,246,0.8);
+    padding: 20px 24px 28px;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.9);
+}
+
+/* ============================================
+   TABLA
+============================================ */
+.mo-table-wrapper {
+    max-height: 380px;
+    overflow-y: auto;
+}
+
+.mo-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #ffffff;
+    font-size: 0.9rem;
+}
+
+.mo-table thead tr {
+    background: #1f3b63;
+}
+
+.mo-table th,
+.mo-table td {
+    padding: 10px;
+    text-align: center;
+}
+
+.mo-table tbody tr:nth-child(odd) {
+    background: #020617;
+}
+.mo-table tbody tr:nth-child(even) {
+    background: #050816;
+}
+.mo-table tbody tr:hover {
+    background: #0b1220;
+}
+
+/* ============================================
+   ESTADOS (PILLS)
+============================================ */
+.mo-pill-state {
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    display: inline-block;
+    min-width: 90px;
+    text-align: center;
+}
+
+/* 🔶 Pendiente (Amarillo) */
+.mo-pill-pendiente {
+    background: #facc15;
+    color: #443703;
+    border: 1px solid #eab308;
+}
+
+/* 🟢 Recibido */
+.mo-pill-recibido {
+    background: #10b981;
+    color: #022c22;
+    border: 1px solid #34d399;
+}
+
+/* 🟢 Finalizado */
+.mo-pill-finalizado {
+    background: #10b981;
+    color: #022c22;
+    border: 1px solid #34d399;
+}
+
+.mo-pill-muted {
+    padding: 6px 12px;
+    border-radius: 10px;
+    background: #6b7280;
+    color: white;
+    font-size: 0.75rem;
+}
+
+/* ============================================
+   BOTONES DE TABLA
+============================================ */
+.mo-btn-table {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: white;
+}
+
+.mo-btn-info {
+    background: #0ea5e9;
+}
+.mo-btn-info:hover {
+    background: #0284c7;
+    box-shadow: 0 0 10px #38bdf8;
+}
+
+.mo-btn-primary {
+    background: #3b82f6;
+}
+.mo-btn-primary:hover {
+    background: #2563eb;
+    box-shadow: 0 0 10px #60a5fa;
+}
+
+/* ============================================
+   BOTÓN CREAR NUEVA ORDEN
+============================================ */
+.mo-create-row {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.mo-btn-create {
+    background: #10b981;
+    color: #022c22;
+    padding: 9px 16px;
+    font-weight: 600;
+    border-radius: 12px;
+    text-decoration: none;
+    border: 1px solid #34d399;
+    transition: 0.25s;
+}
+
+.mo-btn-create:hover {
+    background: #059669;
+    border-color: #6ee7b7;
+    box-shadow: 0 0 8px rgba(16,185,129,0.9);
+}
+
+/* EMPTY MESSAGE */
+.mo-empty {
+    padding: 60px 0;
+    text-align: center;
+    color: white;
+    font-size: 1.1rem;
+}
