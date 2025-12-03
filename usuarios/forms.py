@@ -14,6 +14,29 @@ class RegistroClienteForm(forms.ModelForm):
         model = Usuario
         fields = ["rut", "direccion", "comuna", "telefono"]
 
+    # APLICAR CLASES Y PLACEHOLDERS A TODOS LOS CAMPOS
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        placeholders = {
+            "username": "Nombre de usuario",
+            "first_name": "Nombre",
+            "last_name": "Apellido",
+            "email": "Correo electrónico",
+            "password": "Contraseña",
+            "rut": "RUT",
+            "direccion": "Dirección",
+            "comuna": "Comuna",
+            "telefono": "Teléfono",
+        }
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({
+                "class": "login-input",
+                "autocomplete": "off",
+                "placeholder": placeholders.get(name, "")
+            })
+
     def clean_username(self):
         username = self.cleaned_data["username"].strip()
         if User.objects.filter(username=username).exists():

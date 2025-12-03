@@ -1,0 +1,248 @@
+/* ============================
+   Fondo (mismo que crear_reserva)
+   ============================ */
+body.cliente-body {
+    background: url("/static/img/panelCliente.png") no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+}
+
+/* Capa oscura encima del fondo */
+.misres-overlay {
+    width: 100%;
+    min-height: calc(100vh - 80px);
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 0 60px;
+}
+
+.misres-inner {
+    width: 95%;
+    max-width: 1150px;
+}
+
+/* Botón volver */
+.misres-back-row {
+    margin-bottom: 10px;
+}
+
+.misres-back-link {
+    background: rgba(255, 255, 255, 0.18);
+    padding: 7px 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    color: #ffffff;
+    text-decoration: none;
+    backdrop-filter: blur(6px);
+    font-size: 0.9rem;
+    transition: 0.25s;
+}
+
+.misres-back-link:hover {
+    background: rgba(255, 255, 255, 0.26);
+    border-color: #5bb8ff;
+    box-shadow: 0 0 10px #5bb8ff;
+}
+
+/* Título grande */
+.misres-title {
+    color: #ffffff;
+    font-size: 2.6rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 25px;
+
+    background: rgba(0, 0, 0, 0.45);
+    padding: 10px 28px;
+    border-radius: 20px;
+    backdrop-filter: blur(5px);
+}
+
+/* Cuadro principal */
+.misres-card {
+    background: rgba(0, 0, 0, 0.88);
+    border-radius: 22px;
+    border: 2px solid rgba(43, 123, 255, 0.65);
+    padding: 18px 22px 20px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.9);
+}
+
+/* Scroll interno para la tabla */
+.misres-table-wrapper {
+    max-height: 420px;
+    overflow-y: auto;
+}
+
+/* Tabla */
+.misres-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #ffffff;
+    font-size: 0.9rem;
+}
+
+/* Cabecera azul */
+.misres-table thead tr {
+    background-color: #2b7bff;
+}
+
+.misres-table thead th {
+    padding: 10px 12px;
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+}
+
+/* Filas del cuerpo */
+.misres-table tbody tr:nth-child(odd) {
+    background-color: #020617;
+}
+
+.misres-table tbody tr:nth-child(even) {
+    background-color: #050b1a;
+}
+
+.misres-table tbody tr:hover {
+    background-color: #0b1220;
+}
+
+.misres-table tbody td {
+    padding: 9px 12px;
+    text-align: center;
+    border-top: 1px solid #111827;
+}
+
+/* Píldoras de servicios */
+.misres-service-pill {
+    display: inline-block;
+    background: #00bcd4;
+    color: #00141f;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+/* Texto apagado */
+.misres-muted {
+    color: #9ca3af;
+    font-size: 0.8rem;
+}
+
+/* Badges de estado */
+.estado-badge {
+    display: inline-block;
+    min-width: 110px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+.estado-pendiente {
+    background: #fff500;
+    color: #1f2933;
+}
+
+.estado-proceso {
+    background: #1d4ed8;
+    color: #e5f0ff;
+}
+
+.estado-finalizada {
+    background: #16a34a;
+    color: #ecfdf5;
+}
+
+.estado-cancelada {
+    background: #6b7280;
+    color: #f9fafb;
+}
+
+/* Botones de acciones (cliente) */
+.misres-btn-cancelar,
+.misres-btn-boleta {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.misres-btn-cancelar {
+    background: #ff1744;
+    color: #ffffff;
+}
+
+.misres-btn-cancelar:hover {
+    background: #d50000;
+    box-shadow: 0 0 8px rgba(255, 23, 68, 0.7);
+}
+
+.misres-btn-boleta {
+    background: transparent;
+    color: #90caf9;
+    border: 1px solid #90caf9;
+}
+
+.misres-btn-boleta:hover {
+    background: #0b3b6f;
+}
+
+/* Mensaje vacío */
+.misres-empty {
+    color: #ffffff;
+    text-align: center;
+    padding: 40px 0;
+}
+
+/* Botón + Nueva Reserva debajo del cuadro */
+.misres-new-wrapper {
+    margin-top: 18px;
+    text-align: right;
+}
+
+.misres-btn-nueva {
+    display: inline-block;
+    padding: 9px 20px;
+    border-radius: 999px;
+    border: none;
+    background: #22c55e;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    box-shadow: 0 8px 18px rgba(34, 197, 94, 0.55);
+    transition: 0.2s;
+}
+
+.misres-btn-nueva:hover {
+    background: #16a34a;
+    box-shadow: 0 10px 24px rgba(22, 163, 74, 0.7);
+}
+
+/* Responsive pequeño */
+@media (max-width: 900px) {
+    .misres-inner {
+        max-width: 100%;
+        padding: 0 10px;
+    }
+
+    .misres-card {
+        padding: 14px 10px 14px;
+    }
+
+    .misres-table-wrapper {
+        max-height: 350px;
+    }
+
+    .misres-title {
+        font-size: 2rem;
+    }
+}

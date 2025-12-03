@@ -3,6 +3,11 @@
 {% block content %}
 
 <div class="container mt-4">
+    <div class="mb-3">
+        <a href="{% url 'pedidos:lista_ordenes' %}" class="btn btn-secondary">
+            ← Volver al Listado de Ordenes
+        </a>
+    </div>
 
     <div class="card shadow">
         <div class="card-header bg-success text-white">
@@ -43,13 +48,6 @@
             <div class="text-end mt-4">
                 <h3><strong>Total:</strong> ${{ total }}</h3>
             </div>
-
-            <div class="text-end mt-4">
-                <a href="{% url 'pedidos:lista_ordenes' %}" class="btn btn-primary">
-                    Volver al Listado de Órdenes
-                </a>
-            </div>
-
         </div>
     </div>
 

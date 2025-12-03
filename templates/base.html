@@ -23,21 +23,18 @@
     <!-- Estilos globales -->
     <link rel="stylesheet" href="{% static 'css/global.css' %}">
 
-    <!-- ✅ AGREGADO: Estilos de todos los navbars -->
+    <!-- Navbars -->
     <link rel="stylesheet" href="{% static 'css/navbar/navbar_admin.css' %}">
     <link rel="stylesheet" href="{% static 'css/navbar/navbar_cliente.css' %}">
     <link rel="stylesheet" href="{% static 'css/navbar/navbar_mecanico.css' %}">
     <link rel="stylesheet" href="{% static 'css/navbar/navbar_public.css' %}">
 
-    <!-- Estilos específicos (cliente, mecánico o admin) -->
     {% block extra_css %}{% endblock %}
 </head>
 
-<body class="bg-light d-flex flex-column min-vh-100">
-    <!-- Mensajes flash -->
-    {% include 'includes/messages.html' %}
+<!-- 👇 ESTA ES LA ÚNICA LÍNEA QUE IMPORTA -->
+<body class="{% block body_class %}bg-light d-flex flex-column min-vh-100{% endblock %}">
 
-    <!-- Navbar dinámica según rol -->
     {% if user.is_authenticated %}
         {% if es_admin %}
             {% include 'includes/navbar_admin.html' %}
@@ -51,22 +48,19 @@
     {% else %}
         {% include 'includes/navbar_public.html' %}
     {% endif %}
+    {% include 'includes/messages.html' %}
 
-    <!-- Contenido principal -->
     <main class="{% block main_class %}container flex-grow-1 mt-4{% endblock main_class %}">
         {% block content %}{% endblock %}
     </main>
 
-    <!-- Footer global -->
     {% include 'includes/footer.html' %}
 
-    <!-- Bootstrap JS -->
     <script 
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous">
     </script>
     {% block extra_js %}{% endblock %}
-
 </body>
 </html>

@@ -4,10 +4,19 @@ from repuestos.models import Repuesto
 from usuarios.models import Usuario
 
 class OrdenPedido(models.Model):
+    ESTADOS = [
+        ('pendiente', 'Pendiente'),
+        ('recibido', 'Recibido'),
+    ]
     fecha = models.DateField(auto_now_add=True)
     proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE)
     mecanico = models.ForeignKey(Usuario, on_delete=models.SET_NULL, null=True, related_name='ordenes_creadas')
     fecha_creacion = models.DateTimeField(auto_now_add=True, null=True)
+    estado = models.CharField(
+        max_length=20,
+        choices=ESTADOS,
+        default='pendiente'
+    )
 
     def __str__(self):
         return f"Orden #{self.id} - {self.proveedor.nombre}"
