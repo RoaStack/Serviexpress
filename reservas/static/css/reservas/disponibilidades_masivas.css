@@ -1,0 +1,309 @@
+/* ============================================
+   FONDO PANEL ADMIN
+   ============================================ */
+body.dashboard-body {
+    background: url("/static/img/panelAdmin.png") no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+}
+
+/* Contenedor general */
+.dm-wrapper {
+    width: 100%;
+    min-height: calc(100vh - 80px);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 0;
+}
+
+/* Capa interior (por si luego quieres más cosas) */
+.dm-overlay {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ============================================
+   TARJETA PRINCIPAL CON SCROLL INTERNO
+   ============================================ */
+.dm-card {
+    width: 92%;
+    max-width: 1100px;
+
+    background: rgba(0, 0, 0, 0.88);
+    border-radius: 22px;
+    border: 2px solid #f97316;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.95);
+
+    padding: 26px 30px 30px;
+    color: #f9fafb;
+
+    backdrop-filter: blur(6px);
+
+    /* altura y scroll interno */
+    max-height: 82vh;
+    overflow-y: auto;
+}
+
+/* Scroll de la tarjeta */
+.dm-card::-webkit-scrollbar {
+    width: 8px;
+}
+.dm-card::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+}
+.dm-card::-webkit-scrollbar-thumb {
+    background: #f97316;
+    border-radius: 10px;
+}
+.dm-card::-webkit-scrollbar-thumb:hover {
+    background: #fb923c;
+}
+
+/* ============================================
+   TÍTULOS
+   ============================================ */
+.dm-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.dm-subtitle {
+    font-size: 0.95rem;
+    color: #d1d5db;
+    margin-bottom: 20px;
+}
+
+/* ============================================
+   FORMULARIO / LAYOUT
+   ============================================ */
+
+.dm-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.dm-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 10px;
+}
+
+.dm-col {
+    flex: 1 1 260px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.dm-col-small {
+    max-width: 260px;
+}
+
+/* Bloques de una sola columna (como días semana, etc.) */
+.dm-block {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+/* Labels genéricos */
+.dm-label,
+.dm-card label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 4px;
+    color: #e5e7eb;
+}
+
+/* ============================================
+   CAMPOS DE FORMULARIO
+   ============================================ */
+
+.dm-card input[type="text"],
+.dm-card input[type="number"],
+.dm-card input[type="date"],
+.dm-card input[type="time"],
+.dm-card select {
+    width: 100%;
+    padding: 9px 12px;
+    font-size: 0.9rem;
+
+    background: rgba(15, 23, 42, 0.95);
+    border: 1px solid #4b5563;
+    color: #f9fafb;
+
+    border-radius: 10px;
+    outline: none;
+    transition: 0.18s;
+}
+
+.dm-card input::placeholder {
+    color: #9ca3af;
+}
+
+.dm-card input:focus,
+.dm-card select:focus {
+    border-color: #f97316;
+    box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.4);
+}
+
+/* Para que el select se vea más moderno */
+.dm-card select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+/* ============================================
+   DÍAS DE LA SEMANA (CHECKBOX GRID)
+   ============================================ */
+
+.dm-dias-wrapper {
+    padding: 10px 12px;
+    background: rgba(15, 23, 42, 0.85);
+    border-radius: 12px;
+    border: 1px solid #4b5563;
+}
+
+/* Django envuelve MultipleChoiceField en un <ul> */
+.dm-dias-wrapper ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    row-gap: 6px;
+    column-gap: 18px;
+}
+
+.dm-dias-wrapper li {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.dm-dias-wrapper input[type="checkbox"] {
+    margin: 0;
+}
+
+.dm-dias-wrapper label {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #e5e7eb;
+}
+
+/* ============================================
+   BOTONES DE FORMULARIO
+   ============================================ */
+
+.dm-actions {
+    margin-top: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.dm-btn-primary,
+.dm-btn-secondary {
+    border-radius: 12px;
+    padding: 10px 22px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: 0.25s ease-in-out;
+    text-decoration: none;
+}
+
+/* Botón principal naranja */
+.dm-btn-primary {
+    background: #f97316;
+    color: #fff;
+    box-shadow: 0 0 10px rgba(249, 115, 22, 0.4);
+}
+.dm-btn-primary:hover {
+    background: #fb923c;
+    box-shadow: 0 0 14px rgba(249, 115, 22, 0.7);
+    transform: translateY(-2px);
+}
+
+/* Botón secundario oscuro */
+.dm-btn-secondary {
+    background: rgba(255, 255, 255, 0.15);
+    color: #e5e7eb;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+.dm-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: #f97316;
+    box-shadow: 0 0 12px rgba(249, 115, 22, 0.5);
+    transform: translateY(-2px);
+}
+
+/* ============================================
+   BOTÓN VOLVER (FUERA DE LA CARD)
+   ============================================ */
+
+.dm-back-container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 0 auto 15px auto;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.dm-btn-back {
+    padding: 10px 18px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    transition: .2s;
+}
+
+.dm-btn-back:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: #f97316;
+    box-shadow: 0 0 10px #f97316;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 992px) {
+    .dm-card {
+        width: 95%;
+        padding: 22px 20px 24px;
+    }
+}
+
+@media (max-width: 576px) {
+    .dm-title {
+        font-size: 1.4rem;
+        text-align: center;
+    }
+    .dm-subtitle {
+        text-align: center;
+    }
+    .dm-actions {
+        flex-direction: column;
+    }
+    .dm-btn-primary,
+    .dm-btn-secondary {
+        width: 100%;
+        text-align: center;
+    }
+}
