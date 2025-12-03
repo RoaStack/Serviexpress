@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.utils import timezone
 from django.template.loader import render_to_string
 from django.views.decorators.csrf import csrf_exempt
-from .models import Repuesto, Carrito, ItemCarrito
+from .models import Repuesto, Carrito, ItemCarrito, Compra, CompraItem
 from django.http import JsonResponse
 
 def es_cliente(user):
@@ -97,32 +97,71 @@ def generar_comprobante(request):
 
     if carrito.items.count() == 0:
         messages.warning(request, "Tu carrito está vacío, no puedes generar un comprobante.")
-        return redirect('repuestos:ver_repuestos')
+        return redirect('ecommerce:ver_carrito')
 
-    # Primero validamos que haya stock suficiente
+    # Validar stock
     for item in carrito.items.all():
         if item.cantidad > item.repuesto.stock:
             messages.error(request, f"No hay stock suficiente de: {item.repuesto.descripcion}")
             return redirect('ecommerce:ver_carrito')
 
-    # Descontar stock de cada repuesto
+    # Descontar stock
     for item in carrito.items.all():
         repuesto = item.repuesto
         repuesto.stock -= item.cantidad
-        repuesto.save()  # Guarda el nuevo stock
+        repuesto.save()
 
-    total = carrito.total
+    # Crear la Compra
+    compra = Compra.objects.create(
+        usuario=request.user,
+        total=carrito.total
+    )
 
-    # Guardar datos para mostrar en el comprobante ANTES de vaciar el carrito
-    items_para_comprobante = list(carrito.items.all())  
+    # Crear los CompraItem
+    items_para_comprobante = []
 
-    # Vaciar carrito después de la compra
+    for item in carrito.items.all():
+        compra_item = CompraItem.objects.create(
+            compra=compra,
+            repuesto=item.repuesto,
+            cantidad=item.cantidad,
+            precio_unitario=item.repuesto.precio_venta
+        )
+        items_para_comprobante.append(compra_item)
+
+    # Vaciar carrito
     carrito.items.all().delete()
 
-    # Enviar datos al template
+    # Renderizar comprobante
     return render(request, 'comprobante.html', {
         'items': items_para_comprobante,
-        'total': total,
+        'total': compra.total,
         'usuario': request.user,
-        'fecha': timezone.now(),
+        'fecha': compra.fecha,
     })
+
+@login_required
+@user_passes_test(es_cliente)
+def mis_compras(request):
+    compras = Compra.objects.filter(usuario=request.user).order_by('-fecha')
+    return render(request, "mis_compras.html", {
+        "compras": compras
+    })
+
+
+@login_required
+@user_passes_test(es_cliente)
+def detalle_compra(request, compra_id):
+    compra = get_object_or_404(Compra, id=compra_id, usuario=request.user)
+    items = compra.items.all() 
+
+    contexto = {
+        "usuario": request.user,
+        "fecha": compra.fecha,
+        "items": items,
+        "total": compra.total
+    }
+
+    return render(request, "comprobante.html", contexto)
+
+
