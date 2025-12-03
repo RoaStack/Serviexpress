@@ -28,3 +28,29 @@ class ItemCarrito(models.Model):
     @property
     def subtotal(self):
         return self.repuesto.precio_venta * self.cantidad
+    
+class Compra(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='compras')
+    fecha = models.DateTimeField(auto_now_add=True)
+    total = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f"Compra #{self.id} - {self.usuario.username}"
+
+    @property
+    def cantidad_items(self):
+        return sum(item.cantidad for item in self.items.all())
+
+
+class CompraItem(models.Model):
+    compra = models.ForeignKey(Compra, on_delete=models.CASCADE, related_name='items')
+    repuesto = models.ForeignKey(Repuesto, on_delete=models.SET_NULL, null=True)
+    cantidad = models.PositiveIntegerField()
+    precio_unitario = models.PositiveIntegerField()
+
+    @property
+    def subtotal(self):
+        return self.cantidad * self.precio_unitario
+
+    def __str__(self):
+        return f"{self.cantidad} x {self.repuesto.descripcion}"
