@@ -25,4 +25,8 @@ urlpatterns = [
     path("admin/mecanicos/crear/", views.crear_mecanico, name="crear_mecanico"),
     path("admin/mecanicos/<int:usuario_id>/editar/", views.editar_mecanico, name="editar_mecanico"),
     path("admin/mecanicos/<int:usuario_id>/eliminar/", views.eliminar_mecanico, name="eliminar_mecanico"),
+    path("admin/clientes/", views.gestion_clientes, name="gestion_clientes"),
+    path("admin/clientes/crear/", views.crear_cliente, name="crear_cliente"),
+    path("admin/clientes/<int:usuario_id>/editar/", views.editar_cliente, name="editar_cliente"),
+    path("admin/clientes/<int:usuario_id>/eliminar/", views.eliminar_cliente, name="eliminar_cliente"),
 ]

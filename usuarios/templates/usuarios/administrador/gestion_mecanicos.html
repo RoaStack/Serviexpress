@@ -3,12 +3,10 @@
 
 {% block title %}Gestión de Mecánicos{% endblock %}
 
-{# CSS específico de esta vista #}
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'usuarios/css/gestion_mecanicos.css' %}">
 {% endblock %}
 
-{# Fondo del panel admin #}
 {% block body_class %}dashboard-body{% endblock %}
 {% block main_class %}p-0 m-0 w-100{% endblock %}
 
@@ -17,8 +15,15 @@
 <div class="gm-wrapper">
   <div class="gm-overlay">
 
+    <!-- 🔙 Botón volver alineado a la izquierda -->
+    <div class="gm-back-container">
+      <a href="{% url 'reservas:selector_usuario' %}" class="gm-btn-back">
+        ← Volver al selector de usuarios
+      </a>
+    </div>
+
     <!-- Título principal -->
-    <h1 class="gm-title">Gestión De Usuarios</h1>
+    <h1 class="gm-title">Gestión De Mecánicos</h1>
     <p class="gm-subtitle">
       Creación, listado y gestión de usuarios (Mecánicos)
     </p>
@@ -102,7 +107,6 @@
 
 {% endblock %}
 
-{# JS para confirmar eliminación en la misma vista #}
 {% block extra_js %}
 <script>
 document.addEventListener("DOMContentLoaded", () => {
@@ -114,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "⚠️ ¿Estás seguro de eliminar este mecánico?\nEsta acción no se puede deshacer."
       );
       if (!confirmado) {
-        e.preventDefault();   // Cancela el envío del formulario
+        e.preventDefault();
       }
     });
   });

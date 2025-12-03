@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from .models import Usuario
 
 
+
 class RegistroClienteForm(forms.ModelForm):
     username   = forms.CharField(label="Nombre de usuario", max_length=150)
     first_name = forms.CharField(label="Nombre", max_length=150)
@@ -213,3 +214,23 @@ class EditarMecanicoForm(forms.ModelForm):
             perfil.save()
 
         return user
+
+
+# ============================================
+#   FORMULARIOS PARA CLIENTES (ADMIN)
+#   (reutilizan la lógica de mecánicos)
+# ============================================
+
+class RegistroClienteAdminForm(RegistroMecanicoForm):
+    """
+    Igual que RegistroMecanicoForm, pero lo usamos desde el admin
+    para crear CLIENTES (el grupo se asigna en la vista).
+    """
+    pass
+
+
+class EditarClienteForm(EditarMecanicoForm):
+    """
+    Igual que EditarMecanicoForm, pero lo usamos para CLIENTES.
+    """
+    pass
