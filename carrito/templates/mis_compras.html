@@ -1,25 +1,36 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block title %}Mis Compras{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/carrito/mis_compras.css' %}">
+{% endblock %}
+
+{% block body_class %}cliente-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
+
 {% block content %}
-<div class="container mt-4">
+<div class="miscom-overlay">
+    <div class="miscom-inner">
 
-    <div class="mb-3">
-        <a href="{% url 'usuarios:dashboard' %}" class="btn btn-secondary">
-            ← Volver al Dashboard
-        </a>
-    </div>
-
-    <div class="card shadow">
-        <div class="card-header bg-primary text-white">
-            <h3 class="mb-0">Mis Compras</h3>
+        <!-- Botón volver -->
+        <div class="miscom-back-row">
+            <a href="{% url 'usuarios:dashboard' %}" class="miscom-back-link">
+                ← Volver al Dashboard
+            </a>
         </div>
 
-        <div class="card-body">
+        <!-- Título -->
+        <h1 class="miscom-title">Mis Compras</h1>
 
-            {% if compras %}
-                <table class="table table-hover table-bordered">
-                    <thead class="table-dark">
+        <!-- Contenedor principal -->
+        <div class="miscom-card">
+            <div class="miscom-table-wrapper">
+
+                {% if compras %}
+                <table class="miscom-table">
+                    <thead>
                         <tr>
                             <th>ID Compra</th>
                             <th>Fecha</th>
@@ -36,22 +47,26 @@
                             <td>${{ compra.total|floatformat:0 }}</td>
                             <td>
                                 <a href="{% url 'ecommerce:detalle_compra' compra.id %}" 
-                                   class="btn btn-sm btn-info">
+                                   class="miscom-btn-detalle">
                                     Ver
                                 </a>
                             </td>
                         </tr>
                         {% endfor %}
                     </tbody>
+
                 </table>
 
-            {% else %}
-                <div class="alert alert-warning text-center">
-                    No tienes compras registradas.
-                </div>
-            {% endif %}
+                {% else %}
+                    <div class="miscom-empty">
+                        No tienes compras registradas.
+                    </div>
+                {% endif %}
 
+            </div>
         </div>
+
     </div>
 </div>
 {% endblock %}
+

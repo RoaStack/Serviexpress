@@ -1,48 +1,69 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Comprobante de Compra{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/carrito/comprobante.css' %}">
+{% endblock %}
+
+{% block body_class %}cliente-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
+
 {% block content %}
+<div class="comp-overlay">
+    <div class="comp-inner">
 
-<div class="container mt-4">
-  <div class="card shadow p-4">
+        <!-- Título -->
+        <h1 class="comp-title">🧾 Comprobante de Compra</h1>
 
-    <h2 class="text-center mb-4">🧾 Comprobante de Compra</h2>
+        <!-- Card principal -->
+        <div class="comp-card">
 
-    <p><strong>Cliente:</strong> {{ usuario.username }}</p>
-    <p><strong>Fecha:</strong> {{ fecha|date:"d/m/Y H:i" }}</p>
-    <hr>
+            <p class="comp-text"><strong>Cliente:</strong> {{ usuario.username }}</p>
+            <p class="comp-text"><strong>Fecha:</strong> {{ fecha|date:"d/m/Y H:i" }}</p>
 
-    <table class="table table-bordered mt-3">
-      <thead class="table-light">
-        <tr>
-          <th>Repuesto</th>
-          <th>Cantidad</th>
-          <th>Precio</th>
-          <th>Subtotal</th>
-        </tr>
-      </thead>
+            <hr class="comp-divider">
 
-      <tbody>
-        {% for item in items %}
-        <tr>
-          <td>{{ item.repuesto.descripcion }}</td>
-          <td>{{ item.cantidad }}</td>
-          <td>${{ item.repuesto.precio_venta }}</td>
-          <td>${{ item.subtotal }}</td>
-        </tr>
-        {% endfor %}
-        <tr class="table-success">
-          <td colspan="3" class="text-end"><strong>Total:</strong></td>
-          <td><strong>${{ total }}</strong></td>
-        </tr>
-      </tbody>
-    </table>
+            <!-- Tabla -->
+            <div class="comp-table-wrapper">
+                <table class="comp-table">
+                    <thead>
+                        <tr>
+                            <th>Repuesto</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
 
-    <div class="d-flex justify-content-end mt-4">
-      <a href="{% url 'ecommerce:ver_repuestos' %}" class="btn btn-primary">
-        ⬅️ Volver a la tienda
-      </a>
+                    <tbody>
+                        {% for item in items %}
+                        <tr>
+                            <td>{{ item.repuesto.descripcion }}</td>
+                            <td>{{ item.cantidad }}</td>
+                            <td>${{ item.repuesto.precio_venta }}</td>
+                            <td>${{ item.subtotal }}</td>
+                        </tr>
+                        {% endfor %}
+
+                        <tr class="comp-total-row">
+                            <td colspan="3" class="text-end"><strong>Total:</strong></td>
+                            <td><strong>${{ total }}</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Botón volver -->
+            <div class="comp-btn-wrapper">
+                <a href="{% url 'ecommerce:ver_repuestos' %}" class="comp-btn-back">
+                    ⬅️ Volver a la tienda
+                </a>
+            </div>
+
+        </div>
+
     </div>
-
-  </div>
 </div>
-
 {% endblock %}
