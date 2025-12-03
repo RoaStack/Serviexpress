@@ -1,70 +1,87 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}Recepción de Orden{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'pedidos/css/recepcionar_orden.css' %}">
+{% endblock %}
+
+{% block body_class %}mecanico-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
 
-    <div class="mb-3">
-        <a href="{% url 'pedidos:lista_ordenes' %}" class="btn btn-secondary">
-            ← Volver al Listado
+<div class="ro-wrapper">
+  <div class="ro-overlay">
+    <div class="ro-inner">
+
+      <!-- Botón Volver -->
+      <div class="ro-back-row">
+        <a href="{% url 'pedidos:lista_ordenes' %}" class="ro-back-link">
+          ← Volver al listado
         </a>
+      </div>
+
+      <!-- Título -->
+      <h1 class="ro-title">Recepción de Orden #{{ orden.id }}</h1>
+
+      <!-- CARD PRINCIPAL -->
+      <div class="ro-card">
+        <form method="POST" class="ro-form">
+          {% csrf_token %}
+
+          <div class="ro-info-block">
+            <p><span class="ro-info-label">Proveedor:</span> {{ orden.proveedor.nombre }}</p>
+            <p><span class="ro-info-label">Fecha Orden:</span> {{ orden.fecha_creacion }}</p>
+            <p><span class="ro-info-label">Estado actual:</span> {{ orden.get_estado_display }}</p>
+          </div>
+
+          <hr class="ro-divider">
+
+          <h2 class="ro-subtitle">Repuestos recibidos</h2>
+
+          <div class="ro-table-wrapper">
+            <table class="ro-table">
+              <thead>
+                <tr>
+                  <th>Repuesto</th>
+                  <th>Cantidad recibida</th>
+                  <th>Precio U.</th>
+                  <th>Subtotal</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for d in detalles %}
+                <tr>
+                  <td>{{ d.repuesto.descripcion }}</td>
+                  <td>
+                    <input
+                      type="number"
+                      class="ro-input"
+                      name="cantidad_{{ d.id }}"
+                      value="{{ d.cantidad }}"
+                      min="0">
+                  </td>
+                  <td>${{ d.precio_unitario }}</td>
+                  <td>${{ d.subtotal }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+          <div class="ro-actions">
+            <button type="submit" class="ro-btn-confirm">
+              Confirmar recepción
+            </button>
+          </div>
+
+        </form>
+      </div>
+
     </div>
-
-    <div class="card shadow">
-        <div class="card-header bg-warning text-dark">
-            <h3 class="mb-0">Recepción de Orden #{{ orden.id }}</h3>
-        </div>
-
-        <div class="card-body">
-
-            <form method="POST">
-                {% csrf_token %}
-
-                <p><strong>Proveedor:</strong> {{ orden.proveedor.nombre }}</p>
-                <p><strong>Fecha Orden:</strong> {{ orden.fecha_creacion }}</p>
-                <p><strong>Estado Actual:</strong> {{ orden.get_estado_display }}</p>
-
-                <hr>
-
-                <h4>Repuestos Recibidos</h4>
-
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Repuesto</th>
-                            <th>Cantidad Recibida</th>
-                            <th>Precio U.</th>
-                            <th>Subtotal</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        {% for d in detalles %}
-                        <tr>
-                            <td>{{ d.repuesto.descripcion }}</td>
-                            <td>
-                                <input type="number"
-                                       class="form-control"
-                                       name="cantidad_{{ d.id }}"
-                                       value="{{ d.cantidad }}"
-                                       min="0">
-                            </td>
-
-                            <td>${{ d.precio_unitario }}</td>
-                            <td>${{ d.subtotal }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-
-                <div class="text-end mt-3">
-                    <button type="submit" class="btn btn-success btn-lg">
-                        Confirmar Recepción
-                    </button>
-                </div>
-
-            </form>
-
-        </div>
-    </div>
+  </div>
 </div>
+
 {% endblock %}

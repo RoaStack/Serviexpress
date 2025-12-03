@@ -1,0 +1,217 @@
+/* ============================================
+   FONDO MECÁNICO
+   ============================================ */
+body.mecanico-body {
+    background: url("/static/img/panelMecanico.png") no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+}
+
+/* Capa oscura */
+.do-wrapper {
+    width: 100%;
+    min-height: calc(100vh - 80px);
+}
+
+.do-overlay {
+    width: 100%;
+    min-height: calc(100vh - 80px);
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 0 60px;
+}
+
+.do-inner {
+    width: 95%;
+    max-width: 1100px;
+}
+
+/* ============================================
+   BOTÓN VOLVER
+   ============================================ */
+.do-back-row {
+    margin-bottom: 12px;
+}
+
+.do-back-link {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.18);
+    padding: 7px 18px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    color: #ffffff;
+    text-decoration: none;
+    backdrop-filter: blur(6px);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: 0.25s;
+}
+
+.do-back-link:hover {
+    background: rgba(255, 255, 255, 0.26);
+    border-color: #5bb8ff;
+    box-shadow: 0 0 10px #5bb8ff;
+}
+
+/* ============================================
+   TÍTULO
+   ============================================ */
+.do-title {
+    color: #ffffff;
+    font-size: 2.2rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 22px;
+    background: rgba(0, 0, 0, 0.45);
+    padding: 10px 24px;
+    border-radius: 20px;
+    backdrop-filter: blur(5px);
+}
+
+/* ============================================
+   CARD PRINCIPAL
+   ============================================ */
+.do-card {
+    background: rgba(0, 0, 0, 0.92);
+    border-radius: 22px;
+    border: 2px solid rgba(59, 130, 246, 0.8); /* azul */
+    padding: 22px 24px 24px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.9);
+    color: #e5e7eb;
+}
+
+/* Datos generales */
+.do-meta p {
+    margin: 4px 0;
+    font-size: 0.98rem;
+}
+
+.do-meta span {
+    font-weight: 600;
+    color: #ffffff;
+}
+
+/* Línea divisora */
+.do-divider {
+    height: 1px;
+    margin: 16px 0 12px;
+    background: linear-gradient(
+        to right,
+        transparent,
+        rgba(59, 130, 246, 0.9),
+        transparent
+    );
+}
+
+/* Título de sección */
+.do-section-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #ffffff;
+}
+
+/* ============================================
+   TABLA
+   ============================================ */
+.do-table-wrapper {
+    max-height: 280px;
+    overflow-y: auto;
+}
+
+/* Scroll interno */
+.do-table-wrapper::-webkit-scrollbar {
+    width: 8px;
+}
+.do-table-wrapper::-webkit-scrollbar-track {
+    background: #020617;
+}
+.do-table-wrapper::-webkit-scrollbar-thumb {
+    background: #3b82f6;
+    border-radius: 999px;
+}
+
+.do-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #ffffff;
+    font-size: 0.9rem;
+}
+
+/* Cabecera */
+.do-table thead tr {
+    background-color: #1f3b63;
+}
+.do-table th {
+    padding: 9px 10px;
+    text-align: center;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+/* Filas */
+.do-table tbody tr:nth-child(odd) {
+    background-color: #020617;
+}
+.do-table tbody tr:nth-child(even) {
+    background-color: #050b1a;
+}
+.do-table tbody tr:hover {
+    background-color: #0b1220;
+}
+.do-table td {
+    padding: 8px 10px;
+    text-align: center;
+    border-top: 1px solid #111827;
+}
+
+/* ============================================
+   TOTAL
+   ============================================ */
+.do-total-row {
+    margin-top: 18px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: baseline;
+    gap: 8px;
+}
+
+.do-total-label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.do-total-value {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #22c55e;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 900px) {
+    .do-card {
+        padding: 18px 16px 20px;
+    }
+    .do-title {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .do-inner {
+        width: 96%;
+    }
+    .do-title {
+        font-size: 1.8rem;
+    }
+    .do-total-row {
+        justify-content: center;
+    }
+}
