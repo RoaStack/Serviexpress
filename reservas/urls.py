@@ -22,7 +22,9 @@ urlpatterns = [
     path("servicios_realizados/", views.servicios_realizados_cliente, name="servicios_realizados_cliente"),
 
     # Admin genera disponibilidades masivas
-    path("admin/disponibilidades/masivas/", views.crear_disponibilidades_masivas, name="crear_disponibilidades_masivas"),
+    path("admin/selector_usuario/", views.selector_usuario, name="selector_usuario"),
+    path("admin/selector_usuario/gestion_mecanico", views.selector_usuario, name="gestion_mecanico"),
+    path("admin/selector_usuario/gestion_mecanico/disponibilidades/masivas/", views.crear_disponibilidades_masivas, name="crear_disponibilidades_masivas"),
 
      # 🔹 Admin: gestionar disponibilidades existentes
     path("admin/disponibilidades/", views.gestionar_disponibilidades, name="gestionar_disponibilidades"),
