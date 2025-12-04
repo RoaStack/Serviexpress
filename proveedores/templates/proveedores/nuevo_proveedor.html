@@ -1,46 +1,39 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Nuevo Proveedor{% endblock %}
+{% block title %}Crear Proveedor{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'usuarios/css/admin.css' %}">
-<style>
-  /* --- Botón dorado ServiExpress --- */
-    .btn-serviexpress {
-        background-color: #ffc107;
-        color: #000;
-        border: none;
-        font-weight: 600;
-        transition: all 0.2s ease-in-out;
-    }
-    .btn-serviexpress:hover {
-        background-color: #e0a800;
-        color: #000;
-    }
-</style>
+<link rel="stylesheet" href="{% static 'usuarios/css/crear_mecanico.css' %}">
+<link rel="stylesheet" href="{% static 'css/crear_proveedor.css' %}">
 {% endblock %}
+
+{% block body_class %}dashboard-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
-    <div class="text-center mb-4">
-        <h2 class="dashboard-title">Registrar nuevo proveedor</h2>
-        <p class="dashboard-subtitle">Agrega un nuevo proveedor al sistema ServiExpress.</p>
-    </div>
+<div class="gm-overlay gm-form-overlay">
 
-    {% include 'includes/messages.html' %}
+    <div class="gm-form-card">
+        <h2 class="gm-form-title">Registrar nuevo proveedor</h2>
 
-    <div class="d-flex justify-content-center">
-        <form method="post" class="bg-white p-4 rounded shadow-sm" style="width:90%; max-width:520px;">
-        {% csrf_token %}
-        {{ form.as_p }}
+        {% include 'includes/messages.html' %}
 
-        <div class="d-flex justify-content-between mt-3">
-            <button type="submit" class="btn btn-serviexpress">Guardar</button>
-            <a href="{% url 'proveedores:ficha_proveedores' %}" class="btn btn-outline-secondary fw-semibold">Cancelar</a>
-        </div>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <div class="gm-form-actions">
+                <a href="{% url 'proveedores:ficha_proveedores' %}" class="gm-btn gm-btn-secondary">
+                    Volver
+                </a>
+
+                <button type="submit" class="gm-btn gm-btn-orange">
+                    Guardar
+                </button>
+            </div>
         </form>
     </div>
+
 </div>
 {% endblock %}
-

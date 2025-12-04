@@ -5,6 +5,7 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'usuarios/css/reportes.css' %}">
+<link rel="stylesheet" href="{% static 'usuarios/css/gestion_mecanicos.css' %}">
 {% endblock %}
 
 {% block body_class %}dashboard-body{% endblock %}
@@ -13,6 +14,11 @@
 {% block content %}
 <div class="reportes-wrapper">
     <div class="overlay">
+        <div class="gm-back-container">
+            <a href="{% url 'usuarios:dashboard' %}" class="gm-btn-back">
+                ← Volver al dashboard
+            </a>
+        </div>
 
         <h2 class="reportes-title">Panel de Reportes</h2>
         <p class="reportes-subtitle">Información clave del sistema</p>
