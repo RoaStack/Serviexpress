@@ -96,7 +96,7 @@
           <tbody>
             {% for r in boleta.detalles_repuestos.all %}
             <tr>
-              <td>{{ r.repuesto.descripcion }}</td>
+              <td>{{ r.repuesto.nombre }}</td>
               <td>{{ r.cantidad }}</td>
               <td>${{ r.precio_unitario|floatformat:0 }}</td>
               <td>${{ r.subtotal|floatformat:0 }}</td>
