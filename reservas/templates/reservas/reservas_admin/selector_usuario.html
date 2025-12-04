@@ -5,6 +5,7 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'usuarios/css/admin.css' %}">
+<link rel="stylesheet" href="{% static 'usuarios/css/gestion_mecanicos.css' %}">
 {% endblock %}
 
 {% block body_class %}dashboard-body{% endblock %}
@@ -13,7 +14,11 @@
 {% block content %}
 <div class="dashboard-wrapper">
     <div class="overlay">
-
+        <div class="gm-back-container">
+            <a href="{% url 'usuarios:dashboard' %}" class="gm-btn-back">
+                ← Volver al dashboard
+            </a>
+        </div>
         <div class="dashboard-header">
             <h2 class="dashboard-title">Gestión usuarios</h2>
             <p class="dashboard-subtitle">seleciona tipo de usuario</p>
