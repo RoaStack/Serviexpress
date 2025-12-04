@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Gestionar disponibilidades{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/reservas/gestionar_disponibilidades.css' %}">
+{% endblock %}
+
+{% block body_class %}dashboard-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
+
+{% block content %}
+
+<div class="gd-wrapper">
+  <div class="gd-overlay">
+
+    <!-- 🔙 Botón para volver a crear masivas -->
+    <div class="gd-back-container">
+      <a href="{% url 'reservas:crear_disponibilidades_masivas' %}" class="gd-btn-back">
+        ← Volver a crear disponibilidades masivas
+      </a>
+    </div>
+
+    <!-- Tarjeta principal -->
+    <div class="gd-card">
+
+      <h1 class="gd-title">Gestionar disponibilidades</h1>
+
+      <!-- Filtro por mecánico -->
+      <form method="get" class="gd-filter">
+        <div class="gd-filter-row">
+          <div class="gd-filter-col">
+            <label class="gd-label">Filtrar por mecánico</label>
+            <select name="mecanico" class="gd-select">
+              <option value="">-- Todos --</option>
+              {% for m in mecanicos %}
+                <option value="{{ m.id }}"
+                        {% if m.id|stringformat:"s" == mecanico_seleccionado %}selected{% endif %}>
+                  {{ m.user.get_full_name|default:m.user.username }}
+                </option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="gd-filter-col gd-filter-col-small">
+            <button type="submit" class="gd-btn-primary w-100">
+              Aplicar filtro
+            </button>
+          </div>
+        </div>
+      </form>
+
+      {% if disponibilidades %}
+        <!-- Tabla con scroll interno -->
+        <div class="gd-table-wrapper">
+          <table class="gd-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Mecánico</th>
+                <th>Fecha</th>
+                <th>Hora inicio</th>
+                <th>Hora término</th>
+                <th>Colación</th>
+                <th>Bloque (min)</th>
+                <th>Activo</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for d in disponibilidades %}
+              <tr>
+                <td>{{ d.id }}</td>
+                <td>{{ d.mecanico.user.get_full_name|default:d.mecanico.user.username }}</td>
+                <td>{{ d.fecha }}</td>
+                <td>{{ d.hora_inicio }}</td>
+                <td>{{ d.hora_termino }}</td>
+                <td>{{ d.colacion_inicio }} - {{ d.colacion_termino }}</td>
+                <td>{{ d.duracion_bloque }}</td>
+                <td>
+                  {% if d.activo %}
+                    <span class="gd-badge gd-badge-on">Sí</span>
+                  {% else %}
+                    <span class="gd-badge gd-badge-off">No</span>
+                  {% endif %}
+                </td>
+                <td class="gd-actions-cell">
+                  <a href="{% url 'reservas:editar_disponibilidad' d.id %}"
+                     class="gd-btn-table gd-btn-edit">
+                    Editar
+                  </a>
+
+                  <form method="post"
+                        action="{% url 'reservas:eliminar_disponibilidad' d.id %}"
+                        class="gd-inline-form"
+                        onsubmit="return confirm('¿Seguro que deseas eliminar esta disponibilidad?');">
+                    {% csrf_token %}
+                    <button type="submit" class="gd-btn-table gd-btn-delete">
+                      Eliminar
+                    </button>
+                  </form>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <div class="gd-empty">
+          No hay disponibilidades registradas con los filtros actuales.
+        </div>
+      {% endif %}
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,80 @@
+body.dashboard-body {
+    background: url("/static/img/panelAdmin.png") no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+}
+
+/* Fondo igual al dashboard */
+.reportes-wrapper {
+    width: 100%;
+    min-height: 100vh;
+}
+
+.overlay {
+    min-height: 100vh;
+    background: rgba(0, 0, 0, 0.55);
+    padding: 50px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* TITULOS */
+.reportes-title {
+    color: #fff;
+    font-size: 2.7rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.reportes-subtitle {
+    color: #dcdcdc;
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+/* GRID */
+.reportes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 35px;
+    width: 80%;
+    max-width: 1200px;
+}
+
+/* TARJETAS */
+.reporte-card {
+    background: rgba(0, 0, 0, 0.40);
+    border: 2px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 20px 20px 30px;
+    text-align: center;
+    backdrop-filter: blur(4px);
+}
+
+.reporte-card-title {
+    color: #fff;
+    font-size: 1.35rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.reporte-card img {
+    width: 85%;           /* antes 100% */
+    max-height: 280px;    /* límite para que no se pase */
+    object-fit: contain;
+    margin: 0 auto;
+    display: block;
+    border-radius: 12px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+    .reportes-grid {
+        grid-template-columns: 1fr;
+        width: 90%;
+    }
+}

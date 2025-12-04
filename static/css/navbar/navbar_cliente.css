@@ -1,0 +1,67 @@
+/* ==== NAVBAR CLIENTE ==== */
+.navbar-cliente {
+    background-color: #1565C0 !important;
+    border-bottom: 2px solid #1554b3;
+    height: 70px; /* Altura fija para evitar que crezca */
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* Logo dentro del navbar */
+.navbar-cliente .navbar-brand img.navbar-logo {
+    height: 70px; /* Ajusta este valor para hacerlo más grande o pequeño */
+    width: auto;
+    object-fit: contain;
+}
+
+/* Texto de navbar */
+.navbar-cliente .navbar-brand {
+    color: #ffffff !important;
+}
+
+.navbar-cliente .nav-link {
+    color: #ffffff !important;
+    transition: color 0.3s;
+}
+
+.navbar-cliente .nav-link:hover {
+    color: #ffd43b !important;
+}
+
+/* ============================
+        RESPONSIVE
+============================ */
+@media (max-width: 768px) {
+
+    /* Navbar crece libremente en móviles */
+    .navbar-cliente {
+        height: auto;
+        padding: 10px 0 !important;
+    }
+
+    /* Logo un poco más pequeño */
+    .navbar-cliente .navbar-brand img {
+        height: 55px;
+    }
+
+    /* Links ocupan toda la línea y centrados */
+    .navbar-cliente .nav-link {
+        padding: 10px 0;
+        text-align: center;
+        width: 100%;
+    }
+
+    /* Botón cerrar sesión ocupa todo el ancho */
+    .navbar-cliente form button {
+        width: 100%;
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    /* Logo aún más pequeño en pantallas muy chicas */
+    .navbar-cliente .navbar-brand img {
+        height: 45px;
+    }
+}

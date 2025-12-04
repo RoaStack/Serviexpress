@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Mis Compras{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/carrito/mis_compras.css' %}">
+{% endblock %}
+
+{% block body_class %}cliente-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
+
+{% block content %}
+<div class="miscom-overlay">
+    <div class="miscom-inner">
+
+        <!-- Botón volver -->
+        <div class="miscom-back-row">
+            <a href="{% url 'usuarios:dashboard' %}" class="miscom-back-link">
+                ← Volver al Dashboard
+            </a>
+        </div>
+
+        <!-- Título -->
+        <h1 class="miscom-title">Mis Compras</h1>
+
+        <!-- Contenedor principal -->
+        <div class="miscom-card">
+            <div class="miscom-table-wrapper">
+
+                {% if compras %}
+                <table class="miscom-table">
+                    <thead>
+                        <tr>
+                            <th>ID Compra</th>
+                            <th>Fecha</th>
+                            <th>Total</th>
+                            <th>Detalles</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for compra in compras %}
+                        <tr>
+                            <td>{{ compra.id }}</td>
+                            <td>{{ compra.fecha|date:"d/m/Y H:i" }}</td>
+                            <td>${{ compra.total|floatformat:0 }}</td>
+                            <td>
+                                <a href="{% url 'ecommerce:detalle_compra' compra.id %}" 
+                                   class="miscom-btn-detalle">
+                                    Ver
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+
+                {% else %}
+                    <div class="miscom-empty">
+                        No tienes compras registradas.
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+

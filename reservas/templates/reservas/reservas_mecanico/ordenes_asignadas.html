@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Órdenes Asignadas{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/reservas/ordenes_asignadas.css' %}">
+{% endblock %}
+
+{% block body_class %}mecanico-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
+
+{% block content %}
+<div class="oa-overlay">
+    <div class="oa-inner">
+
+        <!-- 🔙 Botón volver al dashboard -->
+        <div class="oa-back-row">
+            <a href="{% url 'usuarios:dashboard' %}" class="oa-back-link">
+                ← Volver al Dashboard
+            </a>
+        </div>
+
+        <!-- Título principal -->
+        <h1 class="oa-title">Órdenes asignadas</h1>
+
+        <!-- Recuadro principal -->
+        <div class="oa-card">
+            <div class="oa-table-wrapper">
+                {% if reservas %}
+                    <table class="oa-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                                <th>Servicios</th>
+                                <th>Auto</th>
+                                <th>Cliente</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for r in reservas %}
+                            <tr>
+                                <td>{{ r.id }}</td>
+                                <td>{{ r.fecha }}</td>
+                                <td>{{ r.hora }}</td>
+                                <td>
+                                    {% for s in r.servicios.all %}
+                                        <span class="oa-service-pill">{{ s.nombre }}</span>
+                                    {% empty %}
+                                        <span class="oa-muted">Sin servicios</span>
+                                    {% endfor %}
+                                </td>
+                                <td>{{ r.marca_auto }} {{ r.modelo_auto }} ({{ r.anio }})</td>
+                                <td>{{ r.cliente.user.get_full_name|default:r.cliente.user.username }}</td>
+                                <td>
+                                    <a href="{% url 'reservas:actualizar_estado_mecanico' r.id 'en_proceso' %}"
+                                       class="oa-btn-primary">
+                                        Iniciar servicio
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <div class="oa-empty">
+                        No tienes órdenes asignadas pendientes.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

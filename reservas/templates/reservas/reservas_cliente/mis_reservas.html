@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Mis Reservas{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/reservas/mis_reservas.css' %}">
+{% endblock %}
+
+{# mismo fondo que el dashboard / crear_reserva #}
+{% block body_class %}cliente-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
+
+{% block content %}
+<div class="misres-overlay">
+    <div class="misres-inner">
+
+        <!-- Botón volver -->
+        <div class="misres-back-row">
+            <a href="{% url 'usuarios:dashboard' %}" class="misres-back-link">
+                ← Volver al Dashboard
+            </a>
+        </div>
+
+        <!-- Título grande sobre el cuadro -->
+        <h1 class="misres-title">Mis Reservas</h1>
+
+        <!-- Cuadro oscuro con la tabla dentro -->
+        <div class="misres-card">
+            <div class="misres-table-wrapper">
+                {% if reservas %}
+                <table class="misres-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Servicios</th>
+                            <th>Auto</th>
+                            <th>Estado</th>
+                            {% if es_mecanico or es_admin %}
+                                <th>Cliente</th>
+                            {% endif %}
+                            <th>Mecánico asignado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for reserva in reservas %}
+                        <tr>
+                            <td>{{ reserva.id }}</td>
+                            <td>{{ reserva.fecha }}</td>
+                            <td>{{ reserva.hora }}</td>
+
+                            <td>
+                                {% for s in reserva.servicios.all %}
+                                    <span class="misres-service-pill">{{ s.nombre }}</span>
+                                {% empty %}
+                                    <span class="misres-muted">Sin servicios</span>
+                                {% endfor %}
+                            </td>
+
+                            <td>{{ reserva.marca_auto }} {{ reserva.modelo_auto }} ({{ reserva.anio }})</td>
+
+                            <td>
+                                {% if reserva.estado == 'pendiente' %}
+                                    <span class="estado-badge estado-pendiente">PENDIENTE</span>
+                                {% elif reserva.estado == 'en_proceso' %}
+                                    <span class="estado-badge estado-proceso">EN PROCESO</span>
+                                {% elif reserva.estado == 'finalizada' %}
+                                    <span class="estado-badge estado-finalizada">FINALIZADA</span>
+                                {% elif reserva.estado == 'cancelada' %}
+                                    <span class="estado-badge estado-cancelada">CANCELADA</span>
+                                {% endif %}
+                            </td>
+
+                            {% if es_mecanico or es_admin %}
+                            <td>
+                                {{ reserva.cliente.user.get_full_name|default:reserva.cliente.user.username }}
+                            </td>
+                            {% endif %}
+
+                            <td>
+                                {% if reserva.mecanico %}
+                                    {{ reserva.mecanico.user.get_full_name|default:reserva.mecanico.user.username }}
+                                {% else %}
+                                    <span class="misres-muted">No asignado</span>
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                {% if es_mecanico or es_admin %}
+                                    <div class="dropdown">
+                                        <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                            Cambiar estado
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="{% url 'reservas:cambiar_estado_reserva' reserva.id 'pendiente' %}">Pendiente</a></li>
+                                            <li><a class="dropdown-item" href="{% url 'reservas:cambiar_estado_reserva' reserva.id 'en_proceso' %}">En proceso</a></li>
+                                            <li><a class="dropdown-item" href="{% url 'reservas:cambiar_estado_reserva' reserva.id 'finalizada' %}">Finalizar</a></li>
+                                            <li><a class="dropdown-item text-danger" href="{% url 'reservas:cambiar_estado_reserva' reserva.id 'cancelada' %}">Cancelar</a></li>
+                                        </ul>
+                                    </div>
+
+                                {% elif es_cliente %}
+                                    {% if reserva.estado == 'pendiente' %}
+                                        <a href="{% url 'reservas:cancelar_reserva' reserva.id %}"
+                                           class="misres-btn-cancelar">
+                                            CANCELAR
+                                        </a>
+                                    {% elif reserva.estado == 'finalizada' and reserva.boleta %}
+                                        <a href="{% url 'boletas:detalle_boleta' reserva.boleta.id %}"
+                                           class="misres-btn-boleta">
+                                            Ver Boleta
+                                        </a>
+                                    {% else %}
+                                        <span class="misres-muted">Sin acciones</span>
+                                    {% endif %}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                    <div class="misres-empty">
+                        No tienes reservas registradas.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if es_cliente %}
+        <div class="misres-new-wrapper">
+            <a href="{% url 'reservas:crear_reserva' %}" class="misres-btn-nueva">
+                + Nueva Reserva
+            </a>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}

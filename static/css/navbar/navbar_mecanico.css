@@ -1,0 +1,65 @@
+/* ============================
+  NAVBAR MECÁNICO
+============================ */
+.navbar-mecanico {
+  background-color: #1c1f24 !important;
+  border-bottom: 2px solid #007bff;
+  height: 70px;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* Logo */
+.navbar-mecanico .navbar-brand img {
+  height: 70px;
+  width: auto;
+  object-fit: contain;
+}
+
+.navbar-mecanico .nav-link {
+  color: #ffffff !important;
+  margin-right: 15px;
+  transition: color 0.3s;
+}
+
+.navbar-mecanico .nav-link:hover {
+  color: #66b2ff !important;
+}
+
+/* ============================
+  RESPONSIVE
+============================ */
+@media (max-width: 768px) {
+
+  /* Navbar más alto para acomodar el menú colapsado */
+  .navbar-mecanico {
+    height: auto;
+    padding: 10px 0 !important;
+  }
+
+  /* Logo más pequeño en móvil */
+  .navbar-mecanico .navbar-brand img {
+    height: 55px;
+  }
+
+  /* Navegación centrada y con más espacio */
+  .navbar-mecanico .nav-link {
+    margin-right: 0;
+    padding: 10px 0;
+    text-align: center;
+    width: 100%;
+  }
+
+  /* Botón de cerrar sesión responsive */
+  .navbar-mecanico form button {
+    width: 100%;
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Logo aún más pequeño en pantallas muy pequeñas */
+  .navbar-mecanico .navbar-brand img {
+    height: 45px;
+  }
+}

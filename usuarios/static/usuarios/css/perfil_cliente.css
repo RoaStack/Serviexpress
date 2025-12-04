@@ -1,7 +1,14 @@
+body.cliente-body {
+    background: url("/static/img/panelCliente.png") no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+}
+
 .perfil-container {
   max-width: 500px;
   margin: 3rem auto;
-  background: #fff;
+  background: #ffffff;
   border-radius: 16px;
   box-shadow: 0 6px 20px rgba(0,0,0,0.08);
   padding: 2rem 2.5rem;

@@ -1,0 +1,251 @@
+/* ============================ */
+/*  FONDO                      */
+/* ============================ */
+
+body.login-body {
+    background: url('/static/img/login_fondo.jpg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Poppins', sans-serif;
+}
+
+.login-overlay {
+    width: 100%;
+    height: 100vh;
+    background: rgba(0,0,0,0.45);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* ============================ */
+/*  ANIMACIONES                */
+/* ============================ */
+
+.animate-login {
+    animation: fadeSlide 0.8s ease forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+@keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================ */
+/*  CAJA PRINCIPAL (GLASS)     */
+/* ============================ */
+
+.login-box {
+    width: 480px;
+    padding: 45px;
+    background: rgba(0, 0, 0, 0.38);
+    border-radius: 38px;
+    border: 1px solid rgba(255,255,255,0.25);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 22px rgba(0,0,0,0.45);
+}
+
+/* ============================ */
+/* LOGO                        */
+/* ============================ */
+
+.login-logo {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.login-logo img {
+    width: 145px;
+    filter: drop-shadow(0 0 4px rgba(255,255,255,0.6));
+}
+
+/* ============================ */
+/*  TÍTULOS                     */
+/* ============================ */
+
+.login-title {
+    color: #c9dbff;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+/* ============================ */
+/* MENSAJE ERROR                */
+/* ============================ */
+
+.error-box {
+    background: rgba(255, 60, 60, 0.18);
+    border: 1px solid #ff6b6b;
+    padding: 12px;
+    border-radius: 12px;
+    color: #ffbaba;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* ============================ */
+/* INPUTS                      */
+/* ============================ */
+
+.input-group-custom {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.input-group-custom input {
+    width: 100%;
+    padding: 12px 45px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 14px;
+    height: 48px;
+    color: #fff;
+    outline: none;
+}
+
+.input-group-custom input::placeholder {
+    color: #cccccc;
+}
+
+/* Icono izquierda */
+.input-icon {
+    position: absolute;
+    top: 50%;
+    left: 14px;
+    transform: translateY(-50%);
+    color: #b5c7ff;
+    pointer-events: none;
+    font-size: 1.2rem;
+}
+
+/* Icono ojo (SVG) */
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+/* Validación roja cuando hay error */
+.input-error input {
+    border-color: #ff5b5b !important;
+}
+
+/* ============================ */
+/*  FORGOT PASSWORD             */
+/* ============================ */
+
+.forgot-container {
+    text-align: right;
+    margin-top: -10px;
+    margin-bottom: 20px;
+}
+
+.forgot-link {
+    color: #b5c7ff;
+    font-size: 0.9rem;
+}
+.forgot-liink {
+    color: #b5c7ff;
+    font-size: 0.9rem;
+    text-align: center;
+    display: block;
+    width: 100%;
+}
+
+
+.forgot-link:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+/* ============================ */
+/* BOTÓN LOGIN                  */
+/* ============================ */
+
+.login-btn {
+    width: 100%;
+    margin-top: 5px;
+    background: linear-gradient(90deg, #1a73e8, #0b56c4);
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 14px;
+    border: none;
+    border-radius: 25px;
+    transition: 0.25s ease;
+}
+
+.login-btn:hover {
+    background: linear-gradient(90deg, #0b56c4, #073a86);
+    transform: translateY(-2px);
+    box-shadow: 0 0 12px #1a73e8;
+}
+
+/* ============================ */
+/* NOTA INFERIOR                */
+/* ============================ */
+
+.login-note {
+    margin-top: 20px;
+    color: #d1d1d1;
+    font-size: 0.82rem;
+    text-align: center;
+}
+
+.login-note a {
+    color: #adc6ff;
+}
+@media (max-width: 768px) {
+    .login-box {
+        width: 90%;
+        padding: 30px;
+        border-radius: 28px;
+    }
+
+    .login-title {
+        font-size: 1.7rem;
+    }
+
+    .login-btn {
+        font-size: 1rem;
+        padding: 12px;
+        border-radius: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-box {
+        width: 95%;
+        padding: 25px;
+    }
+
+    .input-group-custom input {
+        height: 42px;
+        padding: 10px 40px;
+    }
+
+    .login-title {
+        font-size: 1.5rem;
+    }
+}
+/* ------- REGISTRO: Ajuste de campos largos ------- */
+
+.login-field input {
+    width: 100%;
+    padding: 14px 10px 14px 40px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.20);
+    border-radius: 12px;
+    color: #fff;
+}
+
+.login-field input:focus {
+    border-color: #1f6feb;
+    box-shadow: 0 0 6px #1f6feb;
+}
