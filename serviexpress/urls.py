@@ -32,3 +32,5 @@ urlpatterns = [
     path('repuestos/', include('repuestos.urls', namespace='repuestos')),
     path('ecommerce/', include('carrito.urls', namespace='ecommerce')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+

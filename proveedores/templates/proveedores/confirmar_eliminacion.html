@@ -1,36 +1,48 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load static %}
 
-{% block title %}Eliminar proveedor{% endblock %}
+{% block title %}Eliminar Proveedor{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'usuarios/css/admin.css' %}">
+<link rel="stylesheet" href="{% static '/css/proveedores.css' %}">
 {% endblock %}
+
+{% block body_class %}admin-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <div class="text-center mb-4">
-        <h2 class="dashboard-title">Confirmar eliminación</h2>
-        <p class="dashboard-subtitle">Esta acción no se puede deshacer.</p>
+<div class="pv-overlay">
+  <div class="pv-inner">
+
+    <div class="pv-back-row">
+      <a href="{% url 'proveedores:ficha_proveedores' %}" class="pv-back-link">
+        ← Volver a Proveedores
+      </a>
     </div>
 
-    {% include 'includes/messages.html' %}
+    <div class="pv-form-card">
+      <h2 class="pv-form-title">Eliminar Proveedor</h2>
+      <p class="pv-delete-text">
+        Estás a punto de eliminar al proveedor
+        <span class="pv-delete-name">{{ proveedor.nombre }}</span>.
+      </p>
+      <p class="pv-delete-text">
+        Esta acción no se puede deshacer. ¿Deseas continuar?
+      </p>
 
-    <div class="bg-white p-4 rounded shadow-sm mx-auto text-center" style="max-width:600px;">
-        <p>¿Eliminar al proveedor <b>{{ proveedor.nombre }}</b>?</p>
-        <ul class="list-unstyled mb-4 text-start" style="max-width:350px; margin:auto;">
-        <li><b>RUT:</b> {{ proveedor.rut }}</li>
-        <li><b>Teléfono:</b> {{ proveedor.telefono }}</li>
-        <li><b>Correo:</b> {{ proveedor.correo }}</li>
-        <li><b>Dirección:</b> {{ proveedor.direccion }}</li>
-        </ul>
-
-        <form method="post" class="d-flex justify-content-center align-items-center gap-3 mt-3">
+      <form method="post">
         {% csrf_token %}
-        <button type="submit" class="btn btn-danger px-4">🗑️ Sí, eliminar</button>
-        <a href="{% url 'proveedores:ficha_proveedores' %}" class="btn btn-outline-secondary px-4">Cancelar</a>
-        </form>
+        <div class="pv-form-actions">
+          <a href="{% url 'proveedores:ficha_proveedores' %}" class="pv-btn-cancel">
+            Cancelar
+          </a>
+          <button type="submit" class="pv-btn-delete">
+            Sí, eliminar
+          </button>
+        </div>
+      </form>
     </div>
+
+  </div>
 </div>
 {% endblock %}
-

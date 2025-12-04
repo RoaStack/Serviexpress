@@ -13,6 +13,9 @@ urlpatterns = [
     path("historial_servicios/", views.historial_servicios, name="historial_servicios"),
     path("actualizar_estado/<int:pk>/<str:nuevo_estado>/", views.actualizar_estado_mecanico, name="actualizar_estado_mecanico"),
     path("horas_disponibles/", views.obtener_horas_disponibles, name="horas_disponibles"),
+    path("historial_servicios/", views.historial_servicios, name="historial_servicios"),
+    path("servicios_realizados/", views.servicios_realizados_cliente, name="servicios_realizados_cliente"),
+
 
     # 🔹 Repuestos
     path("registrar-repuestos/<int:reserva_id>/", views.registrar_repuestos_reserva, name="registrar_repuestos_reserva"),

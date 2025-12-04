@@ -10,5 +10,5 @@ class ServicioForm(forms.ModelForm):
             'nombre': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre del servicio'}),
             'descripcion': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Descripción del servicio'}),
             'precio': forms.NumberInput(attrs={'class': 'form-control', 'min': 0}),
-            'duracion_estimada': forms.TimeInput(attrs={'class': 'form-control', 'type': 'time'}),
+            'duracion_estimada': forms.NumberInput(attrs={'class': 'form-control', 'type': 'integer', 'min': 0, 'placeholder': 'Duración en minutos'}),
         }

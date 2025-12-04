@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Crear Mecánico{% endblock %}
+{% block title %}Crear Proveedor{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'usuarios/css/crear_mecanico.css' %}">
@@ -14,16 +14,19 @@
 <div class="gm-overlay gm-form-overlay">
 
     <div class="gm-form-card">
-        <h2 class="gm-form-title">Crear nuevo mecánico</h2>
+        <h2 class="gm-form-title">Registrar nuevo proveedor</h2>
+
+        {% include 'includes/messages.html' %}
 
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
 
             <div class="gm-form-actions">
-                <a href="{% url 'usuarios:gestion_mecanicos' %}" class="gm-btn gm-btn-secondary">
+                <a href="{% url 'proveedores:ficha_proveedores' %}" class="gm-btn gm-btn-secondary">
                     Volver
                 </a>
+
                 <button type="submit" class="gm-btn gm-btn-orange">
                     Guardar
                 </button>

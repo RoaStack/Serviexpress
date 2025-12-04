@@ -1,46 +1,61 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load static %}
 
 {% block title %}Nuevo Proveedor{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'usuarios/css/admin.css' %}">
-<style>
-  /* --- Botón dorado ServiExpress --- */
-    .btn-serviexpress {
-        background-color: #ffc107;
-        color: #000;
-        border: none;
-        font-weight: 600;
-        transition: all 0.2s ease-in-out;
-    }
-    .btn-serviexpress:hover {
-        background-color: #e0a800;
-        color: #000;
-    }
-</style>
+<link rel="stylesheet" href="{% static '/css/proveedores.css' %}">
 {% endblock %}
+
+{% block body_class %}admin-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
-    <div class="text-center mb-4">
-        <h2 class="dashboard-title">Registrar nuevo proveedor</h2>
-        <p class="dashboard-subtitle">Agrega un nuevo proveedor al sistema ServiExpress.</p>
+<div class="pv-overlay">
+  <div class="pv-inner">
+
+    <div class="pv-back-row">
+      <a href="{% url 'proveedores:ficha_proveedores' %}" class="pv-back-link">
+        ← Volver a Proveedores
+      </a>
     </div>
 
-    {% include 'includes/messages.html' %}
+    <div class="pv-form-card">
+      <h2 class="pv-form-title">Agregar Proveedor</h2>
+      <p class="pv-form-subtitle">
+        Completa los datos para registrar un nuevo proveedor en el sistema.
+      </p>
 
-    <div class="d-flex justify-content-center">
-        <form method="post" class="bg-white p-4 rounded shadow-sm" style="width:90%; max-width:520px;">
+      <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form.non_field_errors }}
 
-        <div class="d-flex justify-content-between mt-3">
-            <button type="submit" class="btn btn-serviexpress">Guardar</button>
-            <a href="{% url 'proveedores:ficha_proveedores' %}" class="btn btn-outline-secondary fw-semibold">Cancelar</a>
+        {{ form.nombre.label_tag }}
+        {{ form.nombre }}
+
+        {{ form.rut.label_tag }}
+        {{ form.rut }}
+
+        {{ form.telefono.label_tag }}
+        {{ form.telefono }}
+
+        {{ form.correo.label_tag }}
+        {{ form.correo }}
+
+        {{ form.direccion.label_tag }}
+        {{ form.direccion }}
+
+        <div class="pv-form-actions">
+          <a href="{% url 'proveedores:ficha_proveedores' %}" class="pv-btn-cancel">
+            Cancelar
+          </a>
+          <button type="submit" class="pv-btn-save">
+            Guardar Proveedor
+          </button>
         </div>
-        </form>
+      </form>
     </div>
+
+  </div>
 </div>
 {% endblock %}
-

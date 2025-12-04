@@ -39,7 +39,7 @@ def agregar_al_carrito(request, repuesto_id):
         item.cantidad = cantidad
     item.save()
 
-    messages.success(request, f"{repuesto.descripcion} añadido al carrito 🛒")
+    messages.success(request, f"{repuesto.nombre} añadido al carrito 🛒")
     return redirect('ecommerce:ver_carrito')
 
 
@@ -61,7 +61,7 @@ def agregar_al_carrito_ajax(request, repuesto_id):
         total = sum(i.subtotal for i in carrito.items.all())
         return JsonResponse({
             'success': True,
-            'descripcion': repuesto.descripcion,
+            'nombre': repuesto.nombre,
             'cantidad': item.cantidad,
             'total': total,
             'items': carrito.items.count()
@@ -102,7 +102,7 @@ def generar_comprobante(request):
     # Validar stock
     for item in carrito.items.all():
         if item.cantidad > item.repuesto.stock:
-            messages.error(request, f"No hay stock suficiente de: {item.repuesto.descripcion}")
+            messages.error(request, f"No hay stock suficiente de: {item.repuesto.nombre}")
             return redirect('ecommerce:ver_carrito')
 
     # Descontar stock
