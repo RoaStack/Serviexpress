@@ -313,3 +313,7 @@ def eliminar_cliente(request, usuario_id):
         {"cliente": cliente},
     )
 
+@login_required
+@user_passes_test(es_admin, login_url="usuarios:dashboard")
+def reportes(request):
+    return render(request, "usuarios/administrador/reportes.html")

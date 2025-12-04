@@ -29,4 +29,5 @@ urlpatterns = [
     path("admin/clientes/crear/", views.crear_cliente, name="crear_cliente"),
     path("admin/clientes/<int:usuario_id>/editar/", views.editar_cliente, name="editar_cliente"),
     path("admin/clientes/<int:usuario_id>/eliminar/", views.eliminar_cliente, name="eliminar_cliente"),
+    path("admin/reportes/", views.reportes, name="reportes"),
 ]
