@@ -36,21 +36,33 @@ def proveedor_crear(request):
         form = ProveedorForm()
     return render(request, "proveedores/nuevo_proveedor.html", {"form": form})
 
-# === Editar (solo admin) ===
+# === Editar Proveedor (solo admin) ===
 @login_required(login_url='usuarios:login_usuario')
-@user_passes_test(es_admin, login_url='usuarios:login_usuario')
+@user_passes_test(es_admin, login_url='usuarios:dashboard')
 def proveedor_editar(request, pk):
     proveedor = get_object_or_404(Proveedor, pk=pk)
+
     if request.method == "POST":
         form = ProveedorForm(request.POST, instance=proveedor)
         if form.is_valid():
             form.save()
             messages.success(request, "Proveedor actualizado correctamente ✅")
             return redirect("proveedores:ficha_proveedores")
-        messages.error(request, "No se pudo actualizar. Verifica los datos ❌")
+        else:
+            messages.error(request, "No se pudo actualizar. Verifica los datos ❌")
     else:
         form = ProveedorForm(instance=proveedor)
-    return render(request, "proveedores/nuevo_proveedor.html", {"form": form, "proveedor": proveedor})
+
+    return render(
+        request,
+        "proveedores/editar_proveedor.html",
+        {
+            "form": form,
+            "proveedor": proveedor,
+        }
+    )
+
+
 
 # === Eliminar (solo admin) ===
 @login_required(login_url='usuarios:login_usuario')
