@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Proveedores{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/proveedores.css' %}">
+{% endblock %}
+
+{% block body_class %}admin-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
+
+{% block content %}
+<div class="pv-overlay">
+  <div class="pv-inner">
+
+    <!-- 🔙 Volver al dashboard -->
+    <div class="pv-back-row">
+      <a href="{% url 'usuarios:dashboard' %}" class="pv-back-link">
+        ← Volver al dashboard
+      </a>
+    </div>
+
+    <!-- Títulos -->
+    <h1 class="pv-title">Proveedores</h1>
+    <p class="pv-subtitle">
+      Listado y gestión de proveedores registrados
+    </p>
+
+    <!-- Botón fuera del cuadro -->
+    <div class="pv-add-wrapper">
+      <a href="{% url 'proveedores:proveedor_crear' %}" class="pv-btn-add pv-btn-outside">
+        + Agregar Proveedor
+      </a>
+    </div>
+
+    <!-- Card principal con tabla -->
+    <div class="pv-card">
+
+      <!-- Fila superior (solo contador ahora) -->
+      <div class="pv-top-row">
+        <span class="pv-counter">
+          Cantidad de Proveedores: {{ proveedores|length }}
+        </span>
+      </div>
+
+      {% if proveedores %}
+      <div class="pv-table-wrapper">
+        <table class="pv-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>RUT</th>
+              <th>Teléfono</th>
+              <th>Correo</th>
+              <th>Dirección</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in proveedores %}
+            <tr>
+              <td>{{ p.id }}</td>
+              <td>{{ p.nombre }}</td>
+              <td>{{ p.rut }}</td>
+              <td>{{ p.telefono }}</td>
+              <td>
+                <a href="mailto:{{ p.correo }}">{{ p.correo }}</a>
+              </td>
+              <td>{{ p.direccion }}</td>
+              <td>
+                <a href="{% url 'proveedores:proveedor_editar' p.id %}" class="pv-btn-edit">
+                  Editar
+                </a>
+
+                <form action="{% url 'proveedores:proveedor_eliminar' p.id %}"
+                      method="post"
+                      style="display:inline;">
+                  {% csrf_token %}
+                  <button type="submit"
+                          class="pv-btn-delete"
+                          onclick="return confirm('¿Seguro que deseas eliminar este proveedor?');">
+                    Eliminar
+                  </button>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="pv-empty">
+        No hay proveedores registrados aún.
+      </div>
+      {% endif %}
+
+    </div><!-- /.pv-card -->
+
+  </div><!-- /.pv-inner -->
+</div><!-- /.pv-overlay -->
+{% endblock %}
+
