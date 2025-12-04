@@ -2,7 +2,8 @@ from django.db import models
 
 
 class Repuesto(models.Model):
-    descripcion = models.CharField(max_length=200)
+    foto = models.ImageField(upload_to='repuestos/', null=True, blank=True)
+    nombre = models.CharField(max_length=200)
     marca = models.CharField(max_length=100)
     precio_compra = models.PositiveIntegerField()
     precio_venta = models.PositiveIntegerField()
@@ -10,5 +11,5 @@ class Repuesto(models.Model):
     limite_stock = models.PositiveIntegerField(default=5)
 
     def __str__(self):
-        return self.descripcion
+        return self.nombre
 
