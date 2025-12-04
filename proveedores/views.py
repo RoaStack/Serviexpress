@@ -9,7 +9,7 @@ def es_admin(user):
     return user.is_staff or user.is_superuser
 
 def es_mecanico(user):
-    return user.is_authenticated and user.groups.filter(name='mecanico').exists()
+    return user.is_authenticated and user.groups.filter(name='Mecanicos').exists()
 
 def puede_ver_proveedores(user):
     return es_admin(user) or es_mecanico(user)

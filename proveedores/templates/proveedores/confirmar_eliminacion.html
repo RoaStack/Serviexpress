@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Eliminar Proveedor{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static '/css/proveedores.css' %}">
+{% endblock %}
+
+{% block body_class %}admin-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
+
+{% block content %}
+<div class="pv-overlay">
+  <div class="pv-inner">
+
+    <div class="pv-back-row">
+      <a href="{% url 'proveedores:ficha_proveedores' %}" class="pv-back-link">
+        ← Volver a Proveedores
+      </a>
+    </div>
+
+    <div class="pv-form-card">
+      <h2 class="pv-form-title">Eliminar Proveedor</h2>
+      <p class="pv-delete-text">
+        Estás a punto de eliminar al proveedor
+        <span class="pv-delete-name">{{ proveedor.nombre }}</span>.
+      </p>
+      <p class="pv-delete-text">
+        Esta acción no se puede deshacer. ¿Deseas continuar?
+      </p>
+
+      <form method="post">
+        {% csrf_token %}
+        <div class="pv-form-actions">
+          <a href="{% url 'proveedores:ficha_proveedores' %}" class="pv-btn-cancel">
+            Cancelar
+          </a>
+          <button type="submit" class="pv-btn-delete">
+            Sí, eliminar
+          </button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
