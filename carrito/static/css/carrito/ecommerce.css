@@ -1,0 +1,112 @@
+/* 🎨 Estilo general con fondo tipo e-commerce */
+body.cliente-body {
+    background: url("/static/img/FondoEcommerce.png") no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+}
+
+/* 🔩 Título principal */
+h2 {
+    color: #23d3ff;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+/* 🛒 Cards de productos */
+.card {
+    background: #111827;
+    border: 1px solid rgba(35, 211, 255, 0.15);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: 0.3s;
+    position: relative;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    border-color: #23d3ff;
+    box-shadow: 0 0 20px rgba(35, 211, 255, 0.4);
+}
+
+/* 📸 Imagen del producto */
+.card-img-top {
+    height: 220px !important;
+    width: 100%;
+    object-fit: contain;
+    background: #0d121b;
+    padding: 10px;
+}
+
+/* 📝 Textos */
+.card-title {
+    color: #23d3ff;
+    font-weight: 600;
+}
+
+.card-subtitle {
+    color: #9ca3af;
+}
+
+.card p {
+    color: #d1d5db;
+}
+
+/* ➕ Botón agregar */
+.btn-success {
+    background-color: #23d3ff;
+    border-color: #23d3ff;
+    color: #000;
+    font-weight: 600;
+}
+
+.btn-success:hover {
+    background-color: #1ab7df;
+    border-color: #1ab7df;
+}
+
+/* 🔢 Campo cantidad */
+input[type="number"] {
+    border-radius: 8px !important;
+}
+
+/* 🛍 Offcanvas carrito */
+.offcanvas {
+    background: #0f1622;
+    color: #e2e8f0;
+}
+
+/* 🛒 Botón flotante */
+.btn-primary {
+    background: #23d3ff;
+    border: none;
+    font-size: 24px;
+}
+
+.btn-primary:hover {
+    background: #1ab7df;
+}
+
+/* 🔴 Badge */
+.badge.bg-danger {
+    background: #ff4655 !important;
+}
+
+/* 📱 Responsivo */
+@media (max-width: 992px) {
+    .col-lg-3 {
+        flex: 0 0 33.33%;
+    }
+}
+
+@media (max-width: 768px) {
+    .col-md-4 {
+        flex: 0 0 50%;
+    }
+}
+
+@media (max-width: 576px) {
+    .col-sm-6 {
+        flex: 0 0 100%;
+    }
+}

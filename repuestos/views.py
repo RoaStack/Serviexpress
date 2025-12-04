@@ -13,7 +13,7 @@ def es_admin(user):
 @user_passes_test(es_admin)
 def registrar_repuesto(request):
     if request.method == 'POST':
-        form = RepuestoForm(request.POST)
+        form = RepuestoForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             messages.success(request, "Repuesto ingresado exitosamente ✅")
