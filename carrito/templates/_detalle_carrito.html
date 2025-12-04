@@ -11,7 +11,7 @@
     <tbody>
       {% for item in carrito.items.all %}
       <tr>
-        <td>{{ item.repuesto.descripcion }}</td>
+        <td>{{ item.repuesto.nombre }}</td>
         <td>{{ item.cantidad }}</td>
         <td>${{ item.repuesto.precio_venta }}</td>
         <td>${{ item.subtotal }}</td>
