@@ -1,29 +1,34 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Crear Cliente{% endblock %}
+{% block title %}Crear Proveedor{% endblock %}
 
+{# === CSS específico del template === #}
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'usuarios/css/crear_mecanico.css' %}">
+<link rel="stylesheet" href="{% static 'css/nuevo_proveedor.css' %}">
 {% endblock %}
 
 {% block body_class %}dashboard-body{% endblock %}
 {% block main_class %}p-0 m-0 w-100{% endblock %}
 
 {% block content %}
+
 <div class="gm-form-overlay">
 
     <div class="gm-form-card">
-        <h2 class="gm-form-title">Crear nuevo cliente</h2>
+        <h2 class="gm-form-title">Registrar nuevo proveedor</h2>
+
+        {% include 'includes/messages.html' %}
 
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
 
             <div class="gm-form-actions">
-                <a href="{% url 'usuarios:gestion_clientes' %}" class="gm-btn gm-btn-secondary">
+                <a href="{% url 'proveedores:ficha_proveedores' %}" class="gm-btn gm-btn-secondary">
                     Volver
                 </a>
+
                 <button type="submit" class="gm-btn gm-btn-orange">
                     Guardar
                 </button>
@@ -32,4 +37,5 @@
     </div>
 
 </div>
+
 {% endblock %}

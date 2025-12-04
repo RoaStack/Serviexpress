@@ -27,7 +27,7 @@ class DetalleBoletaForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         # Mostrar stock y precio en el menú desplegable
         self.fields['repuesto'].label_from_instance = (
-            lambda obj: f"{obj.descripcion} (Stock: {obj.stock}, ${obj.precio_venta})"
+            lambda obj: f"{obj.nombre} (Stock: {obj.stock}, ${obj.precio_venta})"
         )
 
     def clean(self):

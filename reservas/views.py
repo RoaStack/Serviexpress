@@ -421,7 +421,7 @@ def registrar_repuestos_reserva(request, reserva_id):
         if cantidad > repuesto.stock:
             messages.error(
                 request,
-                f"❌ Stock insuficiente de {repuesto.descripcion}. "
+                f"❌ Stock insuficiente de {repuesto.nombre}. "
                 f"Disponible: {repuesto.stock}.",
             )
             return redirect(
@@ -438,7 +438,7 @@ def registrar_repuestos_reserva(request, reserva_id):
 
         messages.success(
             request,
-            f"✅ Se agregó {cantidad}× {repuesto.descripcion} correctamente.",
+            f"✅ Se agregó {cantidad}× {repuesto.nombre} correctamente.",
         )
         return redirect(
             "reservas:registrar_repuestos_reserva",
@@ -489,7 +489,7 @@ def eliminar_repuesto_detalle(request, reserva_id, detalle_id):
 
         messages.success(
             request,
-            f"♻️ Se eliminó '{repuesto.descripcion}' y se devolvieron "
+            f"♻️ Se eliminó '{repuesto.nombre}' y se devolvieron "
             f"{cantidad_devuelta} unidades al stock.",
         )
     else:
