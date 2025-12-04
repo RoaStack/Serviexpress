@@ -15,23 +15,31 @@
     <div class="overlay">
 
         <div class="dashboard-header">
-            <h2 class="dashboard-title">Selecciona tu tipo de cuenta</h2>
-            <p class="dashboard-subtitle">Elige cómo deseas continuar</p>
+            <h2 class="dashboard-title">Gestión usuarios</h2>
+            <p class="dashboard-subtitle">seleciona tipo de usuario</p>
         </div>
 
+        <!-- USAMOS EL MISMO GRID DEL ADMIN -->
         <div class="dashboard-container">
-            <!-- BOTÓN MECANICOS -->
+
+            <!-- BOTÓN IZQUIERDA (COLUMNA 1) -->
             <a href="{% url 'usuarios:gestion_mecanicos' %}" class="dash-item item-1">
-                <img src="{% static 'img/icons/icons_admin/gestionUsuarios.png' %}" alt="Cliente">
+                <img src="{% static 'img/icons/icons_admin/gestionUsuarios.png' %}">
                 <span>Mecánico</span>
             </a>
 
-            <!-- BOTÓN CLIENTES -->
-            <a href="{% url 'usuarios:gestion_clientes' %}" class="dash-item item-2">
-                <img src="{% static 'img/icons/icons_admin/gestionUsuarios.png' %}" alt="Mecánico">
+            <!-- ESPACIO VACÍO EN LA COLUMNA 2 PARA CENTRAR -->
+            <div></div>
+
+            <!-- BOTÓN DERECHA (COLUMNA 3) -->
+            <a href="{% url 'usuarios:gestion_clientes' %}" class="dash-item item-3">
+                <img src="{% static 'img/icons/icons_admin/gestionUsuarios.png' %}">
                 <span>Cliente</span>
             </a>
+
         </div>
+
     </div>
 </div>
 {% endblock %}
+
