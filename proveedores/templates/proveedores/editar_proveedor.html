@@ -1,40 +1,61 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load static %}
 
 {% block title %}Editar Proveedor{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'usuarios/css/gestion_mecanicos.css' %}">
-<link rel="stylesheet" href="{% static 'usuarios/css/editar_mecanico.css' %}">
+<link rel="stylesheet" href="{% static '/css/proveedores.css' %}">
 {% endblock %}
 
-{% block body_class %}dashboard-body{% endblock %}
+{% block body_class %}admin-body{% endblock %}
 {% block main_class %}p-0 m-0 w-100{% endblock %}
 
 {% block content %}
+<div class="pv-overlay">
+  <div class="pv-inner">
 
-<div class="gm-overlay gm-form-overlay">
-
-    <div class="gm-form-card">
-        <h2 class="gm-form-title">Editar Proveedor: {{ proveedor.nombre }}</h2>
-
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-
-            <div class="gm-form-actions">
-                <a href="{% url 'proveedores:ficha_proveedores' %}"
-                   class="gm-btn gm-btn-secondary">
-                    Volver
-                </a>
-
-                <button type="submit" class="gm-btn gm-btn-orange">
-                    Guardar cambios
-                </button>
-            </div>
-        </form>
+    <div class="pv-back-row">
+      <a href="{% url 'proveedores:ficha_proveedores' %}" class="pv-back-link">
+        ← Volver a Proveedores
+      </a>
     </div>
 
-</div>
+    <div class="pv-form-card">
+      <h2 class="pv-form-title">Editar Proveedor</h2>
+      <p class="pv-form-subtitle">
+        Modificando datos de: <strong>{{ proveedor.nombre }}</strong>
+      </p>
 
+      <form method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        {{ form.nombre.label_tag }}
+        {{ form.nombre }}
+
+        {{ form.rut.label_tag }}
+        {{ form.rut }}
+
+        {{ form.telefono.label_tag }}
+        {{ form.telefono }}
+
+        {{ form.correo.label_tag }}
+        {{ form.correo }}
+
+        {{ form.direccion.label_tag }}
+        {{ form.direccion }}
+
+        <div class="pv-form-actions">
+          <a href="{% url 'proveedores:ficha_proveedores' %}" class="pv-btn-cancel">
+            Cancelar
+          </a>
+          <button type="submit" class="pv-btn-save">
+            Guardar Cambios
+          </button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
 {% endblock %}

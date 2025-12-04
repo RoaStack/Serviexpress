@@ -1,46 +1,74 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Lista de Repuestos{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/repuestos/lista_repuestos.css' %}">
+{% endblock %}
+
+{% block body_class %}dashboard-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
+
 {% block content %}
 
-<div class="container mt-4">
-  <h2>🔩 Lista de Repuestos</h2>
+<div class="lr-wrapper">
+  <div class="lr-overlay">
 
-  <a href="{% url 'repuestos:registrar_repuesto' %}" class="btn btn-success mb-3">
-    ➕ Nuevo Repuesto
-  </a>
+    <!-- 🔙 Volver -->
+    <div class="lr-back-container">
+      <a href="{% url 'usuarios:dashboard' %}" class="lr-btn-back">
+        ← Volver al dashboard
+      </a>
+    </div>
 
-  {% if repuestos %}
-  <!-- ✅ Mostrar tabla solo si hay repuestos -->
-  <table class="table table-striped table-hover align-middle">
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Marca</th>
-        <th>Precio compra</th>
-        <th>Precio venta</th>
-        <th>Stock</th>
-        <th>Límite stock</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for repuesto in repuestos %}
-      <tr class="{% if repuesto.stock <= repuesto.limite_stock %}table-warning{% endif %}">
-        <td>{{ repuesto.nombre }}</td>
-        <td>{{ repuesto.marca }}</td>
-        <td>${{ repuesto.precio_compra }}</td>
-        <td>${{ repuesto.precio_venta }}</td>
-        <td>{{ repuesto.stock }}</td>
-        <td>{{ repuesto.limite_stock }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+    <!-- Título -->
+    <h1 class="lr-title">Lista de Repuestos</h1>
 
-  {% else %}
-  <!-- 🚫 Si no hay repuestos -->
-  <div class="alert alert-info mt-4 text-center" role="alert">
-    <h5>📭 No hay repuestos registrados actualmente.</h5>
-    <p>Puedes agregar uno nuevo haciendo clic en el botón de arriba.</p>
+    <!-- Botón crear -->
+    <div class="lr-top-actions">
+      <a href="{% url 'repuestos:registrar_repuesto' %}" class="lr-btn lr-btn-orange">
+        ➕ Nuevo Repuesto
+      </a>
+    </div>
+
+    {% if repuestos %}
+    <!-- Tabla -->
+    <div class="lr-table-wrapper">
+      <table class="lr-table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Marca</th>
+            <th>Precio compra</th>
+            <th>Precio venta</th>
+            <th>Stock</th>
+            <th>Límite stock</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for repuesto in repuestos %}
+          <tr class="{% if repuesto.stock <= repuesto.limite_stock %}lr-low-stock{% endif %}">
+            <td>{{ repuesto.nombre }}</td>
+            <td>{{ repuesto.marca }}</td>
+            <td>${{ repuesto.precio_compra }}</td>
+            <td>${{ repuesto.precio_venta }}</td>
+            <td>{{ repuesto.stock }}</td>
+            <td>{{ repuesto.limite_stock }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    {% else %}
+    <div class="lr-empty">
+      <h3>📭 No hay repuestos registrados actualmente.</h3>
+      <p>Puedes agregar uno nuevo haciendo clic en el botón superior.</p>
+    </div>
+    {% endif %}
+
   </div>
-  {% endif %}
 </div>
+
 {% endblock %}
