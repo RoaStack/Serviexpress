@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Panel de Reportes{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'usuarios/css/reportes.css' %}">
+{% endblock %}
+
+{% block body_class %}dashboard-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
+
+{% block content %}
+<div class="reportes-wrapper">
+    <div class="overlay">
+
+        <h2 class="reportes-title">Panel de Reportes</h2>
+        <p class="reportes-subtitle">Información clave del sistema</p>
+
+        <div class="reportes-grid">
+
+            <!-- GRAFICO 1 -->
+            <div class="reporte-card">
+                <h3 class="reporte-card-title">Ventas Mensuales</h3>
+                <img src="{% static 'img/reportes/grafico1.png' %}" alt="Ventas Mensuales">
+            </div>
+
+            <!-- GRAFICO 2 -->
+            <div class="reporte-card">
+                <h3 class="reporte-card-title">Servicios Más Solicitados</h3>
+                <img src="{% static 'img/reportes/grafico2.png' %}" alt="Servicios Más Solicitados">
+            </div>
+
+            <!-- GRAFICO 3 -->
+            <div class="reporte-card">
+                <h3 class="reporte-card-title">Citas Agendadas</h3>
+                <img src="{% static 'img/reportes/grafico3.png' %}" alt="Citas Agendadas">
+            </div>
+
+            <!-- GRAFICO 4 -->
+            <div class="reporte-card">
+                <h3 class="reporte-card-title">Stock de Productos</h3>
+                <img src="{% static 'img/reportes/grafico4.png' %}" alt="Stock de Productos">
+            </div>
+
+        </div>
+
+    </div>
+</div>
+{% endblock %}
