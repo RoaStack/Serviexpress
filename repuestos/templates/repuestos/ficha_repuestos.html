@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Repuestos{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/repuestos/repuestos.css' %}">
+{% endblock %}
+
+{% block body_class %}admin-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
+
+{% block content %}
+<div class="pv-overlay">
+  <div class="pv-inner">
+
+    <div class="pv-back-row">
+      <a href="{% url 'usuarios:dashboard' %}" class="pv-back-link">← Volver</a>
+    </div>
+
+    <h1 class="pv-title">Repuestos</h1>
+    <p class="pv-subtitle">Gestión completa de repuestos</p>
+
+    <div class="pv-add-wrapper">
+      <a href="{% url 'repuestos:repuesto_crear' %}" class="pv-btn-add pv-btn-outside">
+        + Agregar Repuesto
+      </a>
+    </div>
+
+    <div class="pv-card">
+
+      <div class="pv-top-row">
+        <span class="pv-counter">
+          Total de Repuestos: {{ repuestos|length }}
+        </span>
+      </div>
+
+      {% if repuestos %}
+      <div class="pv-table-wrapper">
+        <table class="pv-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Marca</th>
+              <th>Precio</th>
+              <th>Stock</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for r in repuestos %}
+            <tr>
+              <td>{{ r.id }}</td>
+              <td>{{ r.nombre }}</td>
+              <td>{{ r.marca }}</td>
+              <td>${{ r.precio_venta }}</td>
+              <td>{{ r.stock }}</td>
+              <td>
+                <a href="{% url 'repuestos:repuesto_editar' r.id %}" class="pv-btn-edit">Editar</a>
+
+                <form method="post" action="{% url 'repuestos:repuesto_eliminar' r.id %}" style="display:inline;">
+                  {% csrf_token %}
+                  <button class="pv-btn-delete" onclick="return confirm('¿Seguro?');">
+                    Eliminar
+                  </button>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="pv-empty">No hay repuestos registrados aún.</div>
+      {% endif %}
+
+    </div>
+  </div>
+</div>
+{% endblock %}
+
