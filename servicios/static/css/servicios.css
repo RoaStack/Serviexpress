@@ -242,17 +242,21 @@ body.admin-body {
     background: #020617 !important;
     border-radius: 10px;
     border: 1px solid #4b5563;
-    color: #e5e7eb;
+    color: #ffffff !important;                 /* Fuerza color del texto */
+    -webkit-text-fill-color: #ffffff !important; /* Evita que Chrome/Bootstrap lo cambien mientras escribes */
     font-size: 0.9rem;
     padding: 8px 10px;
 }
 
+/* Enfocado */
 .sv-field input:focus,
 .sv-field textarea:focus,
 .sv-field select:focus {
     outline: none;
     border-color: #f97316;
     box-shadow: 0 0 0 1px #f97316;
+    color: #ffffff !important;                 /* Reafirma color en focus */
+    -webkit-text-fill-color: #ffffff !important;
 }
 
 /* Placeholder gris suave */
@@ -333,3 +337,4 @@ body.admin-body {
         font-size: 2rem;
     }
 }
+
