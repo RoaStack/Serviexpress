@@ -36,14 +36,13 @@ def repuesto_crear(request):
         form = RepuestoForm()
     return render(request, "repuestos/nuevo_repuesto.html", {"form": form})
 
-# === Editar ===
 @login_required(login_url='usuarios:login_usuario')
 @user_passes_test(es_admin, login_url='usuarios:dashboard')
 def repuesto_editar(request, pk):
     repuesto = get_object_or_404(Repuesto, pk=pk)
 
     if request.method == "POST":
-        form = RepuestoForm(request.POST, instance=repuesto)
+        form = RepuestoForm(request.POST, request.FILES, instance=repuesto)
         if form.is_valid():
             form.save()
             messages.success(request, "Repuesto actualizado correctamente ✅")
@@ -56,6 +55,7 @@ def repuesto_editar(request, pk):
         "form": form,
         "repuesto": repuesto,
     })
+
 
 # === Eliminar ===
 @login_required(login_url='usuarios:login_usuario')

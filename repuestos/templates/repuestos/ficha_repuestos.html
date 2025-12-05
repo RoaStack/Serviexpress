@@ -41,6 +41,7 @@
           <thead>
             <tr>
               <th>ID</th>
+              <th>Foto</th>
               <th>Nombre</th>
               <th>Marca</th>
               <th>Precio</th>
@@ -52,6 +53,16 @@
             {% for r in repuestos %}
             <tr>
               <td>{{ r.id }}</td>
+
+              <!-- FOTO MINIATURA -->
+              <td>
+                {% if r.foto %}
+                  <img src="{{ r.foto.url }}" class="pv-thumb" alt="Foto de {{ r.nombre }}">
+                {% else %}
+                  <span class="pv-no-img">Sin foto</span>
+                {% endif %}
+              </td>
+
               <td>{{ r.nombre }}</td>
               <td>{{ r.marca }}</td>
               <td>${{ r.precio_venta }}</td>
@@ -79,4 +90,5 @@
   </div>
 </div>
 {% endblock %}
+
 
