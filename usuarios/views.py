@@ -1,15 +1,17 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import render,get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import Group
-from .forms import RegistroClienteForm, EditarPerfilForm
+from .forms import RegistroClienteForm, EditarPerfilForm, RegistroMecanicoForm, EditarMecanicoForm, RegistroClienteAdminForm,EditarClienteForm 
+import json
 from .models import Usuario
 from django.http import JsonResponse
-import json
+from usuarios.utils import es_admin
 
-# 🧩 Registro de clientes (desde la web)
+
+#  Registro de clientes (desde la web)
 def registro_cliente(request):
     if request.method == "POST":
         form = RegistroClienteForm(request.POST)
@@ -28,7 +30,7 @@ def registro_cliente(request):
     return render(request, "usuarios/registro.html", {"form": form})
 
 
-# 🔐 Login
+#  Login
 def login_usuario(request):
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
@@ -49,7 +51,7 @@ def login_usuario(request):
     return render(request, "usuarios/login.html", {"form": form})
 
 
-# 🚪 Logout
+#  Logout
 @login_required
 def logout_usuario(request):
     logout(request)
@@ -57,20 +59,19 @@ def logout_usuario(request):
     return redirect("usuarios:login_usuario")
 
 
-# 🧭 Dashboard dinámico según grupo
 @login_required
 def dashboard(request):
     user = request.user
 
-    # 👑 Admin (staff o superuser)
+    #  Admin (staff o superuser)
     if user.is_staff or user.is_superuser:
         return render(request, "usuarios/administrador/dashboard_admin.html")
 
-    # 🔧 Mecánico
+    #  Mecánico
     if user.groups.filter(name="Mecanicos").exists():
         return render(request, "usuarios/mecanico/dashboard_mecanico.html")
 
-    # 👤 Cliente
+    #  Cliente
     if user.groups.filter(name="Clientes").exists():
         return render(request, "usuarios/cliente/dashboard_cliente.html")
 
@@ -121,3 +122,190 @@ def editar_perfil(request):
         return JsonResponse({"success": True})
 
     return JsonResponse({"success": False})
+
+
+@login_required
+@user_passes_test(es_admin, login_url="usuarios:dashboard")
+def gestion_mecanicos(request):
+    mecanicos = (
+        Usuario.objects
+        .filter(user__groups__name="Mecanicos")
+        .select_related("user")
+        .order_by("user__username")
+    )
+    contexto = {
+        "mecanicos": mecanicos,
+        "total_mecanicos": mecanicos.count(),
+    }
+    
+    return render(request, "usuarios/administrador/gestion_mecanicos.html", contexto)
+
+
+@login_required
+@user_passes_test(es_admin, login_url="usuarios:dashboard")
+def crear_mecanico(request):
+    if request.method == "POST":
+        form = RegistroMecanicoForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            grupo_mecanicos, _ = Group.objects.get_or_create(name="Mecanicos")
+            user.groups.add(grupo_mecanicos)
+            messages.success(request, "✅ Mecánico creado correctamente.")
+            return redirect("usuarios:gestion_mecanicos")
+        else:
+            messages.error(request, "Corrige los errores del formulario.")
+    else:
+        form = RegistroMecanicoForm()
+
+    
+    return render(request, "usuarios/administrador/crear_mecanico.html", {"form": form})
+
+
+@login_required
+@user_passes_test(es_admin, login_url="usuarios:dashboard")
+def editar_mecanico(request, usuario_id):
+    mecanico = get_object_or_404(
+        Usuario,
+        id=usuario_id,
+        user__groups__name="Mecanicos"
+    )
+
+    if request.method == "POST":
+        form = EditarMecanicoForm(request.POST, instance=mecanico)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "✅ Datos del mecánico actualizados.")
+            return redirect("usuarios:gestion_mecanicos")
+        else:
+            messages.error(request, "Corrige los errores del formulario.")
+    else:
+        form = EditarMecanicoForm(instance=mecanico)
+
+    
+    return render(
+        request,
+        "usuarios/administrador/editar_mecanico.html",
+        {"form": form, "mecanico": mecanico},
+    )
+
+
+@login_required
+@user_passes_test(es_admin, login_url="usuarios:dashboard")
+def eliminar_mecanico(request, usuario_id):
+    mecanico = get_object_or_404(
+        Usuario,
+        id=usuario_id,
+        user__groups__name="Mecanicos"
+    )
+
+    if request.method == "POST":
+        nombre = mecanico.user.username
+        mecanico.user.delete()
+        messages.success(request, f"🗑️ Mecánico '{nombre}' eliminado correctamente.")
+        return redirect("usuarios:gestion_mecanicos")
+
+    
+    return render(
+        request,
+        "usuarios/administrador/confirmar_eliminar_mecanico.html",
+        {"mecanico": mecanico},
+    )
+
+# ============================================================
+#   GESTIÓN DE CLIENTES (ADMIN)
+# ============================================================
+
+@login_required
+@user_passes_test(es_admin, login_url="usuarios:dashboard")
+def gestion_clientes(request):
+    clientes = (
+        Usuario.objects
+        .filter(user__groups__name="Clientes")
+        .select_related("user")
+        .order_by("user__username")
+    )
+
+    contexto = {
+        "clientes": clientes,
+        "total_clientes": clientes.count(),
+    }
+    return render(request, "usuarios/administrador/gestion_clientes.html", contexto)
+
+
+@login_required
+@user_passes_test(es_admin, login_url="usuarios:dashboard")
+def crear_cliente(request):
+    if request.method == "POST":
+        form = RegistroClienteAdminForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            grupo_clientes, _ = Group.objects.get_or_create(name="Clientes")
+            user.groups.add(grupo_clientes)
+
+            messages.success(request, "✅ Cliente creado correctamente.")
+            return redirect("usuarios:gestion_clientes")
+        else:
+            messages.error(request, "Corrige los errores del formulario.")
+    else:
+        form = RegistroClienteAdminForm()
+
+    return render(
+        request,
+        "usuarios/administrador/crear_cliente.html",
+        {"form": form},
+    )
+
+
+@login_required
+@user_passes_test(es_admin, login_url="usuarios:dashboard")
+def editar_cliente(request, usuario_id):
+    cliente = get_object_or_404(
+        Usuario,
+        id=usuario_id,
+        user__groups__name="Clientes",
+    )
+
+    if request.method == "POST":
+        form = EditarClienteForm(request.POST, instance=cliente)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "✅ Datos del cliente actualizados.")
+            return redirect("usuarios:gestion_clientes")
+        else:
+            messages.error(request, "Corrige los errores del formulario.")
+    else:
+        form = EditarClienteForm(instance=cliente)
+
+    return render(
+        request,
+        "usuarios/administrador/editar_cliente.html",
+        {"form": form, "cliente": cliente},
+    )
+
+
+@login_required
+@user_passes_test(es_admin, login_url="usuarios:dashboard")
+def eliminar_cliente(request, usuario_id):
+    cliente = get_object_or_404(
+        Usuario,
+        id=usuario_id,
+        user__groups__name="Clientes",
+    )
+
+    if request.method == "POST":
+        nombre = cliente.user.username
+        cliente.user.delete()
+        messages.success(request, f"🗑️ Cliente '{nombre}' eliminado correctamente.")
+        return redirect("usuarios:gestion_clientes")
+
+    
+    return render(
+        request,
+        "usuarios/administrador/confirmar_eliminar_cliente.html",
+        {"cliente": cliente},
+    )
+
+@login_required
+@user_passes_test(es_admin, login_url="usuarios:dashboard")
+def reportes(request):
+    return render(request, "usuarios/administrador/reportes.html")

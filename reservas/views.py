@@ -18,31 +18,7 @@ from boletas.forms import DetalleBoletaForm
 from django.db import transaction
 from .forms import ReservaForm, DisponibilidadMasivaForm
 from django.core.exceptions import ValidationError
-
-
-# ================================================================
-# 🔐 HELPERS DE ROLES
-# ================================================================
-def es_cliente(user):
-    return user.is_authenticated and user.groups.filter(name="Clientes").exists()
-
-
-def es_mecanico(user):
-    return user.is_authenticated and user.groups.filter(name="Mecanicos").exists()
-
-
-def es_admin(user):
-    return user.is_authenticated and (user.is_staff or user.is_superuser)
-
-
-def es_cliente_o_admin(user):
-    return es_cliente(user) or es_admin(user)
-
-
-def es_mecanico_o_admin(user):
-    return es_mecanico(user) or es_admin(user)
-
-
+from usuarios.utils import es_cliente, es_admin, es_cliente_o_admin, es_mecanico, es_mecanico_o_admin
 # ================================================================
 # 👤 VISTAS PARA CLIENTES
 # ================================================================
@@ -421,7 +397,7 @@ def registrar_repuestos_reserva(request, reserva_id):
         if cantidad > repuesto.stock:
             messages.error(
                 request,
-                f"❌ Stock insuficiente de {repuesto.descripcion}. "
+                f"❌ Stock insuficiente de {repuesto.nombre}. "
                 f"Disponible: {repuesto.stock}.",
             )
             return redirect(
@@ -438,7 +414,7 @@ def registrar_repuestos_reserva(request, reserva_id):
 
         messages.success(
             request,
-            f"✅ Se agregó {cantidad}× {repuesto.descripcion} correctamente.",
+            f"✅ Se agregó {cantidad}× {repuesto.nombre} correctamente.",
         )
         return redirect(
             "reservas:registrar_repuestos_reserva",
@@ -489,7 +465,7 @@ def eliminar_repuesto_detalle(request, reserva_id, detalle_id):
 
         messages.success(
             request,
-            f"♻️ Se eliminó '{repuesto.descripcion}' y se devolvieron "
+            f"♻️ Se eliminó '{repuesto.nombre}' y se devolvieron "
             f"{cantidad_devuelta} unidades al stock.",
         )
     else:
@@ -693,4 +669,8 @@ def eliminar_disponibilidad(request, pk):
         {"disponibilidad": disponibilidad},
     )
 
+@login_required
+@user_passes_test(es_admin, login_url="usuarios:dashboard")
+def selector_usuario(request):
+    return render(request,"reservas/reservas_admin/selector_usuario.html")
 

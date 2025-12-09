@@ -4,74 +4,106 @@
 {% block title %}Disponibilidades masivas{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/disponibilidades_masivas.css' %}">
+<link rel="stylesheet" href="{% static 'css/reservas/disponibilidades_masivas.css' %}">
 {% endblock %}
 
+{% block body_class %}dashboard-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
+
 {% block content %}
-<div class="container mt-4">
-    <h2 class="mb-3">Crear disponibilidades masivas</h2>
-    <p class="text-muted">
+<div class="dm-wrapper">
+  <div class="dm-overlay">
+
+    {# 🔙 Botón de regreso (fuera de la card) #}
+    <div class="dm-back-container">
+      <a href="{% url 'usuarios:gestion_mecanicos' %}" class="dm-btn-back">
+        ← Volver a gestión de mecánicos
+      </a>
+    </div>
+
+    <div class="dm-card">
+
+      <h1 class="dm-title">Crear disponibilidades masivas</h1>
+      <p class="dm-subtitle">
         Selecciona un mecánico, un rango de fechas y los días de la semana
         en los que trabajará con los mismos horarios.
-    </p>
+      </p>
 
-    <form method="post" class="card p-4 shadow-sm">
+      <form method="post" class="dm-form">
         {% csrf_token %}
 
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label class="form-label">{{ form.mecanico.label }}</label>
-                {{ form.mecanico }}
-            </div>
+        {# Fila: mecánico + fechas #}
+        <div class="dm-row">
+          <div class="dm-col">
+            <label class="dm-label">{{ form.mecanico.label }}</label>
+            {{ form.mecanico }}
+          </div>
 
-            <div class="col-md-3 mb-3">
-                <label class="form-label">{{ form.fecha_inicio.label }}</label>
-                {{ form.fecha_inicio }}
-            </div>
-            <div class="col-md-3 mb-3">
-                <label class="form-label">{{ form.fecha_fin.label }}</label>
-                {{ form.fecha_fin }}
-            </div>
+          <div class="dm-col dm-col-small">
+            <label class="dm-label">{{ form.fecha_inicio.label }}</label>
+            {{ form.fecha_inicio }}
+          </div>
+
+          <div class="dm-col dm-col-small">
+            <label class="dm-label">{{ form.fecha_fin.label }}</label>
+            {{ form.fecha_fin }}
+          </div>
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">{{ form.dias_semana.label }}</label>
-            <div class="d-flex flex-wrap gap-3">
-                {{ form.dias_semana }}
-            </div>
+        {# Días de la semana #}
+        <div class="dm-block">
+          <label class="dm-label">{{ form.dias_semana.label }}</label>
+          <div class="dm-dias-wrapper">
+            {{ form.dias_semana }}
+          </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-3 mb-3">
-                <label class="form-label">{{ form.hora_inicio.label }}</label>
-                {{ form.hora_inicio }}
-            </div>
-            <div class="col-md-3 mb-3">
-                <label class="form-label">{{ form.hora_termino.label }}</label>
-                {{ form.hora_termino }}
-            </div>
-            <div class="col-md-3 mb-3">
-                <label class="form-label">{{ form.colacion_inicio.label }}</label>
-                {{ form.colacion_inicio }}
-            </div>
-            <div class="col-md-3 mb-3">
-                <label class="form-label">{{ form.colacion_termino.label }}</label>
-                {{ form.colacion_termino }}
-            </div>
+        {# Horas y colación #}
+        <div class="dm-row">
+          <div class="dm-col dm-col-small">
+            <label class="dm-label">{{ form.hora_inicio.label }}</label>
+            {{ form.hora_inicio }}
+          </div>
+
+          <div class="dm-col dm-col-small">
+            <label class="dm-label">{{ form.hora_termino.label }}</label>
+            {{ form.hora_termino }}
+          </div>
+
+          <div class="dm-col dm-col-small">
+            <label class="dm-label">{{ form.colacion_inicio.label }}</label>
+            {{ form.colacion_inicio }}
+          </div>
+
+          <div class="dm-col dm-col-small">
+            <label class="dm-label">{{ form.colacion_termino.label }}</label>
+            {{ form.colacion_termino }}
+          </div>
         </div>
 
-        <div class="col-md-3 mb-3">
-            <label class="form-label">{{ form.duracion_bloque.label }}</label>
+        {# Duración bloque #}
+        <div class="dm-row">
+          <div class="dm-col dm-col-small">
+            <label class="dm-label">{{ form.duracion_bloque.label }}</label>
             {{ form.duracion_bloque }}
+          </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">
+        {# Botones #}
+        <div class="dm-actions">
+          <button type="submit" class="dm-btn-primary">
             Crear disponibilidades
-        </button>
-        <a href="{% url 'reservas:gestionar_disponibilidades' %}" class="btn btn-secondary mt-3">
-        Editar disponibilidades
-        </a>
+          </button>
 
-    </form>
+          <a href="{% url 'reservas:gestionar_disponibilidades' %}"
+             class="dm-btn-secondary">
+            Editar disponibilidades
+          </a>
+        </div>
+      </form>
+
+    </div>
+
+  </div>
 </div>
 {% endblock %}

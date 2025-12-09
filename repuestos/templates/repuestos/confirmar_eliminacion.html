@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Eliminar Repuesto{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/repuestos/repuestos.css' %}">
+{% endblock %}
+
+{% block body_class %}admin-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
+
+{% block content %}
+<div class="pv-overlay">
+  <div class="pv-inner">
+
+    <div class="pv-back-row">
+      <a href="{% url 'repuestos:ficha_repuestos' %}" class="pv-back-link">
+        ← Volver a Repuestos
+      </a>
+    </div>
+
+    <div class="pv-form-card">
+      <h2 class="pv-form-title">Eliminar Repuesto</h2>
+
+      <p class="pv-delete-text">
+        Estás a punto de eliminar el repuesto
+        <span class="pv-delete-name">{{ repuesto.nombre }}</span>.
+      </p>
+      <p class="pv-delete-text">Esta acción no se puede deshacer.</p>
+
+      <form method="post">
+        {% csrf_token %}
+        <div class="pv-form-actions">
+          <a href="{% url 'repuestos:ficha_repuestos' %}" class="pv-btn-cancel">
+            Cancelar
+          </a>
+          <button type="submit" class="pv-btn-delete">Eliminar</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

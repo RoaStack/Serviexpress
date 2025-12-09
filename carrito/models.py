@@ -53,4 +53,4 @@ class CompraItem(models.Model):
         return self.cantidad * self.precio_unitario
 
     def __str__(self):
-        return f"{self.cantidad} x {self.repuesto.descripcion}"
+        return f"{self.cantidad} x {self.repuesto.nombre}"

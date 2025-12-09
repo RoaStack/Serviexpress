@@ -1,0 +1,142 @@
+/* ===========================
+   Fondo principal
+=========================== */
+body.cliente-body {
+    background: url("/static/img/panelCliente.png") no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+}
+
+/* Capa de oscurecimiento */
+.comp-overlay {
+    width: 100%;
+    min-height: calc(100vh - 80px);
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    justify-content: center;
+    padding: 40px 0 60px;
+}
+
+.comp-inner {
+    width: 95%;
+    max-width: 900px;
+}
+
+/* Título */
+.comp-title {
+    color: #ffffff;
+    font-size: 2.4rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 25px;
+    background: rgba(0, 0, 0, 0.45);
+    padding: 10px 28px;
+    border-radius: 20px;
+    backdrop-filter: blur(5px);
+}
+
+/* Card principal */
+.comp-card {
+    background: rgba(0, 0, 0, 0.88);
+    border-radius: 22px;
+    border: 2px solid rgba(43, 123, 255, 0.65);
+    padding: 30px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.9);
+    color: #ffffff;
+}
+
+/* Texto superior */
+.comp-text {
+    font-size: 1rem;
+    margin-bottom: 4px;
+}
+
+.comp-divider {
+    border-color: rgba(255, 255, 255, 0.2);
+    margin: 12px 0 20px;
+}
+
+/* Tabla */
+.comp-table-wrapper {
+    overflow-x: auto;
+}
+
+.comp-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.comp-table thead tr {
+    background: #2b7bff;
+}
+
+.comp-table thead th {
+    padding: 10px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.comp-table tbody tr:nth-child(odd) {
+    background-color: #020617;
+}
+
+.comp-table tbody tr:nth-child(even) {
+    background-color: #050b1a;
+}
+
+.comp-table tbody td {
+    padding: 10px;
+    text-align: center;
+    border-top: 1px solid #111827;
+}
+
+.comp-table tbody tr:hover {
+    background-color: #0d1528;
+}
+
+/* Fila total */
+.comp-total-row {
+    background: #0f2a52;
+    border-top: 2px solid #1e40af;
+}
+
+.comp-total-row td {
+    font-size: 1.1rem;
+}
+
+/* Botón volver */
+.comp-btn-wrapper {
+    margin-top: 25px;
+    text-align: right;
+}
+
+.comp-btn-back {
+    display: inline-block;
+    padding: 10px 18px;
+    background: #3b82f6;
+    color: #ffffff;
+    border-radius: 999px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.2s;
+    border: 1px solid #60a5fa;
+}
+
+.comp-btn-back:hover {
+    background: #1d4ed8;
+    box-shadow: 0 0 10px #3b82f6;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .comp-title {
+        font-size: 1.8rem;
+    }
+
+    .comp-card {
+        padding: 18px;
+    }
+}

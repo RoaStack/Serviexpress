@@ -1,56 +1,80 @@
 {% extends "base.html" %}
 {% load static %}
+
+{% block title %}Comprobante de orden{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'pedidos/css/detalle_orden.css' %}">
+{% endblock %}
+
+{# Fondo del mecánico #}
+{% block body_class %}mecanico-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
+
 {% block content %}
+<div class="do-wrapper">
+  <div class="do-overlay">
+    <div class="do-inner">
 
-<div class="container mt-4">
-    <div class="mb-3">
-        <a href="{% url 'pedidos:lista_ordenes' %}" class="btn btn-secondary">
-            ← Volver al Listado de Ordenes
+      <!-- Botón volver -->
+      <div class="do-back-row">
+        <a href="{% url 'pedidos:lista_ordenes' %}" class="do-back-link">
+          ← Volver al listado de órdenes
         </a>
-    </div>
+      </div>
 
-    <div class="card shadow">
-        <div class="card-header bg-success text-white">
-            <h3 class="mb-0">Comprobante de Orden #{{ orden.id }}</h3>
+      <!-- Título -->
+      <h1 class="do-title">
+        Comprobante de Orden #{{ orden.id }}
+      </h1>
+
+      <!-- Card principal -->
+      <div class="do-card">
+
+        <!-- Datos generales -->
+        <div class="do-meta">
+          <p><span>Fecha:</span> {{ orden.fecha }}</p>
+          <p><span>Proveedor:</span> {{ orden.proveedor.nombre }}</p>
+          <p><span>Mecánico:</span> {{ orden.mecanico.user.get_full_name }}</p>
         </div>
 
-        <div class="card-body">
+        <div class="do-divider"></div>
 
-            <h5><strong>Fecha:</strong> {{ orden.fecha }}</h5>
-            <h5><strong>Proveedor:</strong> {{ orden.proveedor.nombre }}</h5>
-            <h5><strong>Mecánico:</strong> {{ orden.mecanico.user.get_full_name }}</h5>
+        <!-- Tabla de detalles -->
+        <h2 class="do-section-title">Detalles de la orden</h2>
 
-            <hr>
-
-            <h4>Detalles de la Orden</h4>
-
-            <table class="table table-striped mt-3">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Repuesto</th>
-                        <th>Cantidad</th>
-                        <th>Precio Unitario</th>
-                        <th>Subtotal</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for d in detalles %}
-                        <tr>
-                            <td>{{ d.repuesto.descripcion }}</td>
-                            <td>{{ d.cantidad }}</td>
-                            <td>${{ d.precio_unitario }}</td>
-                            <td>${{ d.subtotal }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-
-            <div class="text-end mt-4">
-                <h3><strong>Total:</strong> ${{ total }}</h3>
-            </div>
+        <div class="do-table-wrapper">
+          <table class="do-table">
+            <thead>
+              <tr>
+                <th>Repuesto</th>
+                <th>Cantidad</th>
+                <th>Precio unitario</th>
+                <th>Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for d in detalles %}
+                <tr>
+                  <td>{{ d.repuesto.nombre }}</td>
+                  <td>{{ d.cantidad }}</td>
+                  <td>${{ d.precio_unitario }}</td>
+                  <td>${{ d.subtotal }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
         </div>
-    </div>
 
+        <!-- Total -->
+        <div class="do-total-row">
+          <span class="do-total-label">Total:</span>
+          <span class="do-total-value">${{ total }}</span>
+        </div>
+
+      </div>  <!-- /do-card -->
+
+    </div>
+  </div>
 </div>
-
 {% endblock %}

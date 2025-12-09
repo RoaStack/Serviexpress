@@ -1,82 +1,105 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block title %}Mis Órdenes de Pedido{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'pedidos/css/mis_ordenes.css' %}">
+{% endblock %}
+
+{% block body_class %}mecanico-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
+
 {% block content %}
-<div class="container mt-4">
-    <div class="mb-3">
-        <a href="{% url 'usuarios:dashboard' %}" class="btn btn-secondary">
-            ← Volver al Dashboard
+
+<div class="mo-wrapper">
+  <div class="mo-overlay">
+    <div class="mo-inner">
+
+      <!-- Botón Volver -->
+      <div class="mo-back-row">
+        <a href="{% url 'usuarios:dashboard' %}" class="mo-back-link">
+          ← Volver al Dashboard
         </a>
-    </div>
+      </div>
 
-    <div class="card shadow">
-        <div class="card-header bg-primary text-white">
-            <h3 class="mb-0">Mis Órdenes de Pedido</h3>
+      <!-- Título -->
+      <h1 class="mo-title">Mis Órdenes de Pedido</h1>
+
+      <!-- CARD PRINCIPAL -->
+      <div class="mo-card">
+
+        {% if ordenes %}
+        <div class="mo-table-wrapper">
+          <table class="mo-table">
+
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Proveedor</th>
+                <th>Fecha</th>
+                <th>Total</th>
+                <th>Estado</th>
+                <th>Detalles</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {% for orden in ordenes %}
+              <tr>
+                <td>{{ orden.id }}</td>
+                <td>{{ orden.proveedor.nombre }}</td>
+                <td>{{ orden.fecha_creacion|date:"d/m/Y H:i" }}</td>
+                <td>${{ orden.monto_total|floatformat:0 }}</td>
+
+                <!-- ESTADO COLOREADO -->
+                <td>
+                  {% if orden.estado == "pendiente" %}
+                    <span class="mo-pill-state mo-pill-pendiente">Pendiente</span>
+                  {% elif orden.estado == "recibido" %}
+                    <span class="mo-pill-state mo-pill-recibido">Recibido</span>
+                  {% elif orden.estado == "finalizado" %}
+                    <span class="mo-pill-state mo-pill-finalizado">Finalizado</span>
+                  {% else %}
+                    <span class="mo-pill-muted">Sin acción</span>
+                  {% endif %}
+                </td>
+
+                <!-- BOTONES -->
+                <td>
+                  {% if orden.estado == "pendiente" %}
+                    <a href="{% url 'pedidos:recepcionar_orden' orden.id %}" class="mo-btn-table mo-btn-info">Ver</a>
+
+                  {% elif orden.estado == "recibido" %}
+                    <a href="{% url 'pedidos:detalle_orden' orden.id %}" class="mo-btn-table mo-btn-primary">Ver</a>
+
+                  {% else %}
+                    <span class="mo-pill-muted">Sin acción</span>
+                  {% endif %}
+                </td>
+
+              </tr>
+              {% endfor %}
+            </tbody>
+
+          </table>
         </div>
 
-        <div class="card-body">
+        {% else %}
+          <p class="mo-empty">No tienes órdenes de pedido registradas.</p>
+        {% endif %}
 
-            {% if ordenes %}
-            
-                <table class="table table-hover table-bordered">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>ID</th>
-                            <th>Proveedor</th>
-                            <th>Fecha</th>
-                            <th>Total</th>
-                            <th>Estado</th>
-                            <th>Detalles</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        {% for orden in ordenes %}
-                        <tr>
-                            <td>{{ orden.id }}</td>
-                            <td>{{ orden.proveedor.nombre }}</td>
-                            <td>{{ orden.fecha_creacion|date:"d/m/Y H:i" }}</td>
-                            <td>
-                                ${{ orden.monto_total|floatformat:0 }}
-                            </td>
-                            <td>{{ orden.get_estado_display }}</td>
-                            <td>
-                            {% if orden.estado == "pendiente" %}
-                            <a href="{% url 'pedidos:recepcionar_orden' orden.id %}" 
-                                class="btn btn-sm btn-info">
-                                Ver
-                            </a>
-
-                            {% elif orden.estado == "recibido" %}
-                            <a href="{% url 'pedidos:detalle_orden' orden.id %}" 
-                                class="btn btn-sm btn-primary">
-                                Ver
-                            </a>
-
-                            {% else %}
-                                <span class="badge bg-secondary">Sin acción</span>
-                            {% endif %}
-                        </td>
-
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-
-            {% else %}
-                <div class="alert alert-warning text-center">
-                    No tienes órdenes de pedido registradas.
-                </div>
-            {% endif %}
-
-            <div class="text-end mt-3">
-                <a href="{% url 'pedidos:crear' %}" class="btn btn-success">
-                    + Crear Nueva Orden
-                </a>
-            </div>
-
+        <!-- Botón Nueva orden -->
+        <div class="mo-create-row">
+          <a href="{% url 'pedidos:crear' %}" class="mo-btn-create">
+            + Crear Nueva Orden
+          </a>
         </div>
-    </div>
 
+      </div> <!-- card -->
+
+    </div>
+  </div>
 </div>
+
 {% endblock %}

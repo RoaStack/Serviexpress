@@ -1,14 +1,17 @@
+# usuarios/context_processors.py
+
+from .utils import es_admin, es_mecanico, es_cliente
+
 def roles_usuario(request):
     """
-    Devuelve variables booleanas para saber el tipo de usuario.
-    Así no se usan expresiones complejas en los templates.
+    Devuelve variables booleanas para usar en templates.
+    Usa las funciones centralizadas de utils.py.
     """
     if not request.user.is_authenticated:
         return {}
 
-    grupos = list(request.user.groups.values_list("name", flat=True))
     return {
-        "es_admin": request.user.is_staff or request.user.is_superuser,
-        "es_mecanico": "Mecanicos" in grupos,
-        "es_cliente": "Clientes" in grupos,
+        "es_admin": es_admin(request.user),
+        "es_mecanico": es_mecanico(request.user),
+        "es_cliente": es_cliente(request.user),
     }
