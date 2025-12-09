@@ -1,0 +1,190 @@
+/* =======================================
+   FONDO PANEL MECÁNICO
+   ======================================= */
+body.mecanico-body {
+    background: url("/static/img/panelMecanico.png") no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Capa oscura */
+.hsm-overlay {
+    width: 100%;
+    min-height: calc(100vh - 80px);
+    background: rgba(0, 0, 0, 0.55);
+    padding: 40px 0 60px;
+    display: flex;
+    justify-content: center;
+}
+
+.hsm-inner {
+    width: 95%;
+    max-width: 1150px;
+}
+
+/* =======================================
+   BOTÓN VOLVER
+   ======================================= */
+.hsm-back-row {
+    margin-bottom: 10px;
+}
+
+.hsm-back-link {
+    background: rgba(255, 255, 255, 0.18);
+    padding: 7px 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    color: #ffffff;
+    text-decoration: none;
+    backdrop-filter: blur(6px);
+    font-size: 0.9rem;
+    transition: .25s;
+}
+
+.hsm-back-link:hover {
+    background: rgba(255, 255, 255, 0.26);
+    border-color: #5bb8ff;
+    box-shadow: 0 0 10px #5bb8ff;
+}
+
+/* =======================================
+   TÍTULO
+   ======================================= */
+.hsm-title {
+    color: #ffffff;
+    font-size: 2.4rem;
+    font-weight: 700;
+    text-align: center;
+
+    background: rgba(0, 0, 0, 0.45);
+    padding: 10px 24px;
+    border-radius: 20px;
+    backdrop-filter: blur(5px);
+
+    margin-bottom: 25px;
+}
+
+/* =======================================
+   TARJETA PRINCIPAL
+   ======================================= */
+.hsm-card {
+    background: rgba(0, 0, 0, 0.90);
+    border-radius: 22px;
+    border: 2px solid rgba(59, 130, 246, 0.75);
+    padding: 20px 25px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.9);
+}
+
+/* scroll interno */
+.hsm-table-wrapper {
+    max-height: 440px;
+    overflow-y: auto;
+}
+
+/* =======================================
+   TABLA
+   ======================================= */
+.hsm-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #ffffff;
+    font-size: 0.9rem;
+}
+
+/* Encabezado */
+.hsm-table thead tr {
+    background-color: #1f3b63;
+}
+
+.hsm-table th {
+    padding: 10px 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+/* Filas */
+.hsm-table tbody tr:nth-child(odd) {
+    background-color: #020617;
+}
+
+.hsm-table tbody tr:nth-child(even) {
+    background-color: #050b1a;
+}
+
+.hsm-table tbody tr:hover {
+    background-color: #0b1220;
+}
+
+.hsm-table td {
+    padding: 9px 12px;
+    text-align: center;
+    border-top: 1px solid #111827;
+}
+
+/* =======================================
+   PILLS SERVICIOS
+   ======================================= */
+.hsm-pill {
+    display: inline-block;
+    background: #4dd0e1;
+    color: #002b36;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin: 1px 0;
+}
+
+.hsm-muted {
+    color: #9ca3af;
+    font-size: 0.8rem;
+}
+
+/* =======================================
+   ESTADO
+   ======================================= */
+.hsm-badge {
+    display: inline-block;
+    background: #2dd4bf;
+    color: #042f2e;
+    padding: 5px 12px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* =======================================
+   BOTÓN VER BOLETA
+   ======================================= */
+.hsm-btn-info {
+    background: #3b82f6;
+    padding: 6px 14px;
+    border-radius: 999px;
+    color: white !important;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-decoration: none;
+    border: 1px solid #60a5fa;
+    transition: .25s;
+}
+
+.hsm-btn-info:hover {
+    background: #2563eb;
+    box-shadow: 0 0 10px #3b82f6;
+}
+
+/* =======================================
+   MENSAJE VACÍO
+   ======================================= */
+.hsm-empty {
+    color: white;
+    text-align: center;
+    padding: 40px 0;
+}
+
+@media (max-width: 900px) {
+    .hsm-card {
+        padding: 14px;
+    }
+}
