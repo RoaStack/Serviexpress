@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% load static %}
-
 {% block title %}Registrar repuestos — Reserva #{{ reserva.id }}{% endblock %}
 
 {% block extra_css %}
@@ -11,7 +9,6 @@
 
 {% block body_class %}mecanico-body{% endblock %}
 {% block main_class %}p-0 m-0 w-100{% endblock %}
-    
 
 {% block content %}
 
@@ -23,25 +20,6 @@
             <a href="{% url 'reservas:servicios_en_proceso' %}" class="hsm-back-link">⬅ Volver</a>
         </div>
 
-<div class="hsm-overlay">
-    <div class="hsm-inner">
-
-        <!-- Botón volver -->
-        <div class="hsm-back-row">
-            <a href="{% url 'reservas:servicios_en_proceso' %}" class="hsm-back-link">⬅ Volver</a>
-        </div>
-
-        <!-- Título -->
-        <h2 class="hsm-title">🔩 Registrar repuestos — Reserva #{{ reserva.id }}</h2>
-
-        <!-- Tarjeta principal -->
-        <div class="hsm-card">
-
-            <!-- Mensaje informativo -->
-            <div class="alert alert-info text-center fw-semibold">
-                💡 Los repuestos agregados descuentan stock automáticamente.<br>
-                Si eliminas un repuesto, su cantidad se devolverá al inventario.
-            </div>
         <!-- Título -->
         <h2 class="hsm-title">🔩 Registrar repuestos — Reserva #{{ reserva.id }}</h2>
 
@@ -76,33 +54,7 @@
                     <button class="btn btn-success w-100" type="submit">➕ Agregar</button>
                 </div>
             </form>
-            <!-- FORMULARIO -->
-            <form method="POST" class="row g-3 mb-4">
-                {% csrf_token %}
-                <div class="col-md-4 text-white">
-                    {{ form.repuesto.label_tag }}
-                    {{ form.repuesto }}
-                </div>
 
-                <div class="col-md-3 text-white">
-                    {{ form.cantidad.label_tag }}
-                    {{ form.cantidad }}
-                </div>
-
-                <div class="col-md-3 text-white">
-                    {{ form.precio_unitario.label_tag }}
-                    {{ form.precio_unitario }}
-                </div>
-
-                <div class="col-md-2 d-flex align-items-end">
-                    <button class="btn btn-success w-100" type="submit">➕ Agregar</button>
-                </div>
-            </form>
-
-            <!-- Título tabla -->
-            <h4 class="text-danger fw-bold mb-3">
-                <i class="bi bi-clipboard2-check-fill"></i> Repuestos registrados
-            </h4>
             <!-- Título tabla -->
             <h4 class="text-danger fw-bold mb-3">
                 <i class="bi bi-clipboard2-check-fill"></i> Repuestos registrados
@@ -110,7 +62,7 @@
 
             {% if detalles %}
 
-            <!-- Tabla estilo profesional -->
+            <!-- Tabla -->
             <div class="hsm-table-wrapper">
                 <table class="hsm-table">
                     <thead>
@@ -162,7 +114,7 @@
                 <a href="{% url 'reservas:actualizar_estado_mecanico' reserva.id 'finalizada' %}"
                    class="btn btn-success fw-bold"
                    onclick="return confirm('¿Seguro que deseas finalizar esta reserva? Se generará la boleta automáticamente.');">
-                   ✅ Finalizar servicio
+                    ✅ Finalizar servicio
                 </a>
                 {% else %}
                 <button class="btn btn-secondary fw-bold" disabled>
@@ -175,22 +127,12 @@
     </div>
 </div>
 
-<!-- Script autocompletado de precio -->
-<!-- Script autocompletado de precio -->
+<!-- Script autocompletar precio -->
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const repuestoSelect = document.getElementById("id_repuesto");
         const precioInput = document.getElementById("id_precio_unitario");
-    document.addEventListener("DOMContentLoaded", function() {
-        const repuestoSelect = document.getElementById("id_repuesto");
-        const precioInput = document.getElementById("id_precio_unitario");
 
-        repuestoSelect.addEventListener("change", function() {
-            const text = repuestoSelect.options[repuestoSelect.selectedIndex].text;
-            const match = text.match(/\$(\d+)/);
-            precioInput.value = match ? match[1] : "";
-        });
-    });
         repuestoSelect.addEventListener("change", function() {
             const text = repuestoSelect.options[repuestoSelect.selectedIndex].text;
             const match = text.match(/\$(\d+)/);
@@ -200,3 +142,4 @@
 </script>
 
 {% endblock %}
+
