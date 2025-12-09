@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Boleta
-from usuarios.utils import es_cliente, es_mecanico_o_admin
+from usuarios.utils import es_cliente, es_mecanico
 def detalle_boleta(request, pk):
     boleta = get_object_or_404(Boleta, pk=pk)
 
@@ -10,7 +10,7 @@ def detalle_boleta(request, pk):
     total_general = total_servicios + total_repuestos
 
     # 🔙 Ruta + texto del botón según rol
-    if es_mecanico_o_admin:
+    if es_mecanico(request.user):
         # nombre de la URL en reservas/urls.py -> name="historial_servicios"
         volver_url  = "reservas:historial_servicios"
         volver_text = "← Volver al Historial"
