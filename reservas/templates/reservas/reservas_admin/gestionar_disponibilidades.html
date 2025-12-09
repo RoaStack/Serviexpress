@@ -22,9 +22,7 @@
       </a>
     </div>
 
-    <!-- Tarjeta principal -->
     <div class="gd-card">
-
       <h1 class="gd-title">Gestionar disponibilidades</h1>
 
       <!-- Filtro por mecánico -->
@@ -52,11 +50,27 @@
       </form>
 
       {% if disponibilidades %}
-        <!-- Tabla con scroll interno -->
+
+      <!-- 🔥 FORMULARIO PARA ELIMINAR SELECCIONADOS -->
+      <form method="post" action="{% url 'reservas:eliminar_disponibilidades_masivas' %}" id="bulk-delete-form">
+        {% csrf_token %}
+
+        <!-- Botón eliminar múltiples -->
+        <div class="gd-bulk-actions">
+          <button type="submit" class="gd-btn-delete-multi"
+                  onclick="return confirm('¿Eliminar todas las disponibilidades seleccionadas?');">
+            Eliminar seleccionados
+          </button>
+        </div>
+
+        <!-- Tabla -->
         <div class="gd-table-wrapper">
           <table class="gd-table">
             <thead>
               <tr>
+                <th>
+                  <input type="checkbox" id="select-all" class="gd-check">
+                </th>
                 <th>ID</th>
                 <th>Mecánico</th>
                 <th>Fecha</th>
@@ -68,9 +82,14 @@
                 <th>Acciones</th>
               </tr>
             </thead>
+
             <tbody>
               {% for d in disponibilidades %}
               <tr>
+                <td>
+                  <input type="checkbox" name="ids" value="{{ d.id }}" class="gd-check">
+                </td>
+
                 <td>{{ d.id }}</td>
                 <td>{{ d.mecanico.user.get_full_name|default:d.mecanico.user.username }}</td>
                 <td>{{ d.fecha }}</td>
@@ -78,6 +97,7 @@
                 <td>{{ d.hora_termino }}</td>
                 <td>{{ d.colacion_inicio }} - {{ d.colacion_termino }}</td>
                 <td>{{ d.duracion_bloque }}</td>
+
                 <td>
                   {% if d.activo %}
                     <span class="gd-badge gd-badge-on">Sí</span>
@@ -85,6 +105,7 @@
                     <span class="gd-badge gd-badge-off">No</span>
                   {% endif %}
                 </td>
+
                 <td class="gd-actions-cell">
                   <a href="{% url 'reservas:editar_disponibilidad' d.id %}"
                      class="gd-btn-table gd-btn-edit">
@@ -101,11 +122,14 @@
                     </button>
                   </form>
                 </td>
+
               </tr>
               {% endfor %}
             </tbody>
           </table>
         </div>
+      </form>
+
       {% else %}
         <div class="gd-empty">
           No hay disponibilidades registradas con los filtros actuales.
@@ -115,5 +139,15 @@
     </div>
   </div>
 </div>
+
+<script>
+  // Seleccionar todo
+  const selectAll = document.getElementById("select-all");
+  const checks = document.querySelectorAll(".gd-check");
+
+  selectAll.addEventListener("change", () => {
+      checks.forEach(ch => ch.checked = selectAll.checked);
+  });
+</script>
 
 {% endblock %}
