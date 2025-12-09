@@ -1,29 +1,23 @@
 #!/usr/bin/env bash
 
-# Exit when any command fails
 set -o errexit
 
-echo "=== 🚀 Starting build process for ServiExpress ==="
+echo "=== Iniciando proceso de build ==="
 
-# 1. Install dependencies
-echo "1️⃣ Installing dependencies..."
+echo "1. Instalando dependencias..."
 pip install -r requirements.txt
 
-# 2. Apply migrations
-echo "2️⃣ Applying database migrations..."
+echo "2. Aplicando migraciones..."
 python manage.py migrate --noinput
 
-# 3. Create superuser automatically if env vars are present
-echo "3️⃣ Checking superuser creation..."
-if [ -n "$SUPERUSER_USERNAME" ] && [ -n "$SUPERUSER_PASSWORD" ] && [ -n "$SUPERUSER_EMAIL" ]; then
-    echo "➡️ Creating Django superuser..."
+echo "3. Verificando creación de superusuario..."
+if [ -n "$SUPERUSER_PASSWORD" ]; then
     python create_superuser.py
 else
-    echo "⚠️ SUPERUSER variables not set — skipping superuser creation"
+    echo "⚠️ SUPERUSER_PASSWORD no configurada - omitiendo creación de superusuario"
 fi
 
-# 4. Collect static files for Whitenoise
-echo "4️⃣ Collecting static files..."
+echo "4. Recolectando archivos estáticos..."
 python manage.py collectstatic --noinput
 
-echo "✔️ Build completed successfully!"
+echo "✅ Build completado exitosamente"
