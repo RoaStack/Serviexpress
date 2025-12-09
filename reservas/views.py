@@ -674,3 +674,24 @@ def eliminar_disponibilidad(request, pk):
 def selector_usuario(request):
     return render(request,"reservas/reservas_admin/selector_usuario.html")
 
+@login_required
+@user_passes_test(es_admin, login_url="usuarios:dashboard")
+def eliminar_disponibilidades_masivas(request):
+    if request.method == "POST":
+        ids = request.POST.getlist("ids")
+
+        if not ids:
+            messages.error(request, "No seleccionaste ninguna disponibilidad.")
+            return redirect("reservas:gestionar_disponibilidades")
+
+        disponibilidades = Disponibilidad.objects.filter(id__in=ids)
+
+        count = disponibilidades.count()
+        disponibilidades.delete()
+
+        messages.success(
+            request,
+            f"🗑️ Se eliminaron {count} disponibilidades correctamente."
+        )
+
+    return redirect("reservas:gestionar_disponibilidades")

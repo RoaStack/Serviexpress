@@ -77,7 +77,7 @@
                     <tbody>
                         {% for d in detalles %}
                         <tr>
-                            <td>{{ d.repuesto.descripcion }}</td>
+                            <td>{{ d.repuesto.nombre }}</td>
                             <td>{{ d.cantidad }}</td>
                             <td>${{ d.precio_unitario|floatformat:0 }}</td>
                             <td>${{ d.subtotal|floatformat:0 }}</td>
