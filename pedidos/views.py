@@ -5,10 +5,9 @@ from .forms import OrdenPedidoForm
 from .models import DetalleOrden, OrdenPedido
 from repuestos.models import Repuesto
 import json
+from usuarios.utils import es_mecanico
 
 
-def es_mecanico(user):
-    return user.is_authenticated and user.groups.filter(name='Mecanicos').exists()
 
 @login_required
 @user_passes_test(es_mecanico)

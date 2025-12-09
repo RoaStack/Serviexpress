@@ -7,10 +7,11 @@ from django.contrib.auth.models import Group
 from .forms import RegistroClienteForm, EditarPerfilForm, RegistroMecanicoForm, EditarMecanicoForm, RegistroClienteAdminForm,EditarClienteForm 
 import json
 from .models import Usuario
+from django.http import JsonResponse
+from usuarios.utils import es_admin
 
 
-
-# 🧩 Registro de clientes (desde la web)
+#  Registro de clientes (desde la web)
 def registro_cliente(request):
     if request.method == "POST":
         form = RegistroClienteForm(request.POST)
@@ -29,7 +30,7 @@ def registro_cliente(request):
     return render(request, "usuarios/registro.html", {"form": form})
 
 
-# 🔐 Login
+#  Login
 def login_usuario(request):
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
@@ -50,7 +51,7 @@ def login_usuario(request):
     return render(request, "usuarios/login.html", {"form": form})
 
 
-# 🚪 Logout
+#  Logout
 @login_required
 def logout_usuario(request):
     logout(request)
@@ -58,20 +59,19 @@ def logout_usuario(request):
     return redirect("usuarios:login_usuario")
 
 
-# 🧭 Dashboard dinámico según grupo
 @login_required
 def dashboard(request):
     user = request.user
 
-    # 👑 Admin (staff o superuser)
+    #  Admin (staff o superuser)
     if user.is_staff or user.is_superuser:
         return render(request, "usuarios/administrador/dashboard_admin.html")
 
-    # 🔧 Mecánico
+    #  Mecánico
     if user.groups.filter(name="Mecanicos").exists():
         return render(request, "usuarios/mecanico/dashboard_mecanico.html")
 
-    # 👤 Cliente
+    #  Cliente
     if user.groups.filter(name="Clientes").exists():
         return render(request, "usuarios/cliente/dashboard_cliente.html")
 
@@ -124,13 +124,6 @@ def editar_perfil(request):
     return JsonResponse({"success": False})
 
 
-def es_admin(user):
-    # Ajusta esta función a tu lógica real de admin
-    return user.is_staff or user.groups.filter(name="Admin").exists()
-
-
-# usuarios/views.py
-
 @login_required
 @user_passes_test(es_admin, login_url="usuarios:dashboard")
 def gestion_mecanicos(request):
@@ -144,7 +137,7 @@ def gestion_mecanicos(request):
         "mecanicos": mecanicos,
         "total_mecanicos": mecanicos.count(),
     }
-    # 👇 CAMBIA ESTA LÍNEA
+    
     return render(request, "usuarios/administrador/gestion_mecanicos.html", contexto)
 
 
@@ -164,7 +157,7 @@ def crear_mecanico(request):
     else:
         form = RegistroMecanicoForm()
 
-    # 👇 CAMBIA ESTA LÍNEA
+    
     return render(request, "usuarios/administrador/crear_mecanico.html", {"form": form})
 
 
@@ -188,7 +181,7 @@ def editar_mecanico(request, usuario_id):
     else:
         form = EditarMecanicoForm(instance=mecanico)
 
-    # 👇 CAMBIA ESTA LÍNEA
+    
     return render(
         request,
         "usuarios/administrador/editar_mecanico.html",
@@ -211,7 +204,7 @@ def eliminar_mecanico(request, usuario_id):
         messages.success(request, f"🗑️ Mecánico '{nombre}' eliminado correctamente.")
         return redirect("usuarios:gestion_mecanicos")
 
-    # Si quieres una página de confirmación:
+    
     return render(
         request,
         "usuarios/administrador/confirmar_eliminar_mecanico.html",
@@ -246,7 +239,6 @@ def crear_cliente(request):
         form = RegistroClienteAdminForm(request.POST)
         if form.is_valid():
             user = form.save()
-            # 👉 Lo mandamos al grupo "Clientes"
             grupo_clientes, _ = Group.objects.get_or_create(name="Clientes")
             user.groups.add(grupo_clientes)
 
@@ -306,7 +298,7 @@ def eliminar_cliente(request, usuario_id):
         messages.success(request, f"🗑️ Cliente '{nombre}' eliminado correctamente.")
         return redirect("usuarios:gestion_clientes")
 
-    # Si algún día quieres una página de confirmación aparte:
+    
     return render(
         request,
         "usuarios/administrador/confirmar_eliminar_cliente.html",

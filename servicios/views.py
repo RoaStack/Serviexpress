@@ -3,10 +3,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from .models import Servicio
 from .forms import ServicioForm
-
-# Helper para restringir solo a administradores
-def es_admin(user):
-    return user.is_staff or user.is_superuser
+from usuarios.utils import es_admin
 
 @login_required
 @user_passes_test(es_admin)
