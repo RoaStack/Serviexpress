@@ -15,7 +15,7 @@ load_dotenv(BASE_DIR / ".env")
 # SECURITY
 # ---------------------------------------------
 
-SECRET_KEY = 'django-insecure-w_viea!6)#d0t3s+@xc$px*u=680dp9rnqmp78n85$1)(uf0wt'
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 DEBUG = True     # en local funciona en True
 
