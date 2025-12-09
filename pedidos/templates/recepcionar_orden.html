@@ -61,7 +61,10 @@
                       class="ro-input"
                       name="cantidad_{{ d.id }}"
                       value="{{ d.cantidad }}"
-                      min="0">
+                      min="0"
+                      max="{{ d.cantidad }}"
+                    >
+
                   </td>
                   <td>${{ d.precio_unitario }}</td>
                   <td>${{ d.subtotal }}</td>

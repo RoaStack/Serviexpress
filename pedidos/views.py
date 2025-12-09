@@ -80,10 +80,17 @@ def recepcionar_orden(request, orden_id):
     if request.method == "POST":
         for det in orden.detalles.all():
             cantidad_recibida = int(request.POST.get(f"cantidad_{det.id}", det.cantidad))
+
+            # VALIDACIONES IMPORTANTES:
+            if cantidad_recibida < 0:
+                cantidad_recibida = 0   # no permitir negativos
+
+            if cantidad_recibida > det.cantidad:
+                cantidad_recibida = det.cantidad  # no permitir más de lo solicitado
+
             det.cantidad = cantidad_recibida
             det.save()
 
-        # Cambiar estado a recibido
         orden.estado = "recibido"
         orden.save()
 
@@ -94,5 +101,6 @@ def recepcionar_orden(request, orden_id):
         "detalles": orden.detalles.all(),
         "total": orden.monto_total,
     })
+
 
 
