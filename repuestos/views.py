@@ -3,20 +3,11 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from .models import Repuesto
 from .forms import RepuestoForm
-
-# --- Permisos reutilizados ---
-def es_admin(user):
-    return user.is_staff or user.is_superuser
-
-def es_mecanico(user):
-    return user.is_authenticated and user.groups.filter(name='Mecanicos').exists()
-
-def puede_ver_repuestos(user):
-    return es_admin(user) or es_mecanico(user)
+from usuarios.utils import es_admin,es_mecanico_o_admin
 
 # === Listar ===
 @login_required(login_url='usuarios:login_usuario')
-@user_passes_test(puede_ver_repuestos, login_url='usuarios:login_usuario')
+@user_passes_test(es_mecanico_o_admin, login_url='usuarios:login_usuario')
 def repuestos_index(request):
     repuestos = Repuesto.objects.all()
     return render(request, "repuestos/ficha_repuestos.html", {"repuestos": repuestos})

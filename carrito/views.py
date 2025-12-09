@@ -6,10 +6,7 @@ from django.template.loader import render_to_string
 from django.views.decorators.csrf import csrf_exempt
 from .models import Repuesto, Carrito, ItemCarrito, Compra, CompraItem
 from django.http import JsonResponse
-
-def es_cliente(user):
-    return user.is_authenticated and user.groups.filter(name='Clientes').exists()
-
+from usuarios.utils import es_cliente
 
 @login_required
 @user_passes_test(es_cliente)

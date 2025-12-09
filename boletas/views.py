@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Boleta
-
+from usuarios.utils import es_cliente, es_mecanico_o_admin
 def detalle_boleta(request, pk):
     boleta = get_object_or_404(Boleta, pk=pk)
 
@@ -9,14 +9,8 @@ def detalle_boleta(request, pk):
     total_repuestos = sum(r.subtotal() for r in boleta.detalles_repuestos.all())
     total_general = total_servicios + total_repuestos
 
-    user = request.user
-
-    # 🔧 Detectar rol por GRUPOS
-    es_mecanico = user.groups.filter(name="Mecanicos").exists()
-    es_cliente  = user.groups.filter(name="Clientes").exists()
-
     # 🔙 Ruta + texto del botón según rol
-    if es_mecanico or user.is_staff or user.is_superuser:
+    if es_mecanico_o_admin:
         # nombre de la URL en reservas/urls.py -> name="historial_servicios"
         volver_url  = "reservas:historial_servicios"
         volver_text = "← Volver al Historial"

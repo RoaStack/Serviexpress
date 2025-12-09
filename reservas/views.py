@@ -18,31 +18,7 @@ from boletas.forms import DetalleBoletaForm
 from django.db import transaction
 from .forms import ReservaForm, DisponibilidadMasivaForm
 from django.core.exceptions import ValidationError
-
-
-# ================================================================
-# 🔐 HELPERS DE ROLES
-# ================================================================
-def es_cliente(user):
-    return user.is_authenticated and user.groups.filter(name="Clientes").exists()
-
-
-def es_mecanico(user):
-    return user.is_authenticated and user.groups.filter(name="Mecanicos").exists()
-
-
-def es_admin(user):
-    return user.is_authenticated and (user.is_staff or user.is_superuser)
-
-
-def es_cliente_o_admin(user):
-    return es_cliente(user) or es_admin(user)
-
-
-def es_mecanico_o_admin(user):
-    return es_mecanico(user) or es_admin(user)
-
-
+from usuarios.utils import es_cliente, es_admin, es_cliente_o_admin, es_mecanico, es_mecanico_o_admin
 # ================================================================
 # 👤 VISTAS PARA CLIENTES
 # ================================================================
