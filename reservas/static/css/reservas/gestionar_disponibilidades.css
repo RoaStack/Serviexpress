@@ -323,3 +323,31 @@ body.dashboard-body {
         flex-direction: column;
     }
 }
+
+
+/* ============================================
+   BOTÓN ELIMINAR SELECCIONADOS (Rojo transparente)
+   ============================================ */
+.gd-bulk-actions {
+    margin-bottom: 14px;
+}
+
+.gd-btn-delete-multi {
+    padding: 10px 20px;
+    background: rgba(185, 28, 28, 0.18); /* rojo transparente */
+    border: 1px solid rgba(185, 28, 28, 0.55);
+    color: #fef2f2;
+    border-radius: 14px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    transition: 0.25s ease-in-out;
+}
+
+.gd-btn-delete-multi:hover {
+    background: rgba(220, 38, 38, 0.32); /* sube la opacidad en hover */
+    border-color: #ef4444;
+    box-shadow: 0 0 12px rgba(239, 68, 68, 0.65);
+    transform: translateY(-2px);
+}
