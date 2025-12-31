@@ -1,0 +1,107 @@
+/* === PERFIL ADMIN === */
+body.dashboard-body {
+    background: url("/static/img/panelAdmin.png") no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+}
+
+.perfil-container {
+  max-width: 500px;
+  margin: 3rem auto;
+  background: #161b22;
+  border-radius: 12px;
+  border: 1px solid #30363d;
+  padding: 2rem 2.5rem;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
+.perfil-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.perfil-header i {
+  color: #f0ad4e;
+  font-size: 1.8rem;
+}
+
+.perfil-header h2 {
+  font-weight: 700;
+  color: #fff;
+}
+
+.perfil-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #30363d;
+}
+
+.perfil-field strong {
+  color: #f0ad4e;
+  width: 35%;
+}
+
+.perfil-field span {
+  flex: 1;
+  color: #ccc;
+}
+
+.edit-btn {
+  background: none;
+  border: none;
+  color: #f0ad4e;
+  cursor: pointer;
+  transition: color 0.3s, transform 0.2s;
+}
+
+.edit-btn:hover {
+  color: #ffc107;
+  transform: scale(1.2);
+}
+
+.editable {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.editable input {
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  color: #fff;
+  padding: 5px 8px;
+}
+
+.save-btn, .cancel-btn {
+  border: none;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  padding: 4px 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.save-btn {
+  background-color: #f0ad4e;
+  color: #0d1117;
+}
+
+.save-btn:hover {
+  background-color: #ffc107;
+}
+
+.cancel-btn {
+  background-color: #444;
+  color: #fff;
+}
+
+.cancel-btn:hover {
+  background-color: #666;
+}

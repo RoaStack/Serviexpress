@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Seleccionar Tipo de Usuario{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'usuarios/css/admin.css' %}">
+<link rel="stylesheet" href="{% static 'usuarios/css/gestion_mecanicos.css' %}">
+{% endblock %}
+
+{% block body_class %}dashboard-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
+
+{% block content %}
+<div class="dashboard-wrapper">
+    <div class="overlay">
+        <div class="gm-back-container">
+            <a href="{% url 'usuarios:dashboard' %}" class="gm-btn-back">
+                ← Volver al dashboard
+            </a>
+        </div>
+        <div class="dashboard-header">
+            <h2 class="dashboard-title">Gestión usuarios</h2>
+            <p class="dashboard-subtitle">seleciona tipo de usuario</p>
+        </div>
+
+        <!-- USAMOS EL MISMO GRID DEL ADMIN -->
+        <div class="dashboard-container">
+
+            <!-- BOTÓN IZQUIERDA (COLUMNA 1) -->
+            <a href="{% url 'usuarios:gestion_mecanicos' %}" class="dash-item item-1">
+                <img src="{% static 'img/icons/icons_admin/gestionUsuarios.png' %}">
+                <span>Mecánico</span>
+            </a>
+
+            <!-- ESPACIO VACÍO EN LA COLUMNA 2 PARA CENTRAR -->
+            <div></div>
+
+            <!-- BOTÓN DERECHA (COLUMNA 3) -->
+            <a href="{% url 'usuarios:gestion_clientes' %}" class="dash-item item-3">
+                <img src="{% static 'img/icons/icons_admin/gestionUsuarios.png' %}">
+                <span>Cliente</span>
+            </a>
+
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+

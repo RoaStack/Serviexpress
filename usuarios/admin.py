@@ -1,3 +1,8 @@
 from django.contrib import admin
+from .models import Usuario
 
-# Register your models here.
+@admin.register(Usuario)
+class UsuarioAdmin(admin.ModelAdmin):
+    list_display = ('user', 'rut', 'telefono', 'comuna', 'activo', 'fecha_registro')
+    search_fields = ('user__username', 'user__first_name', 'user__last_name', 'rut')
+    list_filter = ('activo', 'comuna')

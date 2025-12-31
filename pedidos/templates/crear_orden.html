@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Crear orden de pedido{% endblock %}
+
+{# CSS específico de la vista #}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'pedidos/css/crear_orden.css' %}">
+{% endblock %}
+
+{# Fondo del mecánico #}
+{% block body_class %}mecanico-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
+
+{% block content %}
+<div class="co-wrapper">
+  <div class="co-overlay">
+    <div class="co-inner">
+
+      <!-- Botón volver -->
+      <div class="co-back-row">
+        <a href="{% url 'usuarios:dashboard' %}" class="co-back-link">
+          ← Volver al Dashboard
+        </a>
+      </div>
+
+      <!-- Título -->
+      <h1 class="co-title">Crear nueva orden de pedido</h1>
+
+      <!-- Card principal -->
+      <div class="co-card">
+        <form id="ordenForm" method="POST" class="co-form">
+          {% csrf_token %}
+
+          <!-- 2 columnas: datos de la orden / repuestos -->
+          <div class="co-form-grid">
+
+            <!-- Datos de la orden -->
+            <section class="co-column">
+              <h2 class="co-section-title">Datos de la orden</h2>
+              <div class="co-section-divider"></div>
+              {{ form|crispy }}
+            </section>
+
+            <!-- Agregar repuesto -->
+            <section class="co-column">
+              <h2 class="co-section-title">Agregar repuesto</h2>
+              <div class="co-section-divider"></div>
+
+              <div class="co-field">
+                <label for="repuestoSelect" class="co-label">Repuesto</label>
+                <select id="repuestoSelect" class="co-input">
+                  <option value="">Seleccione...</option>
+                  {% for r in repuestos %}
+                    <option value="{{ r.id }}">{{ r.nombre }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="co-field">
+                <label for="cantidadInput" class="co-label">Cantidad</label>
+                <input type="number" id="cantidadInput" class="co-input">
+              </div>
+
+              <div class="co-field">
+                <label for="precioInput" class="co-label">Precio unitario</label>
+                <input type="number" id="precioInput" class="co-input" readonly>
+              </div>
+
+              <button type="button" class="co-btn-add" id="btnAgregar">
+                + Agregar repuesto
+              </button>
+            </section>
+
+          </div>
+
+          <!-- Tabla de detalles -->
+          <h2 class="co-section-title co-section-title-table">
+            Detalles de la orden
+          </h2>
+
+          <div class="co-table-wrapper">
+            <table class="co-table" id="tablaDetalles">
+              <thead>
+                <tr>
+                  <th>Repuesto</th>
+                  <th>Cantidad</th>
+                  <th>Precio unitario</th>
+                  <th>Subtotal</th>
+                  <th>Eliminar</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <input type="hidden" name="detalles_json" id="detallesJson">
+
+          <!-- Botón principal -->
+          <div class="co-actions">
+            <button type="submit" class="co-btn-primary">
+              Generar orden
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="{% static 'pedidos/js/orden.js' %}"></script>
+{% endblock %}

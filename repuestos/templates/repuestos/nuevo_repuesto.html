@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Nuevo Repuesto{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/repuestos/repuestos.css' %}">
+{% endblock %}
+
+{% block body_class %}admin-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
+
+{% block content %}
+<div class="pv-overlay">
+  <div class="pv-inner">
+
+    <div class="pv-back-row">
+      <a href="{% url 'repuestos:ficha_repuestos' %}" class="pv-back-link">
+        ← Volver a Repuestos
+      </a>
+    </div>
+
+    <div class="pv-form-card">
+      <h2 class="pv-form-title">Agregar Repuesto</h2>
+
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {{ form.foto.label_tag }} 
+        {{ form.foto }}
+
+        {{ form.nombre.label_tag }} 
+        {{ form.nombre }}
+
+        {{ form.marca.label_tag }} 
+        {{ form.marca }}
+
+        {{ form.precio_compra.label_tag }} 
+        {{ form.precio_compra }}
+
+        {{ form.precio_venta.label_tag }} 
+        {{ form.precio_venta }}
+
+        {{ form.stock.label_tag }} 
+        {{ form.stock }}
+
+        {{ form.limite_stock.label_tag }} 
+        {{ form.limite_stock }}
+
+        <div class="pv-form-actions">
+          <a href="{% url 'repuestos:ficha_repuestos' %}" class="pv-btn-cancel">Cancelar</a>
+          <button type="submit" class="pv-btn-save">Guardar</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+

@@ -1,0 +1,137 @@
+/* MISMO FONDO DEL LOGIN */
+.login-body {
+    background: url("/static/img/login_fondo.jpg") no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+}
+
+/* CONTENEDOR GENERAL */
+.login-wrapper {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* CAJA DEL LOGIN / REGISTRO */
+.registro-box {
+    width: 480px;
+    background: rgba(0, 0, 0, 0.55);
+    padding: 40px 40px 50px;
+    border-radius: 28px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* LOGO */
+.login-logo {
+    width: 270px;
+    margin-bottom: 15px;
+}
+
+/* TITULO */
+.login-title {
+    color: white;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+/* CAMPOS */
+.login-field {
+    position: relative;
+    margin-bottom: 18px;
+}
+
+.login-input,
+.login-field input {
+    width: 100%;
+    padding: 12px 16px 12px 45px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid #6c6c6c;
+    border-radius: 12px;
+    color: white;
+    transition: 0.25s;
+}
+
+.login-input:focus,
+.login-field input:focus {
+    border-color: #1f6feb;
+    background: rgba(255, 255, 255, 0.18);
+}
+
+.login-input:hover,
+.login-field input:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #8ab4ff;
+}
+
+/* ICONOS */
+.icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #c9c9c9;
+    font-size: 15px;
+}
+
+/* BOTÓN */
+.login-btn {
+    width: 100%;
+    background: #1f6feb;
+    border: none;
+    padding: 13px;
+    border-radius: 30px;
+    color: white;
+    font-weight: 600;
+    font-size: 1.05rem;
+    margin-top: 10px;
+    transition: 0.25s;
+}
+
+.login-btn:hover {
+    background: #1052c3;
+    transform: translateY(-2px);
+}
+
+/* FOOTER: LINKS */
+.login-footer {
+    margin-top: 15px;
+    text-align: center;
+    color: #dcdcdc;
+    font-size: 0.9rem;
+}
+
+.login-footer a {
+    color: #9ecbff;
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.login-footer a:hover {
+    color: #cfe4ff;
+    text-decoration: underline;
+}
+
+/* FRASE DE SEGURIDAD */
+.login-security {
+    margin-top: 18px;
+    text-align: center;
+    font-size: 0.85rem;
+    color: #bdbdbd;
+    letter-spacing: 0.3px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 540px) {
+    .registro-box {
+        width: 90%;
+        padding: 30px;
+        border-radius: 20px;
+    }
+    .login-logo {
+        width: 230px;
+    }
+}

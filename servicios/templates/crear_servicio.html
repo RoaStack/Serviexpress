@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Crear servicio{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/servicios.css' %}">
+{% endblock %}
+
+{% block body_class %}admin-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
+
+{% block content %}
+<div class="sv-overlay">
+  <div class="sv-inner">
+
+    <div class="sv-back-row">
+      <a href="{% url 'servicios:listar_servicios' %}" class="sv-back-link">
+        ← Volver a Servicios
+      </a>
+    </div>
+
+    <div class="sv-form-card">
+      <h2 class="sv-form-title">Crear nuevo servicio</h2>
+      <p class="sv-form-subtitle">
+        Completa los datos para registrar un nuevo servicio en el sistema.
+      </p>
+
+      <form method="post" class="sv-form">
+        {% csrf_token %}
+
+        {% for field in form %}
+          <div class="sv-field">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% if field.help_text %}
+              <small class="sv-help-text">{{ field.help_text }}</small>
+            {% endif %}
+            {% for error in field.errors %}
+              <div class="sv-error">{{ error }}</div>
+            {% endfor %}
+          </div>
+        {% endfor %}
+
+        <div class="sv-form-actions">
+          <a href="{% url 'servicios:listar_servicios' %}" class="sv-btn-cancel">
+            Cancelar
+          </a>
+          <button type="submit" class="sv-btn-save">
+            Guardar servicio
+          </button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

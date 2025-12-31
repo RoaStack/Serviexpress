@@ -1,9 +1,141 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block main_class %}full-width-main{% endblock main_class %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
 {% block content %}
-<h1>Bienvenido a ServiExpress</h1>
-{% if user.is_authenticated %}
-  <p>Estás conectado como {{ user.username }}</p>
-{% else %}
-  <p>Por favor, inicia sesión o regístrate.</p>
-{% endif %}
+
+<!-- ================= HERO SECTION ================= -->
+<section class="hero-section">
+    <div class="hero-overlay">
+        <h1 class="hero-title">TALLER<br>SERVIEXPRESS</h1>
+        <p class="hero-subtitle">Cuidamos autos desde el 2025</p>
+        <a href="#seccion2" class="hero-btn">CONTÁCTANOS</a>
+    </div>
+</section>
+
+<!-- ================= SOBRE NOSOTROS ================= -->
+<section class="about-section">
+    <div class="about-content">
+
+        <div class="about-img">
+            <img src="{% static 'img/home/mecanicoTraa.png' %}" alt="Mecánico trabajando">
+        </div>
+
+        <div class="about-text">
+            <h2>NOS APASIONA<br>CUIDAR TU VEHÍCULO</h2>
+
+            <p>
+                En ServiExpress nos dedicamos a ofrecer un servicio mecánico confiable,
+                preciso y de alta calidad. Nuestro equipo combina experiencia técnica
+                con compromiso absoluto por la satisfacción del cliente.
+            </p>
+
+            <p>
+                Un auto bien cuidado garantiza seguridad, eficiencia 
+                y una mayor vida útil.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<!-- ================= SERVICIOS ================= -->
+<section class="services-section">
+
+    <h2 class="services-title">NUESTROS SERVICIOS</h2>
+
+    <div class="services-grid">
+
+        <div class="service-card">
+            <img src="{% static 'img/home/panelMecanico.jpg' %}" alt="Mantenimiento">
+            <h3>Mantenimiento</h3>
+            <p>Revisiones regulares para óptimo rendimiento del vehículo.</p>
+        </div>
+
+        <div class="service-card">
+            <img src="{% static 'img/home/imgMecanico2.png' %}" alt="Reparación">
+            <h3>Reparación</h3>
+            <p>Soluciones profesionales, rápidas y seguras.</p>
+        </div>
+
+        <div class="service-card">
+            <img src="{% static 'img/home/autoNegro.png' %}" alt="Accesorios y Repuestos">
+            <h3>Accesorios y Repuestos</h3>
+            <p>Piezas premium para interior y exterior.</p>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= TESTIMONIOS ================= -->
+<section class="testimonials-section">
+    
+    <h2>LA OPINIÓN DE LOS CLIENTES</h2>
+
+    <div class="testimonials-grid">
+
+        <div class="testimonial">
+            <img src="{% static 'img/home/opinion1.png' %}" alt="">
+            <h4>Jaime Jiménez</h4>
+            <p>Estoy muy feliz de haber encontrado un taller donde sé que cuidarán mis autos.</p>
+        </div>
+
+        <div class="testimonial">
+            <img src="{% static 'img/home/opinion3.png' %}" alt="">
+            <h4>Luis Valenzuela</h4>
+            <p>El equipo realmente sabe lo que hace.</p>
+        </div>
+
+        <div class="testimonial">
+            <img src="{% static 'img/home/opinion2.png' %}" alt="">
+            <h4>Martina Lugo</h4>
+            <p>Servicio rápido y eficiente.</p>
+        </div>
+
+        <div class="testimonial">
+            <img src="{% static 'img/home/opinion4.png' %}" alt="">
+            <h4>Martina Mercedez</h4>
+            <p>Recomendado totalmente.</p>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= CONTACTO ================= -->
+<section class="contact-section">
+    <div class="contact-overlay">
+
+        <h2>DATOS DE CONTACTO</h2>
+
+        <div class="contact-grid" id="seccion2">
+
+            <div>
+                <h4>DIRECCIÓN</h4>
+                <p>Avenida U de Chile<br>Ciudad, Santiago C.H. 12345</p>
+            </div>
+
+            <div>
+                <h4>CORREO ELECTRÓNICO</h4>
+                <p>Serviexpress@gmail.com</p>
+            </div>
+
+            <div>
+                <h4>TELÉFONO</h4>
+                <p>(+56)9-95247528</p>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
 {% endblock %}

@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Servicios{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/servicios.css' %}">
+{% endblock %}
+
+{% block body_class %}admin-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
+
+{% block content %}
+<div class="sv-overlay">
+  <div class="sv-inner">
+
+    <!-- 🔙 Volver -->
+    <div class="sv-back-row">
+      <a href="{% url 'usuarios:dashboard' %}" class="sv-back-link">
+        ← Volver al dashboard
+      </a>
+    </div>
+
+    <!-- Título -->
+    <h1 class="sv-title">Servicios</h1>
+    <p class="sv-subtitle">
+      Listado y gestión de servicios disponibles en el taller
+    </p>
+
+    <!-- Botón crear servicio (fuera del cuadro) -->
+    <div class="sv-add-wrapper">
+      <a href="{% url 'servicios:crear_servicio' %}" class="sv-btn-add">
+        + Crear nuevo servicio
+      </a>
+    </div>
+
+    <!-- Card principal -->
+    <div class="sv-card">
+
+      <div class="sv-top-row">
+        <span class="sv-counter">
+          Cantidad de servicios: {{ servicios|length }}
+        </span>
+      </div>
+
+      {% if servicios %}
+      <div class="sv-table-wrapper">
+        <table class="sv-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th>Precio</th>
+              <th>Duración estimada</th>
+              <th>Editar</th>
+              <th>Eliminar</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for servicio in servicios %}
+            <tr>
+              <td>{{ servicio.nombre }}</td>
+              <td>{{ servicio.descripcion }}</td>
+              <td>${{ servicio.precio }}</td>
+              <td>{{ servicio.duracion_estimada }} min</td>
+              <td>
+                <a href="{% url 'servicios:editar_servicio' servicio.pk %}"
+                   class="sv-btn-edit">
+                  Editar
+                </a>
+              </td>
+              <td>
+                <a href="{% url 'servicios:eliminar_servicio' servicio.pk %}"
+                   class="sv-btn-delete">
+                  Eliminar
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="sv-empty">
+        📭 No hay servicios registrados actualmente.<br>
+        Puedes crear el primero con el botón “Crear nuevo servicio”.
+      </div>
+      {% endif %}
+
+    </div>
+  </div>
+</div>
+{% endblock %}

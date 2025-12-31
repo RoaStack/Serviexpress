@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Panel Cliente{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'usuarios/css/cliente.css' %}">
+{% endblock %}
+
+{% block body_class %}cliente-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
+
+{% block content %}
+
+<div class="cliente-wrapper">
+    <div class="cliente-overlay">
+
+        <div class="cliente-header">
+            <h2 class="cliente-title">Bienvenido, {{ request.user.first_name }} 👋</h2>
+            <p class="cliente-subtitle">
+                Gestiona tus <strong>reservas</strong>, <strong>servicios</strong>, 
+                <strong>compras</strong>.
+            </p>
+        </div>
+
+        <div class="cliente-container">
+
+            <a href="{% url 'reservas:crear_reserva' %}" class="c-item c1">
+                <img src="{% static 'img/icons/icons_cliente/reservar.png' %}">
+                <span>Reservar hora</span>
+            </a>
+
+            <a href="{% url 'reservas:mis_reservas' %}" class="c-item c2">
+                <img src="{% static 'img/icons/icons_cliente/misReservas.png' %}">
+                <span>Mis reservas</span>
+            </a>
+
+            <a href="{% url 'reservas:servicios_realizados_cliente' %}" class="c-item c3">
+                <img src="{% static 'img/icons/icons_cliente/servicios.png' %}">
+                <span>Servicios realizados</span>
+            </a>
+
+            <a href="{% url 'ecommerce:ver_repuestos' %}" class="c-item c4">
+                <img src="{% static 'img/icons/icons_cliente/compras.png' %}">
+                <span>Comprar productos</span>
+            </a>
+
+            <a href="{% url 'ecommerce:mis_compras' %}" class="c-item c5">
+                <img src="{% static 'img/icons/icons_cliente/misCompras.png' %}">
+                <span>Mis compras</span>
+            </a>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

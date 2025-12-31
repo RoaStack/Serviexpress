@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Eliminar servicio{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/servicios.css' %}">
+{% endblock %}
+
+{% block body_class %}admin-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
+
+{% block content %}
+<div class="sv-overlay">
+  <div class="sv-inner">
+
+    <div class="sv-back-row">
+      <a href="{% url 'servicios:listar_servicios' %}" class="sv-back-link">
+        ← Volver a Servicios
+      </a>
+    </div>
+
+    <div class="sv-form-card">
+      <h2 class="sv-form-title">Eliminar servicio</h2>
+      <p class="sv-delete-text">
+        ¿Estás seguro de que deseas eliminar el servicio
+        <span class="sv-delete-name">"{{ servicio.nombre }}"</span>?
+      </p>
+      <p class="sv-form-subtitle">
+        Esta acción no se puede deshacer.
+      </p>
+
+      <form method="post" class="sv-form">
+        {% csrf_token %}
+        <div class="sv-form-actions">
+          <a href="{% url 'servicios:listar_servicios' %}" class="sv-btn-cancel">
+            Cancelar
+          </a>
+          <button type="submit" class="sv-btn-delete">
+            Sí, eliminar
+          </button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

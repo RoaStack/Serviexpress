@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Panel de Administración{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'usuarios/css/admin.css' %}">
+{% endblock %}
+
+{# Body especial solo para este dashboard #}
+{% block body_class %}dashboard-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
+
+{% block content %}
+<div class="dashboard-wrapper">
+    <div class="overlay">
+
+        <div class="dashboard-header">
+            <h2 class="dashboard-title">Panel de Administración</h2>
+            <p class="dashboard-subtitle">Control total del sistema</p>
+        </div>
+
+        <div class="dashboard-container">
+
+            <a href="{% url 'reservas:selector_usuario' %}" class="dash-item item-1">
+                <img src="{% static 'img/icons/icons_admin/gestionUsuarios.png' %}" alt="Gestión de usuarios">
+                <span>Gestión de Usuarios</span>
+            </a>
+
+            <a href="{% url 'repuestos:ficha_repuestos' %}" class="dash-item item-2">
+                <img src="{% static 'img/icons/icons_admin/gestionRepuestos.png' %}" alt="Gestión de repuestos">
+                <span>Gestión de Repuestos</span>
+            </a>
+
+            <a href="{% url 'usuarios:reportes' %}" class="dash-item item-3">
+                <img src="{% static 'img/icons/icons_admin/reportes.png' %}" alt="Reportes">
+                <span>Reportes</span>
+            </a>
+
+            <a href="{% url 'servicios:listar_servicios' %}" class="dash-item item-4">
+                <img src="{% static 'img/icons/icons_admin/gestionServicios.png' %}" alt="Gestión de servicios">
+                <span>Gestión de Servicios</span>
+            </a>
+
+            <a href="{% url 'proveedores:ficha_proveedores' %}" class="dash-item item-5">
+                <img src="{% static 'img/icons/icons_admin/gestionProveedores.png' %}" alt="Gestión de proveedores">
+                <span>Gestión de Proveedores</span>
+            </a>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

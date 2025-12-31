@@ -1,0 +1,86 @@
+<!-- En tu template Django -->
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }} alert-floating mt-2" data-timeout="5000">
+    {{ message }}
+    <button type="button" class="close-alert">&times;</button>
+</div>
+{% endfor %}
+
+<style>
+.alert-floating {
+    position: fixed;
+    top: 55px;
+    right: 20px;
+    z-index: 1000;
+    min-width: 300px;
+    max-width: 400px;
+    animation: slideInRight 0.3s ease-out;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border-radius: 8px;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.alert-floating.fade-out {
+    animation: slideOutRight 0.3s ease-in forwards;
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+.close-alert {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    float: right;
+    margin-left: 10px;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const alerts = document.querySelectorAll('.alert-floating');
+    
+    alerts.forEach(alert => {
+        const timeout = alert.getAttribute('data-timeout') || 5000;
+        const closeBtn = alert.querySelector('.close-alert');
+        
+        // Cerrar con botón
+        closeBtn.addEventListener('click', () => {
+            closeAlert(alert);
+        });
+        
+        // Cerrar automáticamente después del tiempo especificado
+        if (timeout > 0) {
+            setTimeout(() => {
+                closeAlert(alert);
+            }, parseInt(timeout));
+        }
+    });
+    
+    function closeAlert(alert) {
+        alert.classList.add('fade-out');
+        setTimeout(() => {
+            alert.remove();
+        }, 300);
+    }
+});
+</script>

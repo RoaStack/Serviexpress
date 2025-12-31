@@ -4,13 +4,27 @@ from repuestos.models import Repuesto
 from usuarios.models import Usuario
 
 class OrdenPedido(models.Model):
+    ESTADOS = [
+        ('pendiente', 'Pendiente'),
+        ('recibido', 'Recibido'),
+    ]
     fecha = models.DateField(auto_now_add=True)
     proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE)
     mecanico = models.ForeignKey(Usuario, on_delete=models.SET_NULL, null=True, related_name='ordenes_creadas')
-    monto_total = models.PositiveIntegerField(default=0)
+    fecha_creacion = models.DateTimeField(auto_now_add=True, null=True)
+    estado = models.CharField(
+        max_length=20,
+        choices=ESTADOS,
+        default='pendiente'
+    )
 
     def __str__(self):
         return f"Orden #{self.id} - {self.proveedor.nombre}"
+
+    @property
+    def monto_total(self):
+        return sum(det.subtotal() for det in self.detalles.all())
+
 
 class DetalleOrden(models.Model):
     orden = models.ForeignKey(OrdenPedido, on_delete=models.CASCADE, related_name='detalles')
@@ -20,3 +34,7 @@ class DetalleOrden(models.Model):
 
     def subtotal(self):
         return self.cantidad * self.precio_unitario
+
+    def __str__(self):
+        return f"{self.cantidad} x {self.repuesto.descripcion}"
+

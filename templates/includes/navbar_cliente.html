@@ -1,0 +1,34 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-cliente">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center" href="{% url 'usuarios:dashboard' %}">
+      <img src="{% static 'img/Servi_navbar1.png' %}" 
+          alt="ServiExpress" 
+          class="navbar-logo">
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCliente" aria-controls="navbarCliente" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarCliente">
+      <ul class="navbar-nav ms-auto align-items-center">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'usuarios:dashboard' %}">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'ecommerce:mis_compras' %}">Mis compras</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'usuarios:ver_perfil' %}">Perfil</a>
+        </li>
+        <li class="nav-item ms-3">
+          <form method="post" action="{% url 'usuarios:logout_usuario' %}">
+            {% csrf_token %}
+            <button class="btn btn-outline-light btn-sm" type="submit">Cerrar sesión</button>
+          </form>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Comprobante de Compra{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/carrito/comprobante.css' %}">
+{% endblock %}
+
+{% block body_class %}cliente-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
+
+{% block content %}
+<div class="comp-overlay">
+    <div class="comp-inner">
+
+        <!-- Título -->
+        <h1 class="comp-title">🧾 Comprobante de Compra</h1>
+
+        <!-- Card principal -->
+        <div class="comp-card">
+
+            <p class="comp-text"><strong>Cliente:</strong> {{ usuario.username }}</p>
+            <p class="comp-text"><strong>Fecha:</strong> {{ fecha|date:"d/m/Y H:i" }}</p>
+
+            <hr class="comp-divider">
+
+            <!-- Tabla -->
+            <div class="comp-table-wrapper">
+                <table class="comp-table">
+                    <thead>
+                        <tr>
+                            <th>Repuesto</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for item in items %}
+                        <tr>
+                            <td>{{ item.repuesto.nombre }}</td>
+                            <td>{{ item.cantidad }}</td>
+                            <td>${{ item.repuesto.precio_venta }}</td>
+                            <td>${{ item.subtotal }}</td>
+                        </tr>
+                        {% endfor %}
+
+                        <tr class="comp-total-row">
+                            <td colspan="3" class="text-end"><strong>Total:</strong></td>
+                            <td><strong>${{ total }}</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Botón volver -->
+            <div class="comp-btn-wrapper">
+                <a href="{% url 'ecommerce:ver_repuestos' %}" class="comp-btn-back">
+                    ⬅️ Volver a la tienda
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+{% endblock %}

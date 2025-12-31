@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Nueva Reserva{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/reservas/crear_reserva.css' %}">
+{% endblock %}
+
+{% block body_class %}cliente-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
+
+{% block content %}
+
+<div class="reserva-overlay">
+
+    <!-- Botón volver -->
+    <a href="{% url 'usuarios:dashboard' %}" class="reserva-back-link">
+        ← Volver al Dashboard
+    </a>
+
+    <!-- Título -->
+    <h1 class="reserva-main-title">Crear nueva reserva</h1>
+
+    <!-- Tarjeta -->
+    <div class="reserva-card">
+        <h2 class="reserva-card-title">Registrar nueva reserva</h2>
+
+        <form method="post" class="reserva-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <div class="reserva-actions">
+                <a href="{% url 'reservas:mis_reservas' %}" class="btn-reserva-secondary">
+                    Volver
+                </a>
+                <button type="submit" class="btn-reserva-primary">
+                    Reservar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/reservas/crear_reserva.js' %}"></script>
+{% endblock %}

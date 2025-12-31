@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Panel Mecánico{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'usuarios/css/mecanico.css' %}">
+{% endblock %}
+
+{# Clase especial en el body #}
+{% block body_class %}mecanico-body{% endblock %}
+{% block main_class %}p-0 m-0 w-100{% endblock %}
+
+{% block content %}
+
+<div class="mecanico-wrapper">
+    <div class="overlay-mecanico">
+
+        <div class="mecanico-header">
+            <h1 class="mecanico-title">Panel de Mecánico 🔧</h1>
+            <p class="mecanico-subtitle">Accede a tus órdenes y servicios asignados</p>
+        </div>
+
+        <div class="mecanico-container">
+
+            <a href="{% url 'reservas:ordenes_asignadas' %}" class="m-item m1">
+                <img src="{% static 'img/icons/icons_mecanico/ordenes.png' %}" alt="">
+                <span>Órdenes asignadas</span>
+            </a>
+
+            <a href="{% url 'reservas:servicios_en_proceso' %}" class="m-item m2">
+                <img src="{% static 'img/icons/icons_mecanico/servicios.png' %}" alt="">
+                <span>Servicios en proceso</span>
+            </a>
+
+            <a href="{% url 'pedidos:crear' %}" class="m-item m3">
+                <img src="{% static 'img/icons/icons_mecanico/repuestos.png' %}" alt="">
+                <span>Solicitar repuestos</span>
+            </a>
+
+            <a href="{% url 'pedidos:lista_ordenes' %}" class="m-item m4">
+                <img src="{% static 'img/icons/icons_mecanico/recepcion.png' %}" alt="">
+                <span>Recepción de productos</span>
+            </a>
+
+            <a href="{% url 'reservas:historial_servicios' %}" class="m-item m5">
+                <img src="{% static 'img/icons/icons_mecanico/historial.png' %}" alt="">
+                <span>Historial de servicios</span>
+            </a>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,181 @@
+/* ===================================== */
+/*      FONDO SOLO PARA DASHBOARD ADMIN  */
+/* ===================================== */
+
+body.dashboard-body {
+    background: url("/static/img/panelAdmin.png") no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+}
+
+/* Capa oscura */
+.dashboard-wrapper {
+    width: 100%;
+    min-height: 100vh;
+}
+
+.overlay {
+    min-height: 100vh;
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 0;
+}
+
+/* ===================================== */
+/*                TÍTULOS                */
+/* ===================================== */
+
+.dashboard-title {
+    color: #ffffff;
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.dashboard-subtitle {
+    color: #e6e6e6;
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+}
+
+/* ===================================== */
+/*           GRID ESTILO MOCKUP          */
+/* ===================================== */
+
+.dashboard-container {
+    width: 75%;
+    max-width: 900px;
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 200px 200px;
+    column-gap: 40px;
+    row-gap: 40px;
+
+    justify-items: center;
+    align-items: center;
+}
+
+/* ===================================== */
+/*                BOTONES                */
+/* ===================================== */
+
+a.dash-item {
+    text-decoration: none;
+    color: inherit;
+}
+
+.dash-item {
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0, 0, 0, 0.45);
+    border-radius: 22px;
+    border: 2px solid transparent;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    transition: 0.25s;
+}
+
+/* HOVER GENERAL (ARRIBA) */
+.dash-item:hover {
+    border-color: #f0ad4e;
+    background: rgba(0, 0, 0, 0.65);
+    transform: translateY(-5px);
+
+    /* Glow sutil */
+    box-shadow: 0 0 8px #f7ac44;
+}
+
+
+/* Icono iluminado */
+.dash-item:hover img {
+    filter: invert(80%) sepia(70%) saturate(600%) brightness(120%);
+}
+
+
+/* Iconos */
+.dash-item img {
+    width: 75px;
+    margin-bottom: 12px;
+    filter: brightness(0) invert(1); /* blanco */
+    transition: 0.25s;
+}
+
+.dash-item:hover img {
+    transform: scale(1.12); /* solo agranda */
+    filter: brightness(0) invert(1); /* sigue blanco */
+}
+
+
+/* Texto */
+.dash-item span {
+    color: white;
+    font-size: 1.15rem;
+    text-align: center;
+}
+
+/* ===================================== */
+/*     POSICIÓN EXACTA DEL MOCKUP        */
+/* ===================================== */
+
+/* FILA SUPERIOR */
+.item-1 { grid-row: 1; grid-column: 1; }
+.item-2 { grid-row: 1; grid-column: 2; }
+.item-3 { grid-row: 1; grid-column: 3; }
+
+/* FILA INFERIOR CENTRADA */
+.item-4, .item-5 {
+    grid-row: 2;
+    transform: translateX(-160px); /* Centrado óptico */
+    transition: 0.25s;
+}
+
+.item-4 { grid-column: 2; } 
+.item-5 { grid-column: 3; }
+
+/* HOVER ESPECIAL SOLO PARA ABAJO */
+.item-4:hover,
+.item-5:hover {
+    transform: translateX(-160px) translateY(-5px);
+}
+
+/* ===================================== */
+/*               RESPONSIVE              */
+/* ===================================== */
+
+@media (max-width: 900px) {
+    .dashboard-container {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 180px);
+        row-gap: 25px;
+    }
+
+    /* remover truco en pantallas pequeñas */
+    .item-4, .item-5 {
+        transform: none !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .dashboard-container {
+        width: 90%;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(5, 160px);
+    }
+
+    /* remover truco en pantallas pequeñas */
+    .item-4, .item-5 {
+        transform: none !important;
+    }
+}

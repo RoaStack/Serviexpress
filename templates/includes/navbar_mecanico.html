@@ -1,0 +1,31 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-mecanico">
+  <div class="container">
+
+    <!-- SOLO SE CAMBIA ESTA PARTE -->
+    <a class="navbar-brand d-flex align-items-center" href="{% url 'usuarios:dashboard' %}">
+      <img src="{% static 'img/Servi_navbar1.png' %}" alt="ServiExpress" class="navbar-logo">
+    </a>
+    <!-- FIN DEL CAMBIO -->
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMecanico" aria-controls="navbarMecanico" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarMecanico">
+      <ul class="navbar-nav ms-auto align-items-center">
+        <li class="nav-item"><a class="nav-link" href="{% url 'usuarios:dashboard' %}">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'reservas:ordenes_asignadas' %}">Órdenes</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'reservas:servicios_en_proceso' %}">Servicios</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'usuarios:ver_perfil' %}">Perfil</a></li>
+
+        <li class="nav-item ms-3">
+          <form method="post" action="{% url 'usuarios:logout_usuario' %}">
+            {% csrf_token %}
+            <button class="btn btn-outline-primary btn-sm" type="submit">Cerrar sesión</button>
+          </form>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
