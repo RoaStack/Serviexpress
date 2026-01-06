@@ -13,7 +13,7 @@ La plataforma permite administrar clientes, servicios, reservas, usuarios y fluj
 **Serviexpress** optimiza la gestión de un centro de servicios automotrices mediante una aplicación web con múltiples roles y funcionalidades clave:
 
 - **Cliente:** puede registrarse, iniciar sesión y gestionar solicitudes de servicios.  
-- **Técnico / Operador:** visualiza y gestiona servicios asignados.  
+- **Mecanico:** visualiza y gestiona servicios asignados.  
 - **Administrador:** controla usuarios, servicios, estados, precios y configuración general del sistema.
 
 ---
