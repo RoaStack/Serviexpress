@@ -158,7 +158,7 @@ Configuración segura de variables de entorno
 ![AgregarRepuesto](servi_assets/admin/agregarRepuestos.png)
 ![reportes](servi_assets/admin/reportes.png)
 ![GestionServicio](servi_assets/admin/GestionServicios.png)
-![GestionProveedores](servi_assets/admin/GestionProveedores.png)
+![GestionProveedores](servi_assets/admin/gestionProveedores.png)
 ![agregarProveedores](servi_assets/admin/agregarProveedor.png)
 ---
 **Panel Cliente**
