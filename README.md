@@ -152,13 +152,13 @@ Configuración segura de variables de entorno
 ![EditarDatosMecanico](servi_assets/admin/editarDatosMecanico.png)
 ![GestionDisponibilidad](servi_assets/admin/crearDisponibilidad.png)
 ![GestionDisponibilidad1](servi_assets/admin/gestionDisponibilidad.png)
-![GestionCliente](servi_assets/admin/gestionCliente.png)
+![GestionCliente](servi_assets/admin/gestionClientes.png)
 ![CrearCliente](servi_assets/admin/crearCliente.png)
 ![GestionRepuesto](servi_assets/admin/gestionRepuestos.png)
-![AgregarRepuesto](servi_assets/admin/agregarRepuesto.png)
+![AgregarRepuesto](servi_assets/admin/agregarRepuestos.png)
 ![reportes](servi_assets/admin/reportes.png)
 ![GestionServicio](servi_assets/admin/GestionServicios.png)
-![GestionProveedores](servi_assets/admin/GestionProveedor.png)
+![GestionProveedores](servi_assets/admin/GestionProveedores.png)
 ![agregarProveedores](servi_assets/admin/agregarProveedor.png)
 ---
 **Panel Cliente**
@@ -183,7 +183,7 @@ Configuración segura de variables de entorno
 ![SolicitarRepuesto](servi_assets/mecanico/OrdenPedido.png)
 ![ComprobanteOrden](servi_assets/mecanico/comprobanteOrdden.png)
 ![HistorialPedidos](servi_assets/mecanico/misPedidos.png)
-![HistorialServicio](servi_assets/mecanico/historialServicio.png)
+![HistorialServicio](servi_assets/mecanico/historialSerivicio.png)
 ![BoletaServicio](servi_assets/mecanico/boletaServicio.png)
 ---
 ## 🧰 Tecnologías utilizadas
