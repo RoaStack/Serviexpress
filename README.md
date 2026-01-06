@@ -111,6 +111,7 @@ python manage.py createsuperuser
 python manage.py runserver
 
 Luego accede a 👉 http://127.0.0.1:8000/
+
 ---
 ## 🔒 Seguridad
 
@@ -127,6 +128,7 @@ Validación de formularios
 Configuración segura de variables de entorno
 ---
 ## 🖼️ Capturas de pantalla
+
 **Home**
 ![url](servi_assets/home/url.png)
 ![Home1](servi_assets/home/home1.png)
@@ -136,6 +138,7 @@ Configuración segura de variables de entorno
 ![Home5](servi_assets/home/home5.png)
 ![InicioSesion](servi_assets/login_y_registro/login.png)
 ![Registro](servi_assets/login_y_registro/registro.png)
+---
 **Panel Admin**
 ![PanelAdmin](servi_assets/admin/panelAdmin.png)
 ![PerfilAdmin](servi_assets/admin/perfilAdmin.png)
@@ -152,6 +155,7 @@ Configuración segura de variables de entorno
 ![GestionServicio](servi_assets/admin/GestionServicios.png)
 ![GestionProveedores](servi_assets/admin/GestionProveedor.png)
 ![agregarProveedores](servi_assets/admin/agregarProveedor.png)
+---
 **Panel Cliente**
 ![PanelCliente](servi_assets/cliente/panelCliente.png)
 ![PerfilCliente](servi_assets/cliente/perfilCliente.png)
@@ -163,6 +167,7 @@ Configuración segura de variables de entorno
 ![CarritoCompra](servi_assets/cliente/carritoCompra.png)
 ![comprobanteCompras](servi_assets/cliente/comprobanteCompra.png)
 ![MisCompras](servi_assets/cliente/misCompras.png)
+---
 **Panel Mecanico**
 ![PanelMecanico](servi_assets/mecanico/panelMecanico.png)
 ![PerfilMecanico](servi_assets/mecanico/miPerfilMecanico.png)
