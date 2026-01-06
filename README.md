@@ -129,8 +129,8 @@ Configuración segura de variables de entorno
 
 ---
 ## 🖼️ Capturas de pantalla
----
 **Home**
+
 ![url](servi_assets/home/url.png)
 ![Home1](servi_assets/home/home1.png)
 ![Home2](servi_assets/home/home2.png)
