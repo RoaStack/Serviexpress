@@ -137,7 +137,11 @@ Configuración segura de variables de entorno
 ![Home3](servi_assets/home/home3.png)
 ![Home4](servi_assets/home/home4.png)
 ![Home5](servi_assets/home/home5.png)
+---
+**Inicio Sesion**
 ![InicioSesion](servi_assets/login_y_registro/login.png)
+---
+**Registro**
 ![Registro](servi_assets/login_y_registro/registro.png)
 ---
 **Panel Admin**
