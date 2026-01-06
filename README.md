@@ -4,7 +4,7 @@
 Bienvenidos a **Serviexpress**, un sistema web desarrollado con **Django** para la gestión integral de servicios automotrices.  
 La plataforma permite administrar clientes, servicios, reservas, usuarios y flujos operativos desde un panel centralizado, optimizando la atención y el control del negocio.
 
-🌐 Demo en línea: [https://tu-demo-en-render.onrender.com/](https://serviexpress-yclh.onrender.com/)
+🌐 Demo en línea: [https://serviexpress-yclh.onrender.com/]
 
 ---
 
